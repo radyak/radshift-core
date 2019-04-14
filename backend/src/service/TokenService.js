@@ -121,7 +121,7 @@ class TokenService {
       //    w/o unit: milliseconds
       expiresIn: 3600,
 
-      issuer: 'homesweethost'
+      issuer: 'radshift'
     }
 
     return jwt.sign(payload, 'secret', options)

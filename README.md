@@ -1,12 +1,12 @@
-# The ***Home Sweet Host*** *Project* 
+# The ***RadShift*** *Project* 
 
-Welcome to the Project site of ***Home Sweet Host***!
+Welcome to the Project site of ***RadShift***!
 
 Take a seat, have a look and feel yourself at home!
 
-## What is the ***Home Sweet Host*** *Project*?
+## What is the ***RadShift*** *Project*?
 
-*Home Sweet Host* is a mini home server for anyone, which ...
+*RadShift* is a mini home server for anyone, which ...
 * ... is easy to set up and use,
 * ... can be accessed only you (and trusted persons) and
 * ... keeps your data private and close to you - no need to trust big companies and hand them over your privacy!
@@ -22,7 +22,7 @@ Every mobile or web app, e.g. for
 * and nearly any other data you could think of
 
 requires a *backend* that is usually hosted remotely by big companies. This makes it intransparent what happens to the user's data and how it is used by the companies.
-That's where *Home Sweet Host* kicks in: *Home Sweet Host* aims to provide each and every private person with the maxmium of reliable privacy for their data.
+That's where *RadShift* kicks in: *RadShift* aims to provide each and every private person with the maxmium of reliable privacy for their data.
 
 To achieve this, we believe that hosting your own microscopic home server, that only you (and trusted persons) can access, is the best solution. And this should be as easy and at the same time as secure as possible. Like "Plug it, set up a password and go". Have your app backends at home where it is secure from unauthorized access!
 

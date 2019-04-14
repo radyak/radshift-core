@@ -4,5 +4,5 @@
 passwd
 
 # Change hostname
-sudo hostname homesweethost
-sudo hostnamectl set-hostname homesweethost
+sudo hostname radshift
+sudo hostnamectl set-hostname radshift

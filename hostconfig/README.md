@@ -1,4 +1,4 @@
-# _Home Sweet Host &copy;_ - Host Set-Up
+# _RadShift_ - Host Set-Up
 
 ## SSH
 

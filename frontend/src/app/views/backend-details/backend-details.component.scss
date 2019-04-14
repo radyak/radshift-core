@@ -8,17 +8,17 @@
 .details,
 .table {
     color: #fff !important;
-    border-top: 1px solid #fff !important;
 
     td, th {
         padding: 1rem;
         border-top: none !important;
     }
 }
+.table {
+    border-top: 1px solid #fff !important;
+}
 
 .details-header {
-    padding-top: 2.7rem;
-
     .green & {
         background: $primary-threequarter;
     }

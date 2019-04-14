@@ -5,12 +5,11 @@
 html,
 body {
   height: 100%;
-  padding-top: 1.5rem;
   background: $background-main;
 }
 
 .container {
-  margin-top: 1.5rem;
+  margin-top: $base-padding;
 }
 
 h1 {

@@ -23,7 +23,7 @@
 - [ ] Use TypeScript
 - [ ] Consolidate project for development (debugging) and "production"
   - [x] Live-Reload for Nodemon
-- [ ] Refactor gateway build (frontend & backend)
+- [ ] Refactor core build (frontend & backend)
 
 ## Security & Configuration
 

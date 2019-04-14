@@ -80,3 +80,9 @@ lint:
 loop:
 	#find - -type f -name Makefile -execdir make dev \; 
 	find - -type f -name Makefile -execdir make dev \;
+
+
+
+## common
+
+deploy.all: deploy.arm32 deploy.x86

@@ -30,7 +30,11 @@ class BackendsService {
     }
 
     get(backendName) {
-        return this.DockerApiClient.getContainerDetails(backendName).then((res) => {
+        var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
+
+        var containerName = backendConfig.host
+
+        return this.DockerApiClient.getContainerDetails(containerName).then((res) => {
 
             if (res.statusCode == 404) {
                 return null
@@ -51,7 +55,11 @@ class BackendsService {
     }
 
     start(backendName) {
-        return this.DockerApiClient.startContainer(backendName).then((res) => {
+        var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
+
+        var containerName = backendConfig.host
+
+        return this.DockerApiClient.startContainer(containerName).then((res) => {
             if (res.statusCode == 404) {
                 return null
             }
@@ -71,7 +79,11 @@ class BackendsService {
     }
 
     stop(backendName) {
-        return this.DockerApiClient.stopContainer(backendName).then((res) => {
+        var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
+
+        var containerName = backendConfig.host
+
+        return this.DockerApiClient.stopContainer(containerName).then((res) => {
             if (res.statusCode == 404) {
                 return null
             }
@@ -91,34 +103,22 @@ class BackendsService {
     }
 
     create(backendName, onChunkCallback) {
-        return this.DockerApiClient.pullImage(backendName, onChunkCallback)
+        var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
+
+        var imageName = backendConfig.image
+        var containerName = backendConfig.host
+
+        return this.DockerApiClient.pullImage(imageName, onChunkCallback)
         .then(() => {
-            return this.DockerApiClient.createContainer(backendName)
+            return this.DockerApiClient.createContainer(imageName, containerName)
         })
         .then(() => {
-            return this.DockerApiClient.startContainer(backendName)
+            return this.DockerApiClient.startContainer(containerName)
         })
         .then((result) => {
             console.log('result', result)
             return true
         })
-        // .then((res) => {
-        //     if (res.statusCode == 404) {
-        //         return null
-        //     }
-        //     if (res.statusCode >= 500) {
-        //         throw new Error({
-        //             message: `An error occurred`,
-        //             response: res
-        //         })
-        //     }
-
-        //     return this.get(backendName)
-            
-        // }).catch((err) => {
-        //     console.log(`Error while starting backend ${backendName}:`, err)
-        //     throw err
-        // })
     }
 
     remove(backendName) {
@@ -140,7 +140,7 @@ class BackendsService {
                 })
             }
 
-            return this.DockerApiClient.removeContainer(backendName)
+            return this.DockerApiClient.removeContainer(backendConfig.host)
         }).then((res) => {
             if (res && res.statusCode >= 500) {
                 throw new Error({

@@ -1,7 +1,6 @@
 const request = require('request')
 
 const BASE_URL = 'http://unix:/var/run/docker.sock:/v' + (process.env.DOCKER_API_VERSION || '1.30')
-const IMAGE_REPO_PREFIX = 'radyak/'
 
 class DockerApiClient {
 
@@ -44,44 +43,51 @@ class DockerApiClient {
     })
   }
 
-  getContainerDetails(name) {
+  getContainerDetails(containerName) {
     return this.request({
       method: 'GET',
-      path: `/containers/${name}/json`
+      path: `/containers/${containerName}/json`
     })
   }
 
-  createContainer(config, name) {
+  createContainer(imageName, containerName) {
+    /*
+      For some reason, Docker API requires a string as body, but Content-Type: application/json for this resource
+      #wtf
+     */
     return this.request({
       method: 'POST',
-      path: `/containers/create`,
-      body: {
-        'Image': `${IMAGE_REPO_PREFIX}${config.image}`,
+      path: `/containers/create?name=${containerName}`,
+      body: JSON.stringify({
+        'Image': imageName,
         'Env': [
 
         ]
+      }),
+      headers: {
+        'Content-Type': 'application/json'
       }
     })
   }
 
-  stopContainer(name) {
+  stopContainer(containerName) {
     return this.request({
       method: 'POST',
-      path: `/containers/${name}/stop`
+      path: `/containers/${containerName}/stop`
     })
   }
 
-  startContainer(name) {
+  startContainer(containerName) {
     return this.request({
       method: 'POST',
-      path: `/containers/${name}/start`
+      path: `/containers/${containerName}/start`
     })
   }
 
-  removeContainer(name) {
+  removeContainer(containerName) {
     return this.request({
       method: 'DELETE',
-      path: `/containers/${name}`
+      path: `/containers/${containerName}`
     })
   }
 
@@ -90,17 +96,17 @@ class DockerApiClient {
    * IMAGES *
    **********/
 
-  removeImage(name) {
+  removeImage(imageName) {
     return this.request({
       method: 'DELETE',
-      path: `/images/${name}`
+      path: `/images/${imageName}`
     })
   }
 
-  pullImage(name, onDataChunkCallback) {
+  pullImage(imageName, onDataChunkCallback) {
     var stream = this.stream({
       method: 'POST',
-      path: `/images/create?fromImage=${IMAGE_REPO_PREFIX}${name}`
+      path: `/images/create?fromImage=${imageName}`
     })
 
     
@@ -126,23 +132,6 @@ class DockerApiClient {
         }
       })
 
-    })
-  }
-
-  createContainer(name) {
-    /*
-      For some reason, Docker API requires a string as body, but Content-Type: application/json for this resource
-      #wtf
-     */
-    return this.request({
-      method: 'POST',
-      path: `/containers/create?name=${name}`,
-      body: JSON.stringify({
-        'Image': `${IMAGE_REPO_PREFIX}${name}`
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
     })
   }
 

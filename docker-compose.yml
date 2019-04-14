@@ -14,21 +14,25 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 3000:3000
     volumes:
       - "/home/fvo/tmp/test-mounts:/usr/src/conf"
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
+      - PORT=3000
       - CONF_DIR=/usr/src/conf
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
       - MONGO_DATABASE=auth
-      - ACTIVE_CONTEXT_PROFILES=dev,local
+      - ACTIVE_CONTEXT_PROFILES=dev
 
   testapp:
     container_name: testapp
     image: radyak/radshift-testapp:x86-latest
     environment:
-      - PORT=3210
+      - PORT=3000
+    ports:
+      - 3000:3000
     
   mongodb:
     container_name: mongodb

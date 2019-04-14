@@ -1,8 +1,8 @@
 # Architecture
 
-The Main Platform clusters the core functionality of a _Home Sweet Host_. It is separated into the components
+The Main Platform clusters the core functionality of a _RadShift_ server. It is separated into the components
 
-- Gateway
+- Core
 - Persistence
 
 <!--
@@ -31,7 +31,7 @@ sequenceDiagram
 ```
 -->
 
-## Component _Gateway_
+## Component _Core_
 
 The main roles it serves as are:
 
@@ -54,5 +54,5 @@ To be done ...
 ## Required manual setup steps
 
 - Domain Provider: Create a (sub)domain and enable DynDNS for it
-- Router: Forward ports 80 and 443 to the _Home Sweet Host_
-- _Home Sweet Host_: see [Host-Setup](./host/README.md)
+- Router: Forward ports 80 and 443 to the _RadShift_ server
+- _RadShift_: see [Host-Setup](./host/README.md)

@@ -44,7 +44,7 @@
         </tr>
         <tr *ngIf="backend.entry && backend.status.state === 'running'">
           <td>Go to:</td>
-          <td><a href="{{ backend.entry }}">{{ backend.label }} ({{ backend.entry }})</a></td>
+          <td><a class="btn" href="{{ backend.entry }}">{{ backend.label }} ({{ backend.entry }})</a></td>
         </tr>
     </table>
   </section>

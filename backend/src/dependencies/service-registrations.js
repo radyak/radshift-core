@@ -31,9 +31,9 @@ Provider('AuthService', (ClientsService, TokenService, UserService, Authorizatio
   return new AuthService(TokenService, ClientsService, UserService, AuthorizationCodeService)
 })
 
-Provider('BackendConfigurationService', () => {
+Provider('BackendConfigurationService', (backendsConfig) => {
   const DummyBackendConfigurationService = require('../service/DummyBackendConfigurationService')
-  return new DummyBackendConfigurationService()
+  return new DummyBackendConfigurationService(backendsConfig)
 })
 
 Provider('DockerApiClient', () => {
