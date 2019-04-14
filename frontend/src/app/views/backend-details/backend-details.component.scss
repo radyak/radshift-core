@@ -1,0 +1,33 @@
+@import "../../../variables.scss";
+
+
+.container {
+    padding: 0 !important;
+}
+
+.details,
+.table {
+    color: #fff !important;
+    border-top: 1px solid #fff !important;
+
+    td, th {
+        padding: 1rem;
+        border-top: none !important;
+    }
+}
+
+.details-header {
+    padding-top: 2.7rem;
+
+    .green & {
+        background: $primary-threequarter;
+    }
+}
+
+section {
+    margin-top: 2rem;
+
+    & > * {
+        padding: 0 1rem;
+    }
+}

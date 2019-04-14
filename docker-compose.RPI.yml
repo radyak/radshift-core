@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  core:
+    depends_on:
+      - mongodb
+    container_name: core
+    image: radyak/radshift-core
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "/home/pirate/conf:/usr/src/conf"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - CONF_DIR=/usr/src/conf
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DATABASE=auth
+
+  test-app:
+    container_name: test-app
+    image: radyak/radshift-testapp
+    environment:
+      - PORT=3210
+  
+  mongodb:
+    container_name: mongodb
+    image: radyak/radshift-mongodb
+
+  # mongoclient:
+  #   container_name: mongoclient
+  #   image: mongoclient/mongoclient
+  #   ports:
+  #     - 3000:3000
+  #   network_mode: host
+
+  # portainer:
+  #   container_name: portainer
+  #   image: hypriot/rpi-portainer
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"

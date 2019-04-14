@@ -1,0 +1,19 @@
+<div class="my-3 text-white-50 rounded store-item" [ngClass]="{selected: isActive, installed: isInstalled}">
+  <div class="main">
+    <logo size="100" [color]="getColor()"></logo>
+    <div>
+      <h2 class="mb-0">New App</h2>
+      <div class="description">Description</div>
+    </div>
+  </div>
+  <div class="details" *ngIf="isActive">
+    <button *ngIf="!isInstalled" class="btn">
+      <fa name="play" class="fa"></fa>
+      Install
+    </button>
+    <button *ngIf="isInstalled" class="btn">
+      <fa name="trash" class="fa"></fa>
+      Remove
+    </button>
+  </div>
+</div>

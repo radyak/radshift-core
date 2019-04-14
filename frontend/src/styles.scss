@@ -1,0 +1,86 @@
+@import "variables.scss";
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  padding-top: 1.5rem;
+  background: $background-main;
+}
+
+.container {
+  margin-top: 1.5rem;
+}
+
+h1 {
+  color: #fff;
+  padding: 20px 0;
+  margin-left: -10px;
+  width: 100%;
+  text-align: center;
+}
+
+.navbar-brand svg {
+  width: 70px !important;
+}
+
+.text-green {
+  color: $primary;
+
+  &.glow,
+  & > .glow {
+    text-shadow: 0 0 5px $primary-half;
+  }
+}
+
+.btn {
+  border-color: $primary !important;
+  color: $primary !important;
+  background: $background-main !important;
+  &:hover {
+    background: $primary !important;
+    color: $background-main !important;
+  }
+
+  &.btn-primary {
+    color: $background-main !important;
+    background: $primary !important;
+    &:hover {
+      box-shadow: 0 0 5px $primary-threequarter;
+    }
+  }
+
+  &.btn-danger {
+    border-color: $danger !important;
+    color: $danger !important;
+    background: $background-main !important;
+    &:hover {
+      background: $danger !important;
+      color: $background-main !important;
+    }
+  }
+}
+
+
+
+a {
+  outline: none !important;
+}
+
+/*
+ * Loading screen
+ */
+
+
+.modal-content {
+  background-color: $background-main !important;
+  color: #fff !important;
+}
+
+.modal-header {
+  border-bottom: none !important;
+}
+.modal-footer {
+  border-top: none !important;
+}

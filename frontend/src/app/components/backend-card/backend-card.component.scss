@@ -1,0 +1,78 @@
+@import "../../../variables.scss";
+
+
+.card-head svg {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.card-head {
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
+
+    & > .symbol {
+        top: 1.5rem;
+        position: relative;
+    }
+
+}
+
+.card {
+
+    h2 {
+        margin: 1.25rem;
+    }
+
+    background: $background-main !important;
+    color: #fff;
+    cursor: pointer;
+
+    border-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+    &:hover {
+        border-color: rgb(255, 255, 255);
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.75);
+    }
+
+    &.green {
+        color: $primary;
+        border-color: $primary;
+        box-shadow: 0px 0px 5px $primary-half;
+        &:hover {
+            color: $primary;
+            border-color: $primary;
+            box-shadow: 0px 0px 10px $primary-threequarter;
+        }
+
+        .card-description {
+            background: $primary-onequarter;
+        }
+    }
+
+    &.red {
+        color: rgb(252, 173, 197);
+        border-color: rgb(224, 8, 73);
+        box-shadow: 0px 0px 5px rgba(224, 8, 73, 0.5);
+        &:hover {
+            color: rgb(255, 80, 106);
+            border-color: rgb(255, 10, 83);
+            box-shadow: 0px 0px 10px rgba(255, 10, 83, 0.75);
+        }
+
+        .card-description {
+            background: rgba(224, 8, 73, 0.25);
+        }
+    }
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-description {
+    background: rgba(255,255,255,0.25);
+    width: 100%;
+    height: 125px;
+    padding: 1.25rem;
+}

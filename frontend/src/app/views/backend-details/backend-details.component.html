@@ -1,0 +1,51 @@
+<div class="container details" [ngClass]="backend.status.indicator">
+  <div class="details-header">
+    <h1>
+      {{ backend.label }}
+      <logo [color]="'green'" size="100"></logo>
+    </h1>
+  </div>
+
+  <loading-bar [isLoading]="isLoading"></loading-bar>
+
+  <section>
+    <div class="d-flex justify-content-between align-items-center">
+      <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
+        <fa name="arrow-circle-left" class="fa"></fa>
+        Back
+      </button>
+      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="isRunning()" (click)="stop()">
+        <fa name="stop" class="fa"></fa>
+        Stop
+      </button>
+      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="!isRunning()" (click)="start()">
+        <fa name="play" class="fa"></fa>
+        Start
+      </button>
+      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger" (click)="remove()">
+        <fa name="trash" class="fa"></fa>
+        Remove
+      </button>
+    </div>
+  </section>
+  
+  <section>
+    <h2>
+      Summary
+    </h2>
+    <table class="table">
+        <tr>
+          <td>State:</td>
+          <td>{{ backend.status.state }}</td>
+        </tr>
+        <tr>
+          <td>Description:</td>
+          <td>{{ backend.description }}</td>
+        </tr>
+        <tr *ngIf="backend.entry && backend.status.state === 'running'">
+          <td>Go to:</td>
+          <td><a href="{{ backend.entry }}">{{ backend.label }} ({{ backend.entry }})</a></td>
+        </tr>
+    </table>
+  </section>
+</div>

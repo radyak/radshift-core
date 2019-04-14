@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+
+  core:
+    depends_on:
+      - mongodb
+    container_name: core
+    image: radyak/radshift-core:x86-latest
+    build:
+      context: .
+      args:
+        - BASE_IMAGE=node:8
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "/home/fvo/tmp/test-mounts:/usr/src/conf"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - CONF_DIR=/usr/src/conf
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DATABASE=auth
+      - ACTIVE_CONTEXT_PROFILES=dev,local
+
+  testapp:
+    container_name: testapp
+    image: radyak/radshift-testapp:x86-latest
+    environment:
+      - PORT=3210
+    
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - 27017:27017
+
+
+  # mongoclient:
+  #   container_name: mongoclient
+  #   image: mongoclient/mongoclient
+  #   ports:
+  #     - 3000:3000
+  #   network_mode: host
+
+  # portainer:
+  #   container_name: portainer
+  #   image: portainer/portainer
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
