@@ -10,7 +10,7 @@ import { Backend } from '../../model/Backend';
 })
 export class OverviewComponent implements OnInit {
 
-  private backends: Backend[];
+  public backends: Backend[];
 
   constructor(private router: Router, private backendsService: BackendsService) {
   }

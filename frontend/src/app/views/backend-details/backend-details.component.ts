@@ -14,7 +14,7 @@ import { ModalOptions } from 'src/app/components/modal-options';
 export class BackendDetailsComponent implements OnInit {
 
   // TODO: Remove default
-  private backend: any = {
+  public backend: any = {
     "status": {
       "state": "running",
       "indicator": "green"
@@ -24,7 +24,7 @@ export class BackendDetailsComponent implements OnInit {
     "label": "Test-App"
   }
 
-  private isLoading: boolean = false;
+  public isLoading: boolean = false;
 
   constructor(
     private location: Location,

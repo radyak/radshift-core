@@ -16,6 +16,8 @@ import { BackendsService } from './services/backends.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './components/modal/modal.component';
 import { StoreItemComponent } from './components/store-item/store-item.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { StoreItemComponent } from './components/store-item/store-item.component
     AppRoutingModule,
     NgbModule,
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     BackendsService

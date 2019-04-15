@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="250px" height="250px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  version="1.2" baseProfile="tiny">
+
+    <g fill="none" stroke="#ffffff" stroke-width="7" fill-rule="evenodd" stroke-opacity="1" stroke-linecap="round" stroke-linejoin="round" transform="matrix(1,0,0,1,25,65)">
+
+        <!-- Outline -->
+        <g>
+            <path d="M0,30 L0,90 L100,60 L200,90 L200,30 L100,0 L0,30 L0,90 L0,30 M200,30 L200,90 L200,30 M100,0 L100,60 L100,0 M0,90 L100,60 L200,90 L100,120 L0,90 M0,60 L100,30 L200,60 L100,90 L0,60 M0,30 L100,0 L200,30 L100,60 L0,30 M100,60 L100,120 L100,60"/>
+        </g>
+
+        <!-- Fill: center -->
+        <g fill="#ffffff" fill-opacity="1" stroke="none" opacity="0.5" >
+            <path d="M0,60 L100,30 L200,60 L100,90 L0,60"/>
+        </g>
+
+        <!-- Fill: top -->
+        <g fill="#ffffff" fill-opacity="1" stroke="none" opacity="0.75" >
+            <path d="M0,30 L100,0 L200,30 L100,60 L0,30"/>
+        </g>
+
+    </g>
+</svg>
