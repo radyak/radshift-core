@@ -18,11 +18,11 @@ export class ModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  private confirm() {
+  public confirm() {
     this.activeModal.close(true)
   }
 
-  private cancel() {
+  public cancel() {
     this.activeModal.close(false)
   }
 

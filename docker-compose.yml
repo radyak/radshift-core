@@ -10,7 +10,7 @@ services:
     build:
       context: .
       args:
-        - BASE_IMAGE=node:8
+        - BASE_IMAGE=node:lts-alpine
     ports:
       - 80:80
       - 443:443

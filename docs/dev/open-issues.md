@@ -49,5 +49,6 @@
 ## Misc
 
 - [x] Use App-Information (port, required roles etc.) for proxying requests
+- [x] Slim down images/builds
 - [ ] _Tests_ (use Mock MongoDB)
 - [ ] _Validations_/central model

@@ -5,8 +5,8 @@ export
 IMAGE=radshift-core
 REPO=radyak
 
-BASE_IMAGE_ARM32=arm32v7/node
-BASE_IMAGE_X86=node:8
+BASE_IMAGE_ARM32=arm32v7/node:lts-slim
+BASE_IMAGE_X86=node:lts-alpine
 
 TAG=latest
 TAG_X86=x86-latest
@@ -31,7 +31,7 @@ deploy.arm32: build.arm32
 build.x86:
 	docker build -t $(REPO)/$(IMAGE):$(TAG_X86) --build-arg BASE_IMAGE=$(BASE_IMAGE_X86) .
 
-deploy.x86: arm32
+deploy.x86: build.x86
 	docker tag  $(REPO)/$(IMAGE):$(TAG_X86) $(REPO)/$(IMAGE):$(TAG_X86)
 	docker push $(REPO)/$(IMAGE):$(TAG_X86)
 
@@ -61,8 +61,8 @@ tests.continuous:
 	# npm test -- -w --grep 'lists files recursively'
 
 run.mongodb:
-	docker-compose stop mongodb
-	docker-compose up -d mongodb
+	docker-compose stop mongodb radhub
+	docker-compose up -d mongodb radhub
 
 run.dev: run.mongodb
 	cd backend; npm run watch
