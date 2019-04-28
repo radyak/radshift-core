@@ -87,7 +87,7 @@ export class BackendDetailsComponent implements OnInit {
     this.isLoading = true;
     let name: string = this.route.snapshot.params['name']
     this.backendsService.removeBackend(name).subscribe((backend: Backend) => {
-      this.router.navigate(['overview']);
+      this.router.navigate(['dashboard']);
       this.isLoading = false;
     })
   }

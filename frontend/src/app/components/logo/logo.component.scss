@@ -1,4 +1,22 @@
-// svg {
-//     width: 100%;
-//     height: auto;
-// }
+
+svg {
+    g {
+        stroke: white;
+    }
+    
+    path {
+        fill: white;
+    }
+}
+
+
+.green > svg,
+svg.green {
+    g {
+        stroke: green;
+    }
+    
+    path {
+        fill: green;
+    }
+}

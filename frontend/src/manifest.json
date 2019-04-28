@@ -1,7 +1,7 @@
 {
   "name": "RadShift-Main",
   "short_name": "RadShift",
-  "theme_color": "#08e049",
+  "theme_color": "#343a40",
   "background_color": "#343a40",
   "display": "standalone",
   "scope": "/",

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OverviewComponent } from './views/overview/overview.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { StoreComponent } from './views/store/store.component';
 import { BackendDetailsComponent } from './views/backend-details/backend-details.component';
 
 const routes: Routes = [
-  {path: '', component: OverviewComponent},
-  {path: 'overview', component: OverviewComponent},
+  {path: '', component: DashboardComponent},
+  {path: 'dashboard', component: DashboardComponent},
   {path: 'store', component: StoreComponent},
-  {path: 'details/:name', component: BackendDetailsComponent}
+  {path: 'backend/:name', component: BackendDetailsComponent}
 ];
 
 @NgModule({

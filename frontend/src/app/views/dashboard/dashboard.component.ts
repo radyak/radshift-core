@@ -4,11 +4,11 @@ import { BackendsService } from '../../services/backends.service';
 import { Backend } from '../../model/Backend';
 
 @Component({
-  selector: 'overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss']
+  selector: 'dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class OverviewComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
   public backends: Backend[];
 
@@ -26,7 +26,7 @@ export class OverviewComponent implements OnInit {
   }
 
   showDetails(backend) {
-    this.router.navigate(['details', backend.name]);
+    this.router.navigate(['backend', backend.name]);
   }
 
 }

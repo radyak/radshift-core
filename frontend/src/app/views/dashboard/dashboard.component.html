@@ -1,14 +1,14 @@
 <div class="container">
 
-  <h1>
+  <h2>
     <fa name="th" class="fa"></fa>
-    Overview
-  </h1>
+    Dashboard
+  </h2>
 
   <div class="row">
 
     <div class="col-md-3" *ngFor="let backend of backends">
-      <backend-card [backend]="backend" (click)="showDetails(backend)"></backend-card>
+      <backend-item [backend]="backend" (click)="showDetails(backend)"></backend-item>
     </div>
 
   </div>

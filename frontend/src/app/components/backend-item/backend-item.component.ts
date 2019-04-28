@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'backend-card',
-  templateUrl: './backend-card.component.html',
-  styleUrls: ['./backend-card.component.scss']
+  selector: 'backend-item',
+  templateUrl: './backend-item.component.html',
+  styleUrls: ['./backend-item.component.scss']
 })
-export class BackendCardComponent implements OnInit {
+export class BackendItemComponent implements OnInit {
 
   constructor() { }
 

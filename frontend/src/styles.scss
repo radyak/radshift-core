@@ -1,6 +1,31 @@
 @import "variables.scss";
 
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: OpenSans;
+  src: url(assets/fonts/OpenSans/OpenSans-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url(assets/fonts/Roboto/Roboto-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: Rubik;
+  src: url(assets/fonts/Rubik/Rubik-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: VarelaRound;
+  src: url(assets/fonts/Varela_Round/VarelaRound-Regular.ttf) format("truetype");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "VarelaRound", "arial", sans-serif;
+}
 
 html,
 body {
@@ -12,10 +37,10 @@ body {
   margin-top: $base-padding;
 }
 
-h1 {
+h1,
+h2 {
   color: #fff;
   padding: 20px 0;
-  margin-left: -10px;
   width: 100%;
   text-align: center;
 }
@@ -61,8 +86,6 @@ h1 {
   }
 }
 
-
-
 a {
   outline: none !important;
 }
@@ -70,7 +93,6 @@ a {
 /*
  * Loading screen
  */
-
 
 .modal-content {
   background-color: $background-main !important;
