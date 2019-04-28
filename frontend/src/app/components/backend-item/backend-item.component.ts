@@ -12,16 +12,6 @@ export class BackendItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  private map = {
-    'green': 'rgb(8, 224, 73)',
-    'red': 'rgb(224, 8, 73)',
-    'default': 'rgb(224, 224, 224)'
-  };
-
   @Input() backend: any;
-
-  getColor() {
-    return this.map[this.backend.status.indicator] || this.map['default']
-  }
 
 }

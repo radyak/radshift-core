@@ -16,8 +16,7 @@ export class StoreItemComponent implements OnInit {
   }
 
   getColor() {
-    // return this.isInstalled ? 'rgb(8, 224, 73)' : '#fff'
-    return this.isInstalled ? '#343a40' : '#fff'
+    return this.isInstalled ? 'dark' : 'green'
   }
 
 }

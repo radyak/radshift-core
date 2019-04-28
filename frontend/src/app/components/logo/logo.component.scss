@@ -1,3 +1,4 @@
+@import "../../../variables.scss";
 
 svg {
     g {
@@ -7,16 +8,34 @@ svg {
     path {
         fill: white;
     }
-}
 
-
-.green > svg,
-svg.green {
-    g {
-        stroke: green;
+    &.green {
+        g {stroke: $green;}
+        path {fill: $green;}
     }
-    
-    path {
-        fill: green;
+
+    &.red {
+        g {stroke: $red;}
+        path {fill: $red;}
+    }
+
+    &.orange {
+        g {stroke: $orange;}
+        path {fill: $orange;}
+    }
+
+    &.gray {
+        g {stroke: $gray;}
+        path {fill: $gray;}
+    }
+
+    &.blue {
+        g {stroke: $blue;}
+        path {fill: $blue;}
+    }
+
+    &.dark {
+        g {stroke: $dark;}
+        path {fill: $dark;}
     }
 }
