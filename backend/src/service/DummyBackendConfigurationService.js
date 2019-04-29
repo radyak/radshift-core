@@ -6,6 +6,10 @@ class DummyBackendConfigurationService {
         config = backendsConfig
     }
 
+    getBackendConfigurations() {
+        return config;
+    }
+
     getBackendConfiguration(name) {
         return config[name];
     }

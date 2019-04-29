@@ -4,5 +4,7 @@ export interface Backend {
     name: string;
     description: string;
     label: string;
+    image: string;
+    isInstalled: boolean;
     
 }

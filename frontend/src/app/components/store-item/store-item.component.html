@@ -1,19 +1,19 @@
-<div class="my-3 text-white-50 rounded store-item" [ngClass]="{selected: isActive, installed: isInstalled}">
+<div class="my-3 text-white-50 rounded store-item" [ngClass]="{selected: isActive, installed: backend.isInstalled}">
   <div class="main">
     <logo size="100" [color]="getColor()" class="green"></logo>
     <div>
-      <h2 class="mb-0">New App</h2>
-      <div class="description">Description</div>
+      <h2 class="mb-0">{{ backend.label }}</h2>
+      <div class="description">{{ backend.description }}</div>
     </div>
   </div>
   <div class="details" *ngIf="isActive">
-    <button *ngIf="!isInstalled" class="btn">
+    <button *ngIf="!backend.isInstalled" class="btn">
       <fa name="play" class="fa"></fa>
       Install
     </button>
-    <button *ngIf="isInstalled" class="btn">
-      <fa name="trash" class="fa"></fa>
-      Remove
+    <button *ngIf="backend.isInstalled" class="btn" (click)="showDetails(backend)">
+      <fa name="list" class="fa"></fa>
+      Details
     </button>
   </div>
 </div>

@@ -25,20 +25,29 @@ services:
       - MONGO_PORT=27017
       - MONGO_DATABASE=auth
       - ACTIVE_CONTEXT_PROFILES=dev
+      - RADHUB_URL=http://localhost:4010
 
   testapp:
     container_name: testapp
     image: radyak/radshift-testapp:x86-latest
     environment:
-      - PORT=3000
+      - PORT=3210
     ports:
-      - 3000:3000
+      - 3210:3210
     
   mongodb:
     container_name: mongodb
     image: mongo
     ports:
       - 27017:27017
+
+  radhub:
+    container_name: radhub
+    image: radyak/radhub:x86-latest
+    environment:
+      - PORT=4010
+    ports:
+      - 4010:4010
 
 
   # mongoclient:

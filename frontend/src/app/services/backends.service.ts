@@ -14,6 +14,10 @@ export class BackendsService {
     return this.http.get<Backend[]>(`/api/backends`)
   }
 
+  getAvailableBackends(): Observable<Backend[]> {
+    return this.http.get<Backend[]>(`/api/store`)
+  }
+
   getBackend(name: string): Observable<Backend> {
     return this.http.get<Backend>(`/api/backends/${name}`)
   }

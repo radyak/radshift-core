@@ -5,7 +5,7 @@ Dependency('backendsConfig', () => {
             "label": "Test-App",
             "description": "Some sample app",
             "host": "testapp",
-            "port": 3000,
+            "port": 3210,
             "image": "radyak/radshift-testapp:x86-latest",
             "entry": ""
         },

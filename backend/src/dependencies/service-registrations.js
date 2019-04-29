@@ -41,7 +41,12 @@ Provider('DockerApiClient', () => {
   return new DockerApiClient()
 })
 
-Provider('BackendsService', (BackendConfigurationService, DockerApiClient) => {
+Provider('RadHubClient', () => {
+  const RadHubClient = require('../client/RadHubClient')
+  return new RadHubClient()
+})
+
+Provider('BackendsService', (BackendConfigurationService, DockerApiClient, RadHubClient) => {
   const BackendsService = require('../service/BackendsService')
-  return new BackendsService(BackendConfigurationService, DockerApiClient)
+  return new BackendsService(BackendConfigurationService, DockerApiClient, RadHubClient)
 })

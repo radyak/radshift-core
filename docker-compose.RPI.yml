@@ -19,8 +19,8 @@ services:
       - MONGO_PORT=27017
       - MONGO_DATABASE=auth
 
-  test-app:
-    container_name: test-app
+  testapp:
+    container_name: testapp
     image: radyak/radshift-testapp
     environment:
       - PORT=3210

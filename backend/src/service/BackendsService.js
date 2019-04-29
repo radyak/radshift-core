@@ -1,8 +1,9 @@
 class BackendsService {
 
-    constructor(BackendConfigurationService, DockerApiClient) {
+    constructor(BackendConfigurationService, DockerApiClient, RadHubClient) {
         this.BackendConfigurationService = BackendConfigurationService
         this.DockerApiClient = DockerApiClient
+        this.RadHubClient = RadHubClient
     }
 
     getAll() {
@@ -44,6 +45,24 @@ class BackendsService {
         }).catch((err) => {
             console.log(`Error while retrieving details of backend ${backendName}:`, err)
             throw err
+        })
+    }
+
+    getAllAvailable(filter) {
+        var installedBackends = this.getAll()
+        var availableBackends = this.RadHubClient.getAll(filter).then(res => {
+            return JSON.parse(res.body)
+        })
+
+        return Promise.all([installedBackends, availableBackends]).then(values => {
+            installedBackends = values[0]
+            availableBackends = values[1]
+
+            const installedBackendNames = installedBackends.map(backend => backend.name)
+            availableBackends.forEach(backend => {
+                backend.isInstalled = (installedBackendNames.indexOf(backend.name) !== -1)
+            })
+            return availableBackends
         })
     }
 

@@ -5,8 +5,9 @@
     App Store
   </h2>
   
-  <store-item [isActive]="true"></store-item>
-  <store-item [isActive]="true" [isInstalled]="true"></store-item>
-  <store-item [isActive]="false"></store-item>
+  <store-item *ngFor="let backend of availableBackends"
+              (click)="activeBackend = backend"
+              [isActive]="activeBackend === backend"
+              [backend]="backend"></store-item>
 
 </div>

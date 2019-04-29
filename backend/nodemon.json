@@ -13,7 +13,8 @@
   },
   "env": {
     "ACTIVE_CONTEXT_PROFILES": "dev",
-    "PORT": 3000
+    "PORT": 3000,
+    "RADHUB_URL": "http://localhost:4010"
   },
   "ext": "js,json"
 }
