@@ -1,27 +1,30 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" [ngClass]="{ 'open': !isCollapsed }">
-  <a class="navbar-brand" href="#">
-    <logo></logo>
-    RadShift
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-    (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarCollapse" [ngClass]="{ 'show': !isCollapsed }">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="/dashboard" (click)="isCollapsed = true" class="nav-link" routerLinkActive="active">
-          <fa name="th-list" class="fa"></fa>
-          Dashboard
-        </a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/store" (click)="isCollapsed = true" class="nav-link" routerLinkActive="active">
-          <fa name="shopping-cart" class="fa"></fa>
-          App Store
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<span [ngClass]="{ collapsed: isCollapsed }">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">
+      <logo></logo>
+      RadShift
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+      (click)="toggle()" [attr.aria-expanded]="!isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse" [ngClass]="{ show: !isCollapsed }">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a routerLink="/dashboard" (click)="collapse()" class="nav-link" routerLinkActive="active">
+            <fa name="th-list" class="fa"></fa>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/store" (click)="collapse()" class="nav-link" routerLinkActive="active">
+            <fa name="shopping-cart" class="fa"></fa>
+            App Store
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="backdrop" (click)="collapse()"></div>
+</span>

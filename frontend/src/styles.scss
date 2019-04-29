@@ -37,6 +37,13 @@ body {
   margin-top: $base-padding;
 }
 
+.btn-group,
+.btn-group-vertical,
+.btn-group-vertical > .btn,
+.btn-group > .btn {
+  position: initial !important;
+}
+
 h1,
 h2 {
   color: #fff;
