@@ -10,22 +10,33 @@
 
   <section>
     <div class="d-flex justify-content-between align-items-center">
-      <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
-        <fa name="arrow-circle-left" class="fa"></fa>
-        Back
-      </button>
-      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="isRunning()" (click)="stop()">
-        <fa name="stop" class="fa"></fa>
-        Stop
-      </button>
-      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="!isRunning()" (click)="start()">
-        <fa name="play" class="fa"></fa>
-        Start
-      </button>
-      <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger" (click)="remove()">
-        <fa name="trash" class="fa"></fa>
-        Remove
-      </button>
+
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
+          <fa name="arrow-circle-left" class="fa"></fa>
+          Back
+        </button>
+        <button type="button" class="btn btn-lg btn-outline-secondary"  *ngIf="backend.entry && backend.status === 'running'" (click)="open()">
+          <fa name="arrow-circle-right" class="fa"></fa>
+          Open
+        </button>
+        <!-- <a *ngIf="backend.entry && backend.status === 'running'" class="btn btn-lg btn-outline-secondary" href="{{ backend.entry }}">Open</a> -->
+      </div>
+      
+      <div class="btn-group" role="group">
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="isRunning()" (click)="stop()">
+          <fa name="stop" class="fa"></fa>
+          Stop
+        </button>
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="!isRunning()" (click)="start()">
+          <fa name="play" class="fa"></fa>
+          Start
+        </button>
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger" (click)="removeDialog()">
+          <fa name="trash" class="fa"></fa>
+          Remove
+        </button>
+      </div>
     </div>
   </section>
   
@@ -41,10 +52,6 @@
         <tr>
           <td>Description:</td>
           <td>{{ backend.description }}</td>
-        </tr>
-        <tr *ngIf="backend.entry && backend.status === 'running'">
-          <td>Go to:</td>
-          <td><a class="btn" href="{{ backend.entry }}">{{ backend.label }} ({{ backend.entry }})</a></td>
         </tr>
     </table>
   </section>

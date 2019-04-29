@@ -72,7 +72,7 @@ export class BackendDetailsComponent implements OnInit {
     })
   }
 
-  remove() {
+  removeDialog() {
     const modalOptions: ModalOptions = {
       title: `Remove ${this.backend.label}`,
       message: `Do you really want to remove the backend ${this.backend.label}?`
@@ -102,6 +102,10 @@ export class BackendDetailsComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  open(): void {
+    window.open(this.backend.entry, "_blank");
   }
 
   public indicator(state: string) {

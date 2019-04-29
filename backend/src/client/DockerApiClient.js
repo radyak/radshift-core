@@ -106,7 +106,7 @@ class DockerApiClient {
   pullImage(imageName, onDataChunkCallback) {
     var stream = this.stream({
       method: 'POST',
-      path: `/images/create?fromImage=${imageName}`
+      path: `/images/create?fromImage=${imageName}&tag=latest`
     })
 
     

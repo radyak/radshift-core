@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="details" *ngIf="isActive">
-    <button *ngIf="!backend.isInstalled" class="btn">
+    <button *ngIf="!backend.isInstalled" class="btn" (click)="installDialog(backend)">
       <fa name="play" class="fa"></fa>
       Install
     </button>
@@ -16,4 +16,5 @@
       Details
     </button>
   </div>
+  <loading-bar [isLoading]="isLoading"></loading-bar>
 </div>

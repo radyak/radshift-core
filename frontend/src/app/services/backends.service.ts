@@ -30,6 +30,10 @@ export class BackendsService {
     return this.http.post<Backend>(`/api/backends/${name}/start`, {})
   }
 
+  installBackend(name: string): Observable<boolean> {
+    return this.http.post<boolean>(`/api/backends/${name}`, {})
+  }
+
   removeBackend(name: string): Observable<Backend> {
     return this.http.delete<Backend>(`/api/backends/${name}`, {})
   }
