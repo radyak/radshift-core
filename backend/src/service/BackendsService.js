@@ -1,10 +1,3 @@
-
-const indicatorMap = {
-    running: "green",
-    exited: "orange",
-    dead: "red"
-}
-
 class BackendsService {
 
     constructor(BackendConfigurationService, DockerApiClient) {
@@ -183,11 +176,8 @@ class BackendsService {
         var name = raw.Name.substring(1)
         return {
             created: raw.Created,
-            status: {
-                state: raw.State.Status,
-                indicator: indicatorMap[raw.State.Status] || "gray",
-                date: raw.State.StartedAt > raw.State.FinishedAt ? raw.State.StartedAt : raw.State.FinishedAt
-            },
+            status: raw.State.Status,
+            date: raw.State.StartedAt > raw.State.FinishedAt ? raw.State.StartedAt : raw.State.FinishedAt,
             description: metaInformation.description,
             label: metaInformation.label,
             name: name,
@@ -203,20 +193,14 @@ class BackendsService {
             let metaInformation = this.BackendConfigurationService.getBackendConfiguration(name)
             if (metaInformation) {
                 result.push({
-                    status: {
-                        state: container.State,
-                        indicator: indicatorMap[container.State] || "gray"
-                    },
+                    status: container.State,
                     name: name,
                     description: metaInformation.description,
                     label: metaInformation.label
                 })
             } else if (showUnknown) {
                 result.push({
-                    status: {
-                        state: container.State,
-                        indicator: indicatorMap[container.State] || "gray"
-                    },
+                    status: container.State,
                     name: name,
                     description: 'n/a',
                     label: name

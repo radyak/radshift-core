@@ -1,6 +1,6 @@
-<div class="my-3 text-white-50 rounded backend-item" [ngClass]="backend.status.indicator">
+<div class="my-3 text-white-50 rounded backend-item" [ngClass]="indicator(backend.status)">
   <div class="main">
-    <logo size="100" [color]="backend.status.indicator"></logo>
+    <logo size="100" [color]="indicator(backend.status)"></logo>
     <div>
       <h2 class="mb-0">{{ backend.label }}</h2>
       <div class="description">{{ backend.description }}</div>

@@ -16,8 +16,11 @@
     margin-right: 15px;
 }
 
-.navbar-brand svg {
-    width: 50px !important;
+.navbar-brand {
+    font-size: 1.6rem;
+    svg {
+        width: 50px !important;
+    }
 }
 
 .navbar.open {
@@ -40,7 +43,5 @@
 }
 
 logo {
-    width: 50px;
-    height: 70px;
     margin-right: 0 !important;
 }

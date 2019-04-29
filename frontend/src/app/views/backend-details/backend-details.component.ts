@@ -6,6 +6,13 @@ import { Backend } from '../../model/Backend';
 import { ModalService } from '../../components/modal.service';
 import { ModalOptions } from 'src/app/components/modal-options';
 
+
+const indicatorMap = {
+  'running': 'green',
+  'exited': 'default',
+  'error': 'red'
+};
+
 @Component({
   selector: 'backend-details',
   templateUrl: './backend-details.component.html',
@@ -15,10 +22,7 @@ export class BackendDetailsComponent implements OnInit {
 
   // TODO: Remove default
   public backend: any = {
-    "status": {
-      "state": "running",
-      "indicator": "green"
-    },
+    "status": "running",
     "name": "test-app",
     "description": "Some sample app",
     "label": "Test-App"
@@ -93,11 +97,15 @@ export class BackendDetailsComponent implements OnInit {
   }
 
   isRunning(): boolean {
-    return this.backend.status.state === 'running';
+    return this.backend.status === 'running';
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  public indicator(state: string) {
+    return indicatorMap[state] || 'default'
   }
 
 }

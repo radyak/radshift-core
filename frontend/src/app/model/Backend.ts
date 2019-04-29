@@ -1,8 +1,6 @@
-import { BackendState } from './BackendState';
-
 export interface Backend {
 
-    status: BackendState;
+    status: string;
     name: string;
     description: string;
     label: string;

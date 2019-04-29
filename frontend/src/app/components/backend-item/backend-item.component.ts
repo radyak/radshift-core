@@ -1,5 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+
+const indicatorMap = {
+  'running': 'green',
+  'exited': 'default',
+  'error': 'red'
+};
+
+
 @Component({
   selector: 'backend-item',
   templateUrl: './backend-item.component.html',
@@ -13,5 +21,9 @@ export class BackendItemComponent implements OnInit {
   }
 
   @Input() backend: any;
+
+  public indicator(state: string) {
+    return indicatorMap[state] || 'default'
+  }
 
 }

@@ -1,4 +1,4 @@
-<div class="container details" [ngClass]="backend.status.indicator">
+<div class="container details" [ngClass]="indicator(backend.status)">
   <div class="details-header">
     <h1>
       {{ backend.label }}
@@ -36,13 +36,13 @@
     <table class="table">
         <tr>
           <td>State:</td>
-          <td>{{ backend.status.state }}</td>
+          <td>{{ backend.status }}</td>
         </tr>
         <tr>
           <td>Description:</td>
           <td>{{ backend.description }}</td>
         </tr>
-        <tr *ngIf="backend.entry && backend.status.state === 'running'">
+        <tr *ngIf="backend.entry && backend.status === 'running'">
           <td>Go to:</td>
           <td><a class="btn" href="{{ backend.entry }}">{{ backend.label }} ({{ backend.entry }})</a></td>
         </tr>
