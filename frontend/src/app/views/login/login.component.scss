@@ -1,0 +1,22 @@
+@import "../../../variables";
+
+.welcome {
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: initial !important;
+}
+
+form {
+    margin: .5rem auto;
+    width: 80%;
+
+    * {
+        font-size: 1.25rem;
+    }
+}
+
+input {
+    text-align: center;
+}
