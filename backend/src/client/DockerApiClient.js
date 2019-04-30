@@ -50,6 +50,13 @@ class DockerApiClient {
     })
   }
 
+  getContainerStats(containerName) {
+    return this.request({
+      method: 'GET',
+      path: `/containers/${containerName}/stats?stream=false`
+    })
+  }
+
   createContainer(imageName, containerName) {
     /*
       For some reason, Docker API requires a string as body, but Content-Type: application/json for this resource
@@ -88,6 +95,13 @@ class DockerApiClient {
     return this.request({
       method: 'DELETE',
       path: `/containers/${containerName}`
+    })
+  }
+
+  containerStats(containerName) {
+    return this.request({
+      method: 'GET',
+      path: `/containers/${containerName}/stats`
     })
   }
 

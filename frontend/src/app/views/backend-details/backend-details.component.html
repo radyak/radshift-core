@@ -11,13 +11,13 @@
   <section class="controls">
     <div class="d-flex justify-content-between align-items-center">
       <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
-        <fa name="arrow-circle-left" class="fa"></fa>
+        <fa name="angle-left" class="fa"></fa>
         Back
       </button>
       <button type="button" class="btn btn-lg btn-outline-secondary"
         *ngIf="backend.entry && backend.status === 'running'" (click)="open()">
         Open
-        <fa name="arrow-circle-right" class="fa"></fa>
+        <fa name="angle-right " class="fa"></fa>
       </button>
     </div>
   </section>
@@ -58,6 +58,22 @@
       <tr>
         <td>Description:</td>
         <td>{{ backend.description }}</td>
+      </tr>
+      <tr>
+        <td>CPU:</td>
+        <td>
+          <span *ngIf="isLoading">...</span>
+          <span *ngIf="!isLoading && metrics">{{ metrics.cpuPercentate | number:'1.2-2' }} %</span>
+          <span *ngIf="!isLoading && !metrics">n/a</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Memory:</td>
+        <td>
+          <span *ngIf="isLoading">...</span>
+          <span *ngIf="!isLoading && metrics">{{ metrics.memoryPercentate | number:'1.2-2' }} %</span>
+          <span *ngIf="!isLoading && !metrics">n/a</span>
+        </td>
       </tr>
     </table>
   </section>

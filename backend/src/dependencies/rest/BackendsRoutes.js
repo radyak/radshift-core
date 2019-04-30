@@ -33,6 +33,24 @@ Configuration('BackendsRoutes', (BackendsService) => {
     })
   })
 
+  router.get('/:name/metrics', (request, response) => {
+    const name = request.params.name
+    BackendsService.metrics(name).then((metrics) => {
+      if (!metrics) {
+        response.status(404).send({
+          message: `Backend ${name} not found`
+        })
+        return
+      }
+      response.status(200).send(metrics)
+    }).catch((err) => {
+      response.status(500).send({
+        message: `An error occurred`,
+        error: err
+      })
+    })
+  })
+
   router.delete('/:name', (request, response) => {
     const name = request.params.name
     BackendsService.remove(name).then((result) => {

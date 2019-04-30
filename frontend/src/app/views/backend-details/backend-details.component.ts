@@ -5,6 +5,7 @@ import { BackendsService } from '../../services/backends.service';
 import { Backend } from '../../model/Backend';
 import { ModalService } from '../../components/modal.service';
 import { ModalOptions } from 'src/app/components/modal-options';
+import { Metrics } from 'src/app/model/Metrics';
 
 
 const indicatorMap = {
@@ -21,12 +22,15 @@ const indicatorMap = {
 export class BackendDetailsComponent implements OnInit {
 
   // TODO: Remove default
-  public backend: any = {
-    "status": "running",
-    "name": "test-app",
-    "description": "Some sample app",
-    "label": "Test-App"
+  public backend: Backend = {
+    status: "running",
+    name: "test-app",
+    description: "Some sample app",
+    label: "Test-App",
+    image: "testapp",
+    isInstalled: true
   }
+  public metrics: Metrics;
 
   public isLoading: boolean = false;
 
@@ -44,9 +48,14 @@ export class BackendDetailsComponent implements OnInit {
   update(): void {
     this.isLoading = true;
     let name: string = this.route.snapshot.params['name']
+    
     this.backendsService.getBackend(name).subscribe((backend: Backend) => {
-      this.backend = backend
+      this.backend = backend;
       this.isLoading = false;
+    })
+    
+    this.backendsService.getBackendMetrics(name).subscribe((metrics: Metrics) => {
+      this.metrics = metrics;
     })
   }
 
@@ -60,6 +69,7 @@ export class BackendDetailsComponent implements OnInit {
     this.backendsService.stopBackend(name).subscribe((backend: Backend) => {
       this.backend = backend
       this.isLoading = false;
+      this.metrics = null;
     })
   }
 
@@ -69,6 +79,7 @@ export class BackendDetailsComponent implements OnInit {
     this.backendsService.startBackend(name).subscribe((backend: Backend) => {
       this.backend = backend
       this.isLoading = false;
+      this.update();
     })
   }
 
@@ -91,8 +102,8 @@ export class BackendDetailsComponent implements OnInit {
     this.isLoading = true;
     let name: string = this.route.snapshot.params['name']
     this.backendsService.removeBackend(name).subscribe((backend: Backend) => {
-      this.router.navigate(['dashboard']);
       this.isLoading = false;
+      this.router.navigate(['dashboard']);
     })
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { Backend } from '../model/Backend';
+import { Metrics } from '../model/Metrics';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class BackendsService {
 
   getBackend(name: string): Observable<Backend> {
     return this.http.get<Backend>(`/api/backends/${name}`)
+  }
+
+  getBackendMetrics(name: string): Observable<Metrics> {
+    return this.http.get<Metrics>(`/api/backends/${name}/metrics`)
   }
 
   stopBackend(name: string): Observable<Backend> {

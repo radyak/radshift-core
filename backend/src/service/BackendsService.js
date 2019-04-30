@@ -23,6 +23,31 @@ class BackendsService {
         })
     }
 
+    metrics(backendName) {
+        var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
+
+        var containerName = backendConfig.host
+
+        return this.DockerApiClient.getContainerStats(containerName).then((res) => {
+
+            if (res.statusCode == 404) {
+                return null
+            }
+            if (res.statusCode >= 500) {
+                throw new Error({
+                    message: `An error occurred`,
+                    response: res
+                })
+            }
+            
+            return this.mapMetrics(res.body)
+
+        }).catch((err) => {
+            console.log(`Error while retrieving details of backend ${backendName}:`, err)
+            throw err
+        })
+    }
+
     get(backendName) {
         var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
 
@@ -188,6 +213,23 @@ class BackendsService {
             
 
 
+    mapMetrics(raw) {
+        var metrics = JSON.parse(raw)
+
+        var cpuDelta = metrics.cpu_stats.cpu_usage.total_usage -  metrics.precpu_stats.cpu_usage.total_usage
+        var systemDelta = metrics.cpu_stats.system_cpu_usage - metrics.precpu_stats.system_cpu_usage
+        var cpuUsage = cpuDelta / systemDelta * 100
+
+        return {
+            cpuPercentate: cpuUsage,
+            memoryUsed: metrics.memory_stats.usage,
+            memoryUsedMax: metrics.memory_stats.max_usage,
+            memoryLimit: metrics.memory_stats.limit,
+            memoryPercentate: metrics.memory_stats.usage / metrics.memory_stats.limit * 100,
+            networkInput: metrics.networks.eth0.rx_bytes,
+            networkOutput: metrics.networks.eth0.tx_bytes,
+        }
+    }
 
     mapContainerData(raw) {
         raw = JSON.parse(raw)
