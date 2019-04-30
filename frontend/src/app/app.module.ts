@@ -18,6 +18,11 @@ import { ModalComponent } from './components/modal/modal.component';
 import { StoreItemComponent } from './components/store-item/store-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {
+  ToastrModule,
+  ToastNoAnimation,
+  ToastNoAnimationModule
+} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,8 @@ import { environment } from '../environments/environment';
     NgbModule,
     AngularFontAwesomeModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ToastNoAnimationModule.forRoot(),
   ],
   providers: [
     BackendsService

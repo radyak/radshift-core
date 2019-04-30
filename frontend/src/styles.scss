@@ -112,3 +112,23 @@ a {
 .modal-footer {
   border-top: none !important;
 }
+
+.toast-container {
+  z-index: 100 !important;
+  .ngx-toastr {
+    box-shadow: none !important;
+
+    &.toast-success {
+      background-color: $primary;
+    }
+    &.toast-info {
+      background-color: $blue;
+    }
+    &.toast-warning {
+      background-color: $orange;
+    }
+    &.toast-error {
+      background-color: $danger;
+    }
+  }
+}
