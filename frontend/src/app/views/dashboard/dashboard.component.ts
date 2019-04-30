@@ -13,8 +13,11 @@ export class DashboardComponent implements OnInit {
 
   public backends: Backend[];
 
-  constructor(private router: Router, private backendsService: BackendsService, private notification: NotificationService) {
-  }
+  constructor(
+    private router: Router,
+    private backendsService: BackendsService,
+    private notification: NotificationService
+  ) { }
 
   ngOnInit() {
     this.update()
@@ -23,7 +26,9 @@ export class DashboardComponent implements OnInit {
   update() {
     this.backendsService.getBackends().subscribe((backends: Backend[]) => {
       this.backends = backends
-    })
+    }, (e: any) => {
+      this.notification.error('Unable to load backends')
+    });
   }
 
   showDetails(backend) {
