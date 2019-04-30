@@ -23,6 +23,7 @@ import {
   ToastNoAnimation,
   ToastNoAnimationModule
 } from 'ngx-toastr';
+import { IndicatorComponent } from './components/indicator/indicator.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {
     BackendDetailsComponent,
     LoadingBarComponent,
     ModalComponent,
-    StoreItemComponent
+    StoreItemComponent,
+    IndicatorComponent
   ],
   imports: [
     BrowserModule,

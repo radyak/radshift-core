@@ -8,51 +8,57 @@
 
   <loading-bar [isLoading]="isLoading"></loading-bar>
 
-  <section>
+  <section class="controls">
     <div class="d-flex justify-content-between align-items-center">
+      <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
+        <fa name="arrow-circle-left" class="fa"></fa>
+        Back
+      </button>
+      <button type="button" class="btn btn-lg btn-outline-secondary"
+        *ngIf="backend.entry && backend.status === 'running'" (click)="open()">
+        Open
+        <fa name="arrow-circle-right" class="fa"></fa>
+      </button>
+    </div>
+  </section>
 
+  <section class="controls">
+    <div class="d-flex justify-content-between align-items-center">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
-          <fa name="arrow-circle-left" class="fa"></fa>
-          Back
-        </button>
-        <button type="button" class="btn btn-lg btn-outline-secondary"  *ngIf="backend.entry && backend.status === 'running'" (click)="open()">
-          <fa name="arrow-circle-right" class="fa"></fa>
-          Open
-        </button>
-        <!-- <a *ngIf="backend.entry && backend.status === 'running'" class="btn btn-lg btn-outline-secondary" href="{{ backend.entry }}">Open</a> -->
-      </div>
-      
-      <div class="btn-group" role="group">
-        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="isRunning()" (click)="stop()">
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary"
+          *ngIf="isRunning()" (click)="stop()">
           <fa name="stop" class="fa"></fa>
           Stop
         </button>
-        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary" *ngIf="!isRunning()" (click)="start()">
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary"
+          *ngIf="!isRunning()" (click)="start()">
           <fa name="play" class="fa"></fa>
           Start
         </button>
-        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger" (click)="removeDialog()">
+        <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger"
+          (click)="removeDialog()">
           <fa name="trash" class="fa"></fa>
-          Remove
+          Delete
         </button>
       </div>
     </div>
   </section>
-  
+
   <section>
     <h2>
       Summary
     </h2>
     <table class="table">
-        <tr>
-          <td>State:</td>
-          <td>{{ backend.status }}</td>
-        </tr>
-        <tr>
-          <td>Description:</td>
-          <td>{{ backend.description }}</td>
-        </tr>
+      <tr>
+        <td>State:</td>
+        <td>
+          <indicator [state]="backend.status"></indicator>
+          {{ backend.status }}</td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td>{{ backend.description }}</td>
+      </tr>
     </table>
   </section>
 </div>
