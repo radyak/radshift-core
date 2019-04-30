@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.notification.info('Hello world!', 'Toastr fun!');
     this.update()
   }
 
