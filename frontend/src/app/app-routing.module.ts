@@ -4,12 +4,13 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { StoreComponent } from './views/store/store.component';
 import { BackendDetailsComponent } from './views/backend-details/backend-details.component';
 import { LoginComponent } from './views/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'store', component: StoreComponent},
-  {path: 'backend/:name', component: BackendDetailsComponent},
+  {path: '', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'store', component: StoreComponent, canActivate: [AuthGuard]},
+  {path: 'backend/:name', component: BackendDetailsComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent}
 ];
 

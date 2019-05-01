@@ -31,6 +31,7 @@ import {
   ToastNoAnimation,
   ToastNoAnimationModule
 } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ToastNoAnimationModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [
     BackendsService
