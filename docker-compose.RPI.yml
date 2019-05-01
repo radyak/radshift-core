@@ -17,7 +17,7 @@ services:
       - CONF_DIR=/usr/src/conf
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
-      - MONGO_DATABASE=auth
+      - MONGO_DATABASE=core
 
   testapp:
     container_name: testapp

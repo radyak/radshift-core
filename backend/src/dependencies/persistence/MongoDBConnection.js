@@ -5,7 +5,7 @@ Provider('MongoDBConnection', (config) => {
     // TODO: fetch props from config, not (only) from Env
     const HOST = process.env.MONGO_HOST || 'localhost'
     const PORT = process.env.MONGO_PORT || '27017'
-    const DATABASE = process.env.MONGO_DATABASE || 'auth'
+    const DATABASE = process.env.MONGO_DATABASE || 'core'
 
     var connectString = `mongodb://${HOST}:${PORT}/${DATABASE}`
 
