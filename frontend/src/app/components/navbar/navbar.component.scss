@@ -23,8 +23,14 @@
     border-width: 2px;
 }
 
-.navbar-brand > * {
-    margin-right: 15px;
+.navbar-brand {
+    & > * {
+        margin-right: 15px;
+    }
+    
+    b {
+        margin-right: 0 !important;
+    }
 }
 
 .navbar-brand {

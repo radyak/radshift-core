@@ -220,15 +220,20 @@ class BackendsService {
         var systemDelta = metrics.cpu_stats.system_cpu_usage - metrics.precpu_stats.system_cpu_usage
         var cpuUsage = cpuDelta / systemDelta * 100
 
-        return {
+        var result = {
             cpuPercentate: cpuUsage,
             memoryUsed: metrics.memory_stats.usage,
             memoryUsedMax: metrics.memory_stats.max_usage,
             memoryLimit: metrics.memory_stats.limit,
-            memoryPercentate: metrics.memory_stats.usage / metrics.memory_stats.limit * 100,
-            networkInput: metrics.networks.eth0.rx_bytes,
-            networkOutput: metrics.networks.eth0.tx_bytes,
+            memoryPercentate: metrics.memory_stats.usage / metrics.memory_stats.limit * 100
         }
+
+        if (metrics && metrics.networks && metrics.networks.eth0) {
+            result.networkInput = metrics.networks.eth0.rx_bytes;
+            result.networkOutput = metrics.networks.eth0.tx_bytes;
+        }
+
+        return result;
     }
 
     mapContainerData(raw) {
