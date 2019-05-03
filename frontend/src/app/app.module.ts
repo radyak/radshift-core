@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +32,7 @@ import {
   ToastNoAnimationModule
 } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    BackendsService
+    BackendsService,
+    {
+      multi: true,
+      useClass: AuthInterceptor,
+      provide: HTTP_INTERCEPTORS
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

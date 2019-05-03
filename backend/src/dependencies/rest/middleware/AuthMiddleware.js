@@ -1,4 +1,4 @@
-const jwt = require('express-jwt');
+const jwt = require('express-jwt')
 
 
 // TODO: Configurize
@@ -16,41 +16,21 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
             return authorization.split(' ')[1]
         }
         return null
-    };
-
-    const getTokenFromCookie = (req) => {
-        
-        const COOKIE_PREFIX = 'Authorization='
-
-        if (!req.headers.cookie) {
-            return null
-        }
-        var rawCookie = req.headers.cookie
-                .split(/\s*;\s*/g)
-                .filter((cookie => cookie.indexOf(COOKIE_PREFIX) === 0))[0]
-
-        if (!rawCookie) {
-            return null
-        }
-        var cookie = rawCookie.replace(COOKIE_PREFIX, '')
-        return cookie
-    };
-
-    const getToken = getTokenFromCookie
+    }
 
     const auth = {
         required: jwt({
             secret: JWT_SECRET,
             userProperty: 'payload',
-            getToken: getToken,
+            getToken: getTokenFromHeaders,
         }),
         optional: jwt({
             secret: JWT_SECRET,
             userProperty: 'payload',
-            getToken: getToken,
+            getToken: getTokenFromHeaders,
             credentialsRequired: false,
         }),
-    };
+    }
 
     return auth
 })

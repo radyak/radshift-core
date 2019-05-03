@@ -1,6 +1,5 @@
 var express = require('express')
 var app = express()
-// var session = require('express-session')
 var bodyParser = require('body-parser')
 
 Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes) => {
@@ -16,14 +15,6 @@ Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, Backen
   app.use('/api/isalive', function (req, res) {
     res.status(204).end()
   })
-
-  // TODO: Configurize
-  // app.use(session({
-  //   secret: 'abc123',
-  //   cookie: { maxAge: 60000 },
-  //   resave: false,
-  //   saveUninitialized: false
-  // }));
 
   app.use('/api/admin', bodyParser.json(), AdminRoutes)
   app.use('/api/backends', bodyParser.json(), BackendsRoutes)

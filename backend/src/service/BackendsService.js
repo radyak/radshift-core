@@ -229,11 +229,11 @@ class BackendsService {
         }
 
         if (metrics && metrics.networks && metrics.networks.eth0) {
-            result.networkInput = metrics.networks.eth0.rx_bytes;
-            result.networkOutput = metrics.networks.eth0.tx_bytes;
+            result.networkInput = metrics.networks.eth0.rx_bytes
+            result.networkOutput = metrics.networks.eth0.tx_bytes
         }
 
-        return result;
+        return result
     }
 
     mapContainerData(raw) {

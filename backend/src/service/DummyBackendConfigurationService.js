@@ -7,11 +7,11 @@ class DummyBackendConfigurationService {
     }
 
     getBackendConfigurations() {
-        return config;
+        return config
     }
 
     getBackendConfiguration(name) {
-        return config[name];
+        return config[name]
     }
 
     registerBackend(name, config) {

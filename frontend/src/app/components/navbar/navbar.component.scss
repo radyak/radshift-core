@@ -49,6 +49,7 @@
     font-size: 1.2rem;
     // color: #343a40 !important;
     text-decoration: none !important;
+    cursor: pointer;
 
     &:hover {
         color: #fff !important;
@@ -57,7 +58,10 @@
         color: #fff !important;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
+}
 
+.user-label {
+    font-size: 1.5rem !important;
 }
 
 logo {

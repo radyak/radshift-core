@@ -1,5 +1,5 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
 
 Configuration('AuthConfiguration', (User) => {
 
@@ -19,6 +19,6 @@ Configuration('AuthConfiguration', (User) => {
 
                 return done(null, user)
             }).catch(done)
-    }));
+    }))
 
 })

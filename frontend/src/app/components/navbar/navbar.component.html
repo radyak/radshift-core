@@ -1,12 +1,12 @@
-<span [ngClass]="{ collapsed: isCollapsed }">
+<span [ngClass]="{ collapsed: isCollapsed }" *ngIf="isLoggedIn | async">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#">
       <logo></logo>
       <b>Rad</b>Shift
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-      (click)="toggle()" [attr.aria-expanded]="!isCollapsed">
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" (click)="toggle()"
+      [attr.aria-expanded]="!isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse" [ngClass]="{ show: !isCollapsed }">
@@ -21,6 +21,21 @@
           <a routerLink="/store" (click)="collapse()" class="nav-link" routerLinkActive="active">
             <fa name="shopping-cart" class="fa"></fa>
             App Store
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li role="separator" class="dropdown-divider"></li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapse(); profile()">
+            <fa name="user-circle" class="fa"></fa>
+            {{ username | async }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="collapse(); logout()">
+            Logout
+            <fa name="sign-out " class="fa"></fa>
           </a>
         </li>
       </ul>
