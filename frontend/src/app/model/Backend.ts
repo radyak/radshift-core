@@ -6,5 +6,6 @@ export interface Backend {
     label: string;
     image: string;
     isInstalled: boolean;
+    entry?: string;
     
 }

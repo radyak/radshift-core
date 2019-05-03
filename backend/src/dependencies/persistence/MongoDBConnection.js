@@ -14,7 +14,7 @@ Provider('MongoDBConnection', (config) => {
       .then(
         res => {
           console.log(`Successfully connected to ${connectString}`)
-          resolve(res)
+          resolve(mongoose)
         },
         err => {
           console.error(`Unable to connected to ${connectString}`, err)
