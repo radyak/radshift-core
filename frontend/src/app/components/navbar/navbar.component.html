@@ -1,4 +1,4 @@
-<span [ngClass]="{ collapsed: isCollapsed }" *ngIf="isLoggedIn | async">
+<span [ngClass]="{ collapsed: isCollapsed }" *ngIf="auth">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#">
       <logo></logo>
@@ -24,18 +24,19 @@
           </a>
         </li>
       </ul>
+
       <ul class="navbar-nav">
         <li role="separator" class="dropdown-divider"></li>
         <li class="nav-item">
           <a class="nav-link" (click)="collapse(); profile()">
             <fa name="user-circle" class="fa"></fa>
-            {{ username | async }}
+            {{ auth.name }}
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" (click)="collapse(); logout()">
-            Logout
+          <a class="nav-link logout" (click)="collapse(); logout()">
             <fa name="sign-out " class="fa"></fa>
+            Logout
           </a>
         </li>
       </ul>

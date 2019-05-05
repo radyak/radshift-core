@@ -58,10 +58,28 @@
         color: #fff !important;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
+
+    &.profile {
+        font-weight: bold;
+    }
+
+    &.logout {
+        color: $danger !important;
+
+        &:hover,
+        &:active {
+            text-shadow: 0 0 5px $danger;
+        }
+    }
+}
+
+.dropdown-divider {
+    margin-top: 2rem !important;
 }
 
 .user-label {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 logo {

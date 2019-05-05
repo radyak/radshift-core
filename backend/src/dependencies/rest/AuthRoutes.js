@@ -42,9 +42,7 @@ Configuration('AuthRoutes', (User, AuthMiddleware, AuthService) => {
             if (passportUser) {
                 const token = AuthService.generateJWT(passportUser)
                 return res.status(200).send({
-                    username: passportUser.username,
-                    token: token,
-                    expiresIn: 60000,
+                    token: token
                 })
             }
 

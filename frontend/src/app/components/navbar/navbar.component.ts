@@ -10,14 +10,15 @@ import { Observable } from 'rxjs';
 export class NavbarComponent implements OnInit {
 
   isCollapsed = true;
-  username: Observable<String>;
-  isLoggedIn: Observable<boolean>;
+  auth: Observable<any>;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
-    this.username = this.authService.userName$;
-    this.isLoggedIn = this.authService.loggedIn$;
+    this.authService.getAuthentication().subscribe(auth => {
+      this.auth = auth;
+    });
   }
 
   toggle() {
