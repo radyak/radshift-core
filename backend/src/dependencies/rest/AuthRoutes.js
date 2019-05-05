@@ -1,29 +1,13 @@
-const mongoose = require('mongoose')
 const passport = require('passport')
+const express = require('express')
+const router = express.Router()
 
-var express = require('express')
-var router = express.Router()
-
-Configuration('AuthRoutes', (User, AuthMiddleware, AuthService) => {
-
-    router.post('/register', AuthMiddleware.optional, (req, res) => {
-        const registration = req.body
-
-        // TODO: extend registration
-
-        if (!registration.password) {
-            return res.status(400).json().send()
-        }                
-        const user = new User(registration)
-        user.setPassword(registration.password)
-
-        return user.save()
-                .then(() => res.status(204).send())
-                .catch(err => res.status(400).json(err).send())
-    })
-
+Configuration('AuthRoutes', (AuthMiddleware, AuthService) => {
 
     router.post('/login', AuthMiddleware.optional, (req, res, next) => {
+
+        // TODO: Refactor to AuthService (?)
+
         const user = req.body
 
         if (!user.username || !user.password) {
@@ -48,6 +32,10 @@ Configuration('AuthRoutes', (User, AuthMiddleware, AuthService) => {
 
             return res.status(401).send()
         })(req, res, next)
+    })
+
+    router.use('/*', (req, res, next) => {
+        res.status(404).send()
     })
 
     return router

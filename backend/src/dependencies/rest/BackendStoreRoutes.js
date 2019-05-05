@@ -16,5 +16,9 @@ Configuration('BackendStoreRoutes', (BackendsService) => {
     })
   })
 
+  router.use('/*', (req, res, next) => {
+      res.status(404).send()
+  })
+
   return router
 })
