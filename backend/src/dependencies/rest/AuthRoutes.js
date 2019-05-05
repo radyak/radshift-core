@@ -2,9 +2,9 @@ const passport = require('passport')
 const express = require('express')
 const router = express.Router()
 
-Configuration('AuthRoutes', (AuthMiddleware, AuthService) => {
+Configuration('AuthRoutes', (AuthService) => {
 
-    router.post('/login', AuthMiddleware.optional, (req, res, next) => {
+    router.post('/login', (req, res, next) => {
 
         // TODO: Refactor to AuthService (?)
 

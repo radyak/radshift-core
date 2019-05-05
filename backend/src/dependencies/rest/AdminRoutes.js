@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-Configuration('AdminRoutes', (ConfigService, Users, AuthService) => {
+Configuration('AdminRoutes', (ConfigService, Users, AuthService, AuthMiddleware) => {
   
   router.get('/config', (req, res) => {
     ConfigService.getConfigSecure().then(config => {

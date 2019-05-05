@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 
-Configuration('BackendsRoutes', (BackendsService) => {
+Configuration('BackendsRoutes', (AuthMiddleware, BackendsService) => {
 
   router.get('/', (request, response) => {
     BackendsService.getAll().then((backends) => {

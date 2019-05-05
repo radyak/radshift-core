@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
 
-Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes) => {
+Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, AuthMiddleware) => {
 
   app.use(
     bodyParser.urlencoded({
@@ -16,9 +16,9 @@ Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, Backen
     res.status(204).end()
   })
 
-  app.use('/api/admin', bodyParser.json(), AdminRoutes)
-  app.use('/api/backends', bodyParser.json(), BackendsRoutes)
-  app.use('/api/store', bodyParser.json(), BackendStoreRoutes)
+  app.use('/api/admin', bodyParser.json(), AuthMiddleware.hasPermission('admin'), AdminRoutes)
+  app.use('/api/backends', bodyParser.json(), AuthMiddleware.authenticated, BackendsRoutes)
+  app.use('/api/store', bodyParser.json(), AuthMiddleware.authenticated, BackendStoreRoutes)
   app.use('/api/auth', bodyParser.json(), AuthRoutes)
 
   app.use('/api', ApiProxyRoutes)
