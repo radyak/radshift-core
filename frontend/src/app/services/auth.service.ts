@@ -6,6 +6,7 @@ import { NotificationService } from '../components/notification.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Authentication } from '../model/Authentication';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { map, take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -45,7 +46,25 @@ export class AuthService {
   }
 
   public getAuthentication(): Observable<any> {
-    return this.auth$;
+    return this.auth$.asObservable();
+  }
+
+  public isAuthenticated(): Observable<boolean> {
+    return this.getAuthentication().pipe(
+      take(1),
+      map((auth: any) => {
+        return !!auth;
+      })
+    );
+  }
+
+  public hasRole(role: string): Observable<boolean> {
+    return this.getAuthentication().pipe(
+      take(1),
+      map((auth: any) => {
+        return auth && auth.scope.split(' ').indexOf(role) !== -1;
+      })
+    );
   }
 
   private readAuthentication(): String {
