@@ -11,13 +11,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse" [ngClass]="{ show: !isCollapsed }">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="canNavigate('dashboard') | async">
           <a routerLink="/dashboard" (click)="collapse()" class="nav-link" routerLinkActive="active">
             <fa name="th-list" class="fa"></fa>
             Dashboard
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="canNavigate('store') | async">
           <a routerLink="/store" (click)="collapse()" class="nav-link" routerLinkActive="active">
             <fa name="shopping-cart" class="fa"></fa>
             App Store

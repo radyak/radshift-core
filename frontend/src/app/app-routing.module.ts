@@ -5,13 +5,17 @@ import { StoreComponent } from './views/store/store.component';
 import { BackendDetailsComponent } from './views/backend-details/backend-details.component';
 import { LoginComponent } from './views/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-import { PermissionGuard } from './guards/permission.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard]
+    // example for PermissionGuard/Authorization:
+    // canActivate: [AuthGuard, PermissionGuard],
+    // data: { 
+    //   requiredRole: 'admin'
+    // }
   },
   {
     path: 'dashboard',
@@ -21,10 +25,7 @@ const routes: Routes = [
   {
     path: 'store',
     component: StoreComponent,
-    canActivate: [AuthGuard, PermissionGuard],
-    data: { 
-      requiredRole: 'admin'
-    }
+    canActivate: [AuthGuard]
   },
   {
     path: 'backend/:name',
@@ -36,6 +37,7 @@ const routes: Routes = [
     component: LoginComponent
   }
 ];
+export { routes };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
