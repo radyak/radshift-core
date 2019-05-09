@@ -21,7 +21,7 @@ Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, Backen
   app.use('/api/store', bodyParser.json(), AuthMiddleware.authenticated, BackendStoreRoutes)
   app.use('/api/auth', bodyParser.json(), AuthRoutes)
 
-  app.use('/api', ApiProxyRoutes)
+  app.use('/api', AuthMiddleware.backendForwarding, ApiProxyRoutes)
 
   app.use('/', express.static('/usr/src/frontend/dist/management'))
 

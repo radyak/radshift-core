@@ -20,7 +20,6 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
         return null
     }
 
-
     const authentication = jwt({
         secret: JWT_SECRET,
         userProperty: TOKEN_PROPERTY,
@@ -33,6 +32,41 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
         getToken: getTokenFromHeaders,
         credentialsRequired: false,
     })
+
+    /*
+        There are three possibilities to provide AuthN & AuthZ for backends:
+            1. Forward the JWT. Backends can trust it and simply decode it since it has already been verified by authenticationOptional
+            2. Forward the user details from the decoded JWT. Might be more unclean but simpler for testing
+            3. Let backends specify AuthN & AuthZ requirements in their backendConfig for the core to check them, e.g.
+                ...
+                "myapp": {
+                    "securityRules": [
+                        {
+                            path: "/some/path/**",
+                            authenticated: true,
+                            permissions: [
+                                "some",
+                                "permissions"
+                            ]
+                        }
+                    ]
+                }
+    */
+    const backendForwarding = (req, res, next) => {
+        if (!req[TOKEN_PROPERTY]) {
+            return
+        }
+        req.headers['X-User'] = req.user.name
+        req.headers['X-Scope'] = req.user.scope
+    }
+
+    const errorHandler = function(err, req, res, next) {
+        console.log(`err.name = ${err.name}`)
+        if (err.name === 'UnauthorizedError') {
+            return res.status(401).send()
+        }
+        next(req, res, next)
+    }
 
     const authorization = (permission) => {
         return [
@@ -50,15 +84,27 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
                         error: err
                     })
                 }
-            }
+            },
+            errorHandler
         ]
     }
     
 
     const auth = {
-        authenticated: authentication,
-        authenticatedOptional: authenticationOptional,
-        hasPermission: authorization
+        authenticated: [
+            authentication,
+            errorHandler
+        ],
+        authenticatedOptional: [
+            authenticationOptional,
+            errorHandler
+        ],
+        hasPermission: authorization,
+        backendForwarding: [
+            authenticationOptional,
+            backendForwarding,
+            errorHandler
+        ]
     }
 
     return auth
@@ -74,7 +120,8 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
     return {
         authenticated: mockMiddleware,
         authenticatedOptional: mockMiddleware,
-        hasPermission: (permission) => mockMiddleware
+        hasPermission: (permission) => mockMiddleware,
+        backendForwarding: mockMiddleware
     }
 
 }, 'no-auth')

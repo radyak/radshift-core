@@ -61,8 +61,8 @@ tests.continuous:
 	# npm test -- -w --grep 'lists files recursively'
 
 run.dev.dependencies:
-	docker-compose stop mongodb radhub
-	docker-compose up -d mongodb radhub
+	docker-compose stop mongodb radhub testapp
+	docker-compose up -d mongodb radhub testapp
 
 run.dev.backend: run.dev.dependencies
 	cd backend; npm run watch
