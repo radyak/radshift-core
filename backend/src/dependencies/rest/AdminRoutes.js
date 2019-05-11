@@ -9,6 +9,13 @@ Configuration('AdminRoutes', (ConfigService, Users, AuthService, AuthMiddleware)
     })
   })
   
+  router.post('/config', (req, res) => {
+    // ConfigService.getConfigSecure().then(config => {
+    //   res.status(200).send(config)
+    // })
+    res.status(200).send()
+  })
+  
   router.get('/users', (req, res) => {
     Users.find((err, users) => {
       res.status(200).send(users)

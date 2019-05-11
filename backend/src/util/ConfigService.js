@@ -65,7 +65,7 @@ function ConfigService (configFile, keyProvider) {
       .then(config => {
         ObjectUtil.traverse(config, (key, val, owner) => {
           if (/password/i.test(key)) {
-            owner[key] = '******'
+            owner[key] = ''
           }
         })
         return config

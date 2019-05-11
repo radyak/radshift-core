@@ -22,11 +22,11 @@ class DynDnsUpdateService {
    */
   constructor (config) {
     this.config = {
-      username: config.dynDns.username,
-      password: config.dynDns.password,
-      dynDnsHost: config.dynDns.dynDnsHost,
+      username: config.dynDnsProviderUsername,
+      password: config.dynDnsProviderPassword,
+      dynDnsHost: config.dynDnsProviderHost,
       domain: config.hostDomain,
-      updateIntervalMinutes: config.dynDns.updateIntervalMinutes || 5
+      updateIntervalMinutes: config.dynDnsUpdateIntervalMinutes || 5
     }
     SimpleParamCheck.checkForFalsy(this.config)
   }

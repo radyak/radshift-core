@@ -5,7 +5,7 @@ Provider('Server', (config, App) => {
     version: 'draft-11',
     server: 'https://acme-v02.api.letsencrypt.org/directory',
     configDir: '~/.config/acme/',
-    email: config.admin.email,
+    email: config.adminEmail,
     approvedDomains: [config.hostDomain],
     agreeTos: true,
     app: App,
