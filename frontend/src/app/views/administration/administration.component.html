@@ -1,0 +1,75 @@
+<div class="container administration">
+
+  <h2>
+    <fa name="cogs" class="fa"></fa>
+    Administration
+  </h2>
+
+  <form (ngSubmit)="submit()">
+
+
+    <h3>Host</h3>
+    
+    <div class="form-group row">
+      <label class="col-lg-2 col-form-label">
+        Domain
+        <label-help text="Your RadShift host registers itself under this domain"></label-help>
+      </label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="hostDomain" [(ngModel)]="config.hostDomain" name="hostDomain">
+      </div>
+    </div>
+
+
+    <h3>Admin</h3>
+
+    <div class="form-group row">
+      <label for="adminEmail" class="col-lg-2 col-form-label">Email</label>
+      <div class="col-lg-10">
+        <input type="email" class="form-control" id="adminEmail" [(ngModel)]="config.adminEmail" name="adminEmail">
+      </div>
+    </div>
+
+
+    <h3>DynDNS</h3>
+
+    <div class="form-group row">
+      <label for="dynDnsProviderUsername" class="col-lg-2 col-form-label">Username</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="dynDnsProviderUsername" [(ngModel)]="config.dynDnsProviderUsername" name="dynDnsProviderUsername">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="dynDnsProviderPassword" class="col-lg-2 col-form-label">Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="dynDnsProviderPassword" [(ngModel)]="config.dynDnsProviderPassword" name="dynDnsProviderPassword">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="dynDnsProviderHost" class="col-lg-2 col-form-label">Provider Host</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="dynDnsProviderHost" [(ngModel)]="config.dynDnsProviderHost" name="dynDnsProviderHost">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="dynDnsUpdateIntervalMinutes" class="col-lg-2 col-form-label">Update Interval (Minutes)</label>
+      <div class="col-lg-10">
+        <input type="number" class="form-control" id="dynDnsUpdateIntervalMinutes" [(ngModel)]="config.dynDnsUpdateIntervalMinutes" name="dynDnsUpdateIntervalMinutes">
+      </div>
+    </div>
+    
+    <!-- <div class="form-check">
+      <input type="checkbox" class="form-check" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> -->
+    
+    <button type="submit" class="btn btn-primary pull-right">
+      <fa name="save" class="fa"></fa>
+      Save
+    </button>
+  </form>
+
+</div>

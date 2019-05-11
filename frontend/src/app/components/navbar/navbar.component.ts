@@ -26,7 +26,11 @@ export class NavbarComponent implements OnInit {
     let route = routes.filter(route => {
       return route.path === path
     })[0];
-    return route && route.data && route.data.requiredRole && this.authService.hasRole(route.data.requiredRole);
+    if (!route) {
+      console.error(`Could not find route config for ${path}`);
+    }
+    let requiredRole = route && route.data && route.data.requiredRole;
+    return this.authService.hasRole(requiredRole);
   }
 
   toggle() {

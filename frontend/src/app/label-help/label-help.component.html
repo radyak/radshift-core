@@ -1,0 +1,6 @@
+<span>
+  <fa name="question-circle" class="fa help-toggle" (click)="toggle()"></fa>
+  <small class="form-text text-muted help-text" [ngClass]="{'visible': isActive}">
+    {{ text }}
+  </small>
+</span>

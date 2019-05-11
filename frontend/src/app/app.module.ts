@@ -31,8 +31,12 @@ import {
   ToastNoAnimation,
   ToastNoAnimationModule
 } from 'ngx-toastr';
+// TODO: Remove, only used in login
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { AdministrationComponent } from './views/administration/administration.component';
+import { FormsModule } from '@angular/forms';
+import { LabelHelpComponent } from './label-help/label-help.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     ModalComponent,
     StoreItemComponent,
     IndicatorComponent,
-    LoginComponent
+    LoginComponent,
+    AdministrationComponent,
+    LabelHelpComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ToastNoAnimationModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     BackendsService,

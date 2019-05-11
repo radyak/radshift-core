@@ -42,8 +42,8 @@ run.x86: build.x86
 ## RPI
 
 deploy.rpi.config:
-	scp -P $(PORT) .env.conf $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.conf
-	scp -P $(PORT) .env.key $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.key
+	scp -P $(PORT) backend/.env.conf $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.conf
+	scp -P $(PORT) backend/.env.key $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.key
 
 deploy.rpi.cluster-config:
 	scp -P $(PORT) docker-compose.RPI.yml $(SSH_USER)@$(DOMAIN):docker-compose.yml

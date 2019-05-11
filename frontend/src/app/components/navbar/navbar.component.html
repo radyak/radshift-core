@@ -23,6 +23,12 @@
             App Store
           </a>
         </li>
+        <li class="nav-item" *ngIf="canNavigate('administration') | async">
+          <a routerLink="/administration" (click)="collapse()" class="nav-link" routerLinkActive="active">
+            <fa name="cogs" class="fa"></fa>
+            Administration
+          </a>
+        </li>
       </ul>
 
       <ul class="navbar-nav">

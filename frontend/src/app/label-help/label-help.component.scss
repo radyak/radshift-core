@@ -1,0 +1,12 @@
+.help-toggle {
+    float: right;
+    cursor: pointer;
+}
+
+.help-text {
+    display: none;
+
+    &.visible {
+        display: block;
+    }
+}

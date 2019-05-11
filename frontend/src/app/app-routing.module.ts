@@ -5,17 +5,22 @@ import { StoreComponent } from './views/store/store.component';
 import { BackendDetailsComponent } from './views/backend-details/backend-details.component';
 import { LoginComponent } from './views/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PermissionGuard } from './guards/permission.guard';
+import { AdministrationComponent } from './views/administration/administration.component';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     canActivate: [AuthGuard]
-    // example for PermissionGuard/Authorization:
-    // canActivate: [AuthGuard, PermissionGuard],
-    // data: { 
-    //   requiredRole: 'admin'
-    // }
+  },
+  {
+    path: 'administration',
+    component: AdministrationComponent,
+    canActivate: [AuthGuard, PermissionGuard],
+    data: {
+      requiredRole: 'admin'
+    }
   },
   {
     path: 'dashboard',

@@ -62,6 +62,9 @@ export class AuthService {
     return this.getAuthentication().pipe(
       take(1),
       map((auth: any) => {
+        if (!role) {
+          return true;
+        }
         return auth && auth.scope.split(' ').indexOf(role) !== -1;
       })
     );
