@@ -3,10 +3,20 @@ var CryptService = require('./CryptService')
 var ObjectUtil = require('./ObjectUtil')
 var deepmerge = require('deepmerge')
 
-function ConfigService (configFile, keyProvider) {
-  var configCache = null
+class ConfigService {
 
-  var isJson = function (string) {
+  constructor(configFile, keyProvider) {
+    this.configFile = configFile
+    this.keyProvider = keyProvider
+    this.configCache = null
+
+    // Encrypt config
+    this.addConfig({}).then(() => {
+      console.log('Using encrypted config')
+    })
+  }
+
+  isJson(string) {
     try {
       JSON.parse(string)
     } catch (e) {
@@ -15,16 +25,16 @@ function ConfigService (configFile, keyProvider) {
     return true
   }
 
-  var readConfig = function () {
+  readConfig () {
     return Promise.all([
-      FileIO.read(configFile),
-      keyProvider.get()
+      FileIO.read(this.configFile),
+      this.keyProvider.get()
     ]).then(values => {
       var configString = values[0].toString('utf8')
       var key = values[1].toString('utf8')
 
       // Content was not encrypted, parse directly
-      if (isJson(configString)) {
+      if (this.isJson(configString)) {
         return JSON.parse(configString)
       }
 
@@ -33,31 +43,31 @@ function ConfigService (configFile, keyProvider) {
         password: key
       })
       var decryptedConfigString = cryptService.decrypt(configString)
-      if (isJson(decryptedConfigString)) {
+      if (this.isJson(decryptedConfigString)) {
         return JSON.parse(decryptedConfigString)
       }
 
       // Unreadable, since content was neither unencrypted nor decryptable with provided key
-      throw new Error(`${configFile} is not JSON (${configString})`)
+      throw new Error(`${this.configFile} is not JSON (${configString})`)
     })
   }
 
-  this.getConfig = function (hidePasswords) {
+  getConfig() {
     var promise
-    if (configCache === null) {
-      promise = readConfig().then(config => {
-        configCache = config
-        return configCache
+    if (this.configCache === null) {
+      promise = this.readConfig().then(config => {
+        this.configCache = config
+        return this.configCache
       })
     } else {
       promise = new Promise((resolve, reject) => {
-        resolve(configCache)
+        resolve(this.configCache)
       })
     }
     return promise
   }
 
-  this.getConfigSecure = function () {
+  getConfigSecure() {
     return this.getConfig()
       .then(config => {
         return ObjectUtil.deepCopy(config)
@@ -72,25 +82,21 @@ function ConfigService (configFile, keyProvider) {
       })
   }
 
-  this.addConfig = function (subConfig) {
-    return Promise.all([this.getConfig(), keyProvider.get()]).then(
+  addConfig(subConfig) {
+    return Promise.all([this.getConfig(), this.keyProvider.get()]).then(
       values => {
         var config = values[0]
         var key = values[1].toString()
-        configCache = deepmerge(config, subConfig)
+        this.configCache = deepmerge(config, subConfig)
         var cryptService = new CryptService({
           password: key
         })
-        var encryptedResult = cryptService.encrypt(JSON.stringify(configCache))
-        return FileIO.write(configFile, encryptedResult)
+        var encryptedResult = cryptService.encrypt(JSON.stringify(this.configCache))
+        return FileIO.write(this.configFile, encryptedResult)
       }
     )
   }
 
-  // Encrypt config
-  this.addConfig({}).then(() => {
-    console.log('Using encrypted config')
-  })
 }
 
 module.exports = ConfigService

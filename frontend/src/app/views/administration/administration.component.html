@@ -9,57 +9,66 @@
 
 
     <h3>Host</h3>
-    
-    <div class="form-group row">
-      <label class="col-lg-2 col-form-label">
-        Domain
-        <label-help text="Your RadShift host registers itself under this domain"></label-help>
-      </label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="hostDomain" [(ngModel)]="config.hostDomain" name="hostDomain">
-      </div>
-    </div>
+
+    <form-input
+      [(value)]="config.hostDomain"
+      property="hostDomain"
+      type="text"
+      label="Domain"
+      help="Your RadShift host registers itself under this domain"
+      [error]="errors['hostDomain']">
+    </form-input>
 
 
     <h3>Admin</h3>
 
-    <div class="form-group row">
-      <label for="adminEmail" class="col-lg-2 col-form-label">Email</label>
-      <div class="col-lg-10">
-        <input type="email" class="form-control" id="adminEmail" [(ngModel)]="config.adminEmail" name="adminEmail">
-      </div>
-    </div>
+    <form-input
+      [(value)]="config.adminEmail"
+      property="adminEmail"
+      type="text"
+      label="Email"
+      help="The default email address for the RadShift administrator"
+      [error]="errors['adminEmail']">
+    </form-input>
 
 
     <h3>DynDNS</h3>
 
-    <div class="form-group row">
-      <label for="dynDnsProviderUsername" class="col-lg-2 col-form-label">Username</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="dynDnsProviderUsername" [(ngModel)]="config.dynDnsProviderUsername" name="dynDnsProviderUsername">
-      </div>
-    </div>
+    <form-input
+      [(value)]="config.dynDnsProviderUsername"
+      property="dynDnsProviderUsername"
+      type="text"
+      label="Provider Username"
+      help="Your username for your DNS provider"
+      [error]="errors['dynDnsProviderUsername']">
+    </form-input>
 
-    <div class="form-group row">
-      <label for="dynDnsProviderPassword" class="col-lg-2 col-form-label">Password</label>
-      <div class="col-lg-10">
-        <input type="password" class="form-control" id="dynDnsProviderPassword" [(ngModel)]="config.dynDnsProviderPassword" name="dynDnsProviderPassword">
-      </div>
-    </div>
+    <form-input
+      [(value)]="config.dynDnsProviderPassword"
+      property="dynDnsProviderPassword"
+      type="password"
+      label="Provider Password"
+      help="Your password for your DNS provider"
+      [error]="errors['dynDnsProviderPassword']">
+    </form-input>
 
-    <div class="form-group row">
-      <label for="dynDnsProviderHost" class="col-lg-2 col-form-label">Provider Host</label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" id="dynDnsProviderHost" [(ngModel)]="config.dynDnsProviderHost" name="dynDnsProviderHost">
-      </div>
-    </div>
+    <form-input
+      [(value)]="config.dynDnsProviderHost"
+      property="dynDnsProviderHost"
+      type="text"
+      label="Provider Host"
+      help="The host name of your DNS provider"
+      [error]="errors['dynDnsProviderHost']">
+    </form-input>
 
-    <div class="form-group row">
-      <label for="dynDnsUpdateIntervalMinutes" class="col-lg-2 col-form-label">Update Interval (Minutes)</label>
-      <div class="col-lg-10">
-        <input type="number" class="form-control" id="dynDnsUpdateIntervalMinutes" [(ngModel)]="config.dynDnsUpdateIntervalMinutes" name="dynDnsUpdateIntervalMinutes">
-      </div>
-    </div>
+    <form-input
+      [(value)]="config.dynDnsUpdateIntervalMinutes"
+      property="dynDnsUpdateIntervalMinutes"
+      type="number"
+      label="Update Interval (Minutes)"
+      help="How often shall the DNS record be updated"
+      [error]="errors['dynDnsUpdateIntervalMinutes']">
+    </form-input>
     
     <!-- <div class="form-check">
       <input type="checkbox" class="form-check" id="exampleCheck1">

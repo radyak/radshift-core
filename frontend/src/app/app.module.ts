@@ -36,7 +36,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AdministrationComponent } from './views/administration/administration.component';
 import { FormsModule } from '@angular/forms';
-import { LabelHelpComponent } from './label-help/label-help.component';
+import { LabelHelpComponent } from './components/label-help/label-help.component';
+import { FormInputComponent } from './components/form-input/form-input.component';
+import { LabelErrorComponent } from './components/label-error/label-error.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { LabelHelpComponent } from './label-help/label-help.component';
     IndicatorComponent,
     LoginComponent,
     AdministrationComponent,
-    LabelHelpComponent
+    LabelHelpComponent,
+    FormInputComponent,
+    LabelErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -25,7 +25,8 @@ export class NotificationService {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: false,
       tapToDismiss: true,
-      closeButton: false
+      closeButton: false,
+      enableHtml: true
     });
   }
 
@@ -34,7 +35,8 @@ export class NotificationService {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
       tapToDismiss: false,
-      closeButton: true
+      closeButton: true,
+      enableHtml: true
     });
   }
 
@@ -43,7 +45,8 @@ export class NotificationService {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
       tapToDismiss: false,
-      closeButton: true
+      closeButton: true,
+      enableHtml: true
     });
   }
 
@@ -52,7 +55,8 @@ export class NotificationService {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
       tapToDismiss: false,
-      closeButton: true
+      closeButton: true,
+      enableHtml: true
     });
   }
 

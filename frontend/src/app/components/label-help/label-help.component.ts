@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LabelHelpComponent {
 
-  @Input()
-  text: string;
+  @Input() text: string;
+  @Input() show: boolean = false;
 
   isActive: boolean = false;
 

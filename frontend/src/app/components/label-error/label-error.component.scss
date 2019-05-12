@@ -1,0 +1,10 @@
+@import "../../../variables.scss";
+
+.label-error {
+    color: $danger;
+    display: none;
+
+    &.show {
+        display: block;    
+    }
+}

@@ -1,0 +1,16 @@
+<div class="form-group row" [ngClass]="{error: !!error}">
+  <label class="col-lg-2 col-form-label">
+    {{ label }}
+    <label-help [show]="!!error" [text]="help"></label-help>
+    <label-error [message]="error"></label-error>
+  </label>
+  <div class="col-lg-10">
+    <input
+      [type]="type"
+      class="form-control"
+      [(ngModel)]="value"
+      [name]="property"
+      [ngClass]="{invalid: error}"
+      (input)="onChange()">
+  </div>
+</div>

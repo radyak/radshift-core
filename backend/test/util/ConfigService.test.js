@@ -126,7 +126,7 @@ describe('ConfigService.getConfigSecure', function () {
       .then(config => {
         console.log(`config is ${JSON.stringify(config)}`)
         expect(config).to.deep.equal({
-          password: '******',
+          password: '',
           temp: 'ephemeral'
         })
         return done()

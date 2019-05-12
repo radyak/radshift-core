@@ -1,6 +1,11 @@
 
 Dependency('ConfigService', require('../util/ConfigService'))
 
+Dependency('AdministrationService', (ConfigService) => {
+  const AdministrationService = require('../service/AdministrationService')
+  return new AdministrationService(ConfigService)
+})
+
 Provider('BackendConfigurationService', (backendsConfig) => {
   const DummyBackendConfigurationService = require('../service/DummyBackendConfigurationService')
   return new DummyBackendConfigurationService(backendsConfig)
