@@ -34,8 +34,8 @@ export class NotificationService {
     return this.toastr.info(text, title, {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
-      tapToDismiss: false,
-      closeButton: true,
+      tapToDismiss: true,
+      closeButton: false,
       enableHtml: true
     });
   }
@@ -44,8 +44,8 @@ export class NotificationService {
     return this.toastr.warning(text, title, {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
-      tapToDismiss: false,
-      closeButton: true,
+      tapToDismiss: true,
+      closeButton: false,
       enableHtml: true
     });
   }
@@ -54,8 +54,8 @@ export class NotificationService {
     return this.toastr.error(text, title, {
       positionClass: 'toast-bottom-full-width',
       disableTimeOut: true,
-      tapToDismiss: false,
-      closeButton: true,
+      tapToDismiss: true,
+      closeButton: false,
       enableHtml: true
     });
   }

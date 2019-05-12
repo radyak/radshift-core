@@ -1,8 +1,7 @@
 <div class="form-group row" [ngClass]="{error: !!error}">
-  <label class="col-lg-2 col-form-label">
+  <label class="col-lg-2 col-form-label" (click)="toggleHelp()">
     {{ label }}
-    <label-help [show]="!!error" [text]="help"></label-help>
-    <label-error [message]="error"></label-error>
+    <label-help [show]="showHelp" [text]="help"></label-help>
   </label>
   <div class="col-lg-10">
     <input
@@ -12,5 +11,6 @@
       [name]="property"
       [ngClass]="{invalid: error}"
       (input)="onChange()">
+      <label-error [message]="error"></label-error>
   </div>
 </div>

@@ -2,9 +2,5 @@
 
 .label-error {
     color: $danger;
-    display: none;
-
-    &.show {
-        display: block;    
-    }
+    padding: 10px 0;
 }

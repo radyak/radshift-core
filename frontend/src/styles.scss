@@ -78,6 +78,10 @@ input {
   }
 }
 
+.hidden {
+  display: none !important;
+}
+
 .navbar-brand svg {
   width: 70px !important;
 }
@@ -122,10 +126,6 @@ input {
 a {
   outline: none !important;
 }
-
-/*
- * Loading screen
- */
 
 .modal-content {
   background-color: $background-main !important;

@@ -66,7 +66,10 @@ import { LabelErrorComponent } from './components/label-error/label-error.compon
     AngularFontAwesomeModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ToastNoAnimationModule.forRoot(),
+    ToastNoAnimationModule.forRoot({
+      maxOpened: 1,
+      autoDismiss: true
+    }),
     ReactiveFormsModule,
     FormsModule
   ],

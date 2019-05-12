@@ -17,6 +17,8 @@ export class FormInputComponent implements OnInit {
   @Input() help: string;
   @Input() error: string;
 
+  showHelp: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -27,6 +29,10 @@ export class FormInputComponent implements OnInit {
       this.value = parseInt(this.value)
     }
     this.valueChange.emit(this.value)
+  }
+
+  toggleHelp() {
+    this.showHelp = !this.showHelp;
   }
 
 }

@@ -35,7 +35,7 @@ export class AdministrationComponent implements OnInit {
         let error = errors[i]
         this.errors[error.property] = error.message
       }
-      this.notification.error('Could not update configuration')
+      this.notification.error('Please check your inputs', 'Could not update configuration')
     });
   }
 
