@@ -12,5 +12,6 @@ AppContext
 
     process.on('SIGHUP', () => {
       Server.stop()
+      DynDns.stopUpdateCyclic()
     })
   })

@@ -2,7 +2,6 @@ const { promisify } = require('util')
 const getIP = promisify(require('external-ip')())
 const request = require('request')
 var cron = require('node-cron')
-const SimpleParamCheck = require('../util/SimpleParamCheck')
 
 var state = {
   previousExternalIP: null,
@@ -18,22 +17,18 @@ var cronJob = null
 class DynDnsUpdateService {
   /**
    *
-   * @param {*} config
+   * @param {*} ConfigService
    */
-  constructor (config) {
-    this.config = {
-      username: config.dynDnsProviderUsername,
-      password: config.dynDnsProviderPassword,
-      dynDnsHost: config.dynDnsProviderHost,
-      domain: config.hostDomain,
-      updateIntervalMinutes: config.dynDnsUpdateIntervalMinutes || 5
-    }
-    SimpleParamCheck.checkForFalsy(this.config)
+  constructor (ConfigService) {
+    this.configService = ConfigService
   }
 
   updateOnce () {
-    getIP()
-      .then(EXTERNALIP => {
+    Promise.all([this.configService.getConfig(), getIP()])
+      .then(values => {
+        const config = values[0]
+        const EXTERNALIP = values[1]
+
         if (state.previousExternalIP === EXTERNALIP) {
           console.log(
             `The external IP ${EXTERNALIP} hasn't changed; nothing to do`
@@ -48,24 +43,25 @@ class DynDnsUpdateService {
         )
 
         var base64Credentials = Buffer.from(
-          `${this.config.username}:${this.config.password}`
+          `${config.username}:${config.password}`
         ).toString('base64')
 
-        const URL = `https://${this.config.dynDnsHost}/nic/update?hostname=${
-          this.config.domain
+        const URL = `https://${config.dynDnsHost}/nic/update?hostname=${
+          config.domain
         }&myip=${EXTERNALIP}`
 
         var options = {
           url: URL,
           headers: {
             'User-Agent': 'nodeclient',
-            Host: this.config.dynDnsHost,
+            Host: config.dynDnsHost,
             Authorization: `Basic ${base64Credentials}`
           }
         }
 
         request.get(options, (err, res, body) => {
           if (err) {
+            console.error(err)
             state = {
               previousExternalIP: null,
               error: err
@@ -84,41 +80,46 @@ class DynDnsUpdateService {
       .catch(error => {
         console.error(error)
       })
+    return this
   }
 
   updateCyclic () {
-    if (cronJob != null) {
-      throw new Error(
-        'A cyclic update is already running, cannot start another one'
-      )
-    }
-
-    var cronExpression = `*/${this.config.updateIntervalMinutes} * * * *`
-    cron.validate(cronExpression)
-
-    cronJob = cron.schedule(
-      cronExpression,
-      () => {
-        this.updateOnce()
-      },
-      {
-        scheduled: false
+    this.configService.getConfig().then(config => {
+      if (cronJob != null) {
+        throw new Error(
+          'A cyclic update is already running, cannot start another one'
+        )
       }
-    )
-    // Run first update immediately
-    this.updateOnce()
-    cronJob.start()
-    console.log(`Started cyclic update every ${this.config.updateIntervalMinutes} minute(s)`)
+
+      var cronExpression = `*/${config.updateIntervalMinutes} * * * *`
+      cron.validate(cronExpression)
+
+      cronJob = cron.schedule(
+        cronExpression,
+        () => {
+          this.updateOnce()
+        },
+        {
+          scheduled: false
+        }
+      )
+      // Run first update immediately
+      this.updateOnce()
+      cronJob.start()
+      console.log(`Started cyclic update every ${config.updateIntervalMinutes} minute(s)`)
+    })
+    return this
   }
 
-  stopCyclicUpdate () {
+  stopUpdateCyclic () {
     if (cronJob == null) {
-      console.warn('Cannot stop cyclic update - non was started')
+      console.warn('Cannot stop cyclic update - none was started')
       return
     }
     cronJob.destroy()
     cronJob = null
     console.log(`Cyclic update stopped`)
+    return this
   }
 }
 

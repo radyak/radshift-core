@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
-Provider('MongoDBConnection', (config) => {
-  return new Promise((resolve, reject) => {
+Provider('MongoDBConnection', (ConfigService) => {
+  return ConfigService.getConfig().then((config) => {
     // TODO: fetch props from config, not (only) from Env
     const HOST = process.env.MONGO_HOST || 'localhost'
     const PORT = process.env.MONGO_PORT || '27017'
@@ -9,16 +9,16 @@ Provider('MongoDBConnection', (config) => {
 
     var connectString = `mongodb://${HOST}:${PORT}/${DATABASE}`
 
-    mongoose
+    return mongoose
       .connect(connectString, { useNewUrlParser: true })
       .then(
         res => {
           console.log(`Successfully connected to ${connectString}`)
-          resolve(mongoose)
+          return mongoose
         },
         err => {
           console.error(`Unable to connected to ${connectString}`, err)
-          reject(err)
+          throw err
         }
       )
   })
