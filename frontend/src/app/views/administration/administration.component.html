@@ -5,7 +5,7 @@
     Administration
   </h2>
 
-  <form (ngSubmit)="submit()">
+  <form (ngSubmit)="submitConfig()">
 
 
     <h3>Host</h3>
@@ -70,15 +70,94 @@
       [error]="errors['dynDnsUpdateIntervalMinutes']">
     </form-input>
     
-    <!-- <div class="form-check">
-      <input type="checkbox" class="form-check" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div> -->
-    
     <button type="submit" class="btn btn-primary pull-right">
       <fa name="save" class="fa"></fa>
       Save
     </button>
   </form>
+
+  <!-- <form (ngSubmit)="submit()">-->
+
+
+  <h3>Users</h3>
+
+  <ul class="list-group">
+    <li class="list-group-item user-config" *ngFor="let user of users">
+
+      <h4 (click)="editUser(user)">{{ user.username }}</h4>
+
+      <form (ngSubmit)="updateUser(user)" *ngIf="user === currentUser">
+
+        <h5>
+          <fa name="edit" class="fa"></fa>
+          Permissions:
+        </h5>
+        <div class="user-permissions" *ngFor="let permission of permissions; let i = index">
+          <fa name="minus" class="fa"></fa>
+          <input name="permission-input-{{ permission.id }}" type="text" class="" [(ngModel)]="permission.name">
+        </div>
+        <div class="user-permissions add" (click)="addNewPermission('')">
+          <fa name="plus" class="fa"></fa>
+          <span class="add-permission">Add Permission</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary pull-right">
+          <fa name="save" class="fa"></fa>
+          Update
+        </button>
+        
+      </form>
+    </li>
+    <li class="list-group-item" (click)="showNewUserForm()">
+
+      <h4>
+        <fa name="plus-square"></fa>
+        New User
+      </h4>
+      
+      <form *ngIf="newUser" (ngSubmit)="addNewUser()">
+        
+          <form-input
+            [(value)]="newUser.username"
+            property="username"
+            type="text"
+            label="Username"
+            help="Specify a username"
+            [error]="errors['username']">
+          </form-input>
+
+          <form-input
+            [(value)]="newUser.password"
+            property="password"
+            type="password"
+            label="Password"
+            help="Specify a password"
+            [error]="errors['password']">
+          </form-input>
+          
+          <button type="submit" class="btn btn-primary pull-right">
+            <fa name="user-plus" class="fa"></fa>
+            Add user
+          </button>
+      
+      </form>
+
+    </li>
+  </ul>
+
+  <!-- <form-input
+    [(value)]="config.hostDomain"
+    property="hostDomain"
+    type="text"
+    label="Domain"
+    help="Your RadShift host registers itself under this domain"
+    [error]="errors['hostDomain']">
+  </form-input> -->
+  
+  <!-- <button type="submit" class="btn btn-primary pull-right">
+    <fa name="save" class="fa"></fa>
+    Save
+  </button> -->
+  <!--</form> -->
 
 </div>

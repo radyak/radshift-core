@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { NotificationService } from 'src/app/components/notification.service';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'administration',
@@ -11,6 +12,11 @@ export class AdministrationComponent implements OnInit {
 
   private config: Object = {};
   private errors: Object = {};
+  
+  private users: User[] = [];
+  private permissions: Object[] = [];
+  private currentUser: User;
+  private newUser: Object;
 
   constructor(
     private adminService: AdminService,
@@ -21,9 +27,47 @@ export class AdministrationComponent implements OnInit {
     this.adminService.getConfig().subscribe(config => {
       this.config = config;
     });
+    this.adminService.getUsers().subscribe(users => {
+      this.users = users;
+    });
   }
 
-  submit() {
+  editUser(user: User) {
+    this.currentUser = user;
+    this.permissions = user.permissions.map(permission => {
+      return {
+        id: 'perm_id-' + Math.random(),
+        name: permission
+      }
+    })
+    this.newUser = null;
+  }
+
+  showNewUserForm() {
+    this.currentUser = null;
+    this.newUser = {
+      username: '',
+      password: ''
+    };
+  }
+
+  updateUser(user: User) {
+    console.log(user);
+  }
+
+  addNewPermission(permission: string) {
+    this.permissions.push({
+      id: 'perm_id-' + Math.random(),
+      name: permission
+    });
+  }
+
+  removePermission(permission: string, user: User) {
+    let index = user.permissions.indexOf(permission)
+    user.permissions.splice(index, 1);
+  }
+
+  submitConfig() {
     console.log('Saving:', this.config)
     this.adminService.saveConfig(this.config).subscribe(config => {
       this.config = config;
@@ -37,6 +81,10 @@ export class AdministrationComponent implements OnInit {
       }
       this.notification.error('Please check your inputs', 'Could not update configuration')
     });
+  }
+
+  addNewUser() {
+    this.newUser = null;
   }
 
 }

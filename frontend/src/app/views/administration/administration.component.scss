@@ -22,3 +22,37 @@ h3 {
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+h4 {
+    // font-size: 1.2rem;
+    // margin-top: 15px;
+    // border-bottom: 1px solid #fff;
+}
+
+h5 {
+    color: $gray;
+    // font-size: 1.2rem;
+    margin-top: 15px;
+    border-bottom: 1px solid $gray;
+}
+
+.user-permissions.add {
+    padding-top: 10px;
+    color: $primary;
+}
+.user-config input,
+.user-config .add-permission {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 5px;
+    width: 100%;
+    margin-left: -20px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.user-config input:hover,
+.user-config input:active,
+.user-config input:focus {
+    background: rgba(0, 0, 0, 0.2) !important;
+}

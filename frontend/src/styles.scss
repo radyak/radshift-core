@@ -82,6 +82,12 @@ input {
   display: none !important;
 }
 
+.list-group-item {
+  background: none !important;
+  border-color: #fff !important;
+  cursor: pointer;
+}
+
 .navbar-brand svg {
   width: 70px !important;
 }
