@@ -6,6 +6,7 @@ Provider('Initializer', (AuthService) => {
             AuthService.registerNewUser({
                 username: 'admin',
                 password: 'admin',
+                passwordRepeat: 'admin',
                 permissions: ['admin']
             }).then(admin => {
                 console.error(`Created default user "admin" - CHANGE THE PASSWORD !!!`)

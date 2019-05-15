@@ -5,7 +5,7 @@
     Administration
   </h2>
 
-  <form (ngSubmit)="submitConfig()">
+  <form (ngSubmit)="updateConfig()">
 
 
     <h3>Host</h3>
@@ -84,41 +84,50 @@
   <ul class="list-group">
     <li class="list-group-item user-config" *ngFor="let user of users">
 
-      <h4 (click)="editUser(user)">{{ user.username }}</h4>
+      <h4 (click)="showEditUserForm(user)">{{ user.username }}</h4>
 
-      <form (ngSubmit)="updateUser(user)" *ngIf="user === currentUser">
+      <form *ngIf="user === currentUser">
 
         <h5>
           <fa name="edit" class="fa"></fa>
           Permissions:
         </h5>
-        <div class="user-permissions" *ngFor="let permission of permissions; let i = index">
-          <fa name="minus" class="fa"></fa>
-          <input name="permission-input-{{ permission.id }}" type="text" class="" [(ngModel)]="permission.name">
+        <div class="user-permissions" *ngIf="!currentPermissions || !currentPermissions.length">
+          <i>No permissions</i>
         </div>
-        <div class="user-permissions add" (click)="addNewPermission('')">
+        <div class="user-permissions" *ngFor="let permission of currentPermissions">
+          <div class="remove-permission" (click)="removePermission(permission)">
+            <fa name="times" class="fa"></fa>
+          </div>
+          <input name="permission-input-{{ permission.index }}" type="text" class="" [(ngModel)]="permission.name" autofocus>
+        </div>
+        <div class="user-permissions add" (click)="addPermission('')">
           <fa name="plus" class="fa"></fa>
           <span class="add-permission">Add Permission</span>
         </div>
 
-        <button type="submit" class="btn btn-primary pull-right">
+        <button (click)="updateUser(user)" type="submit" class="btn btn-primary pull-right">
           <fa name="save" class="fa"></fa>
           Update
+        </button>
+        <button (click)="showDeleteUserDialog(user)" class="btn btn-danger">
+          <fa name="trash" class="fa"></fa>
+          Delete
         </button>
         
       </form>
     </li>
-    <li class="list-group-item" (click)="showNewUserForm()">
+    <li class="list-group-item">
 
-      <h4>
+      <h4 (click)="showNewUserForm()">
         <fa name="plus-square"></fa>
         New User
       </h4>
       
-      <form *ngIf="newUser" (ngSubmit)="addNewUser()">
+      <form *ngIf="!currentUser" (ngSubmit)="addNewUser()">
         
           <form-input
-            [(value)]="newUser.username"
+            [(value)]="newUserRegistration.username"
             property="username"
             type="text"
             label="Username"
@@ -127,12 +136,21 @@
           </form-input>
 
           <form-input
-            [(value)]="newUser.password"
+            [(value)]="newUserRegistration.password"
             property="password"
             type="password"
             label="Password"
             help="Specify a password"
             [error]="errors['password']">
+          </form-input>
+          
+          <form-input
+            [(value)]="newUserRegistration.passwordRepeat"
+            property="passwordRepeat"
+            type="password"
+            label="Repeat the Password"
+            help="The password must be repeated to avoid errors"
+            [error]="errors['passwordRepeat']">
           </form-input>
           
           <button type="submit" class="btn btn-primary pull-right">

@@ -9,7 +9,7 @@ Configuration('AdminRoutes', (AdministrationService, Users, AuthService, AuthMid
     })
   })
   
-  router.post('/config', (req, res) => {
+  router.put('/config', (req, res) => {
     AdministrationService.saveConfig(req.body)
     .then(config => {
       res.status(200).send(config)
@@ -29,17 +29,51 @@ Configuration('AdminRoutes', (AdministrationService, Users, AuthService, AuthMid
   router.post('/users', (req, res) => {
     try {
       AuthService.registerNewUser(req.body)
-          .then(() => res.status(204).send())
-          .catch(err => res.status(400).json(err).send())
+          .then((user) => res.status(204).send(user))
+          .catch(err => res.status(400).send(err))
     } catch (err) {
       console.error('Err', err)
       return res.status(400).json(err).send()
     }
   })
   
-  router.put('/users/:username/permissions', (req, res) => {
+  // router.put('/users/:username/permissions', (req, res) => {
+  //   let username = req.params.username
+  //   AuthService.changeUserPermissions(username, req.body)
+  //       .then((result) => {
+  //         console.log(result)
+  //         if(result.n === 0) {
+  //           return res.status(404).json({
+  //             username: `User '${username}' not found`
+  //           }).send()
+  //         }
+  //         res.status(204).send()
+  //       })
+  //       .catch(err => res.status(400).json(err).send())
+  // })
+  
+  router.put('/users/:username', (req, res) => {
     let username = req.params.username
-    AuthService.changeUserPermissions(username, req.body)
+    let user = req.body
+    console.log(`Updating user ${username}`, user)
+    AuthService.changeUserPermissions(username, user.permissions)
+        .then((result) => {
+          if(result.n === 0) {
+            return res.status(404).json({
+              username: `User '${username}' not found`
+            }).send()
+          }
+          res.status(204).send()
+        })
+        .catch(err => res.status(400).json(err).send())
+  })
+  
+  router.delete('/users/:username', (req, res) => {
+    let username = req.params.username
+    
+    Users.deleteOne({
+      username: username
+    })
         .then((result) => {
           console.log(result)
           if(result.n === 0) {

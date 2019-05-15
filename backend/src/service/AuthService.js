@@ -15,9 +15,33 @@ class AuthService {
         // TODO: extend registration
 
         let password = registration && registration.password
+        let passwordRepeat = registration && registration.passwordRepeat
         if (!password || !password.trim()) {
             throw {
-                password: 'is required'
+                errors: {
+                    password: {
+                        property: 'password',
+                        message: 'Password is required'
+                    },
+                    passwordRepeat: {
+                        property: 'passwordRepeat',
+                        message: 'Password and password repition must be identical'
+                    }
+                }
+            }
+        }
+        if (password !== passwordRepeat) {
+            throw {
+                errors: {
+                    password: {
+                        property: 'password',
+                        message: 'Password and password repition must be identical'
+                    },
+                    passwordRepeat: {
+                        property: 'passwordRepeat',
+                        message: 'Password and password repition must be identical'
+                    }
+                }
             }
         }
         const user = new this.Users(registration)

@@ -119,12 +119,11 @@ input {
   }
 
   &.btn-danger {
+    color: $background-main !important;
+    background: $danger !important;
     border-color: $danger !important;
-    color: $danger !important;
-    background: $background-main !important;
     &:hover {
-      background: $danger !important;
-      color: $background-main !important;
+      box-shadow: 0 0 5px $danger !important;
     }
   }
 }

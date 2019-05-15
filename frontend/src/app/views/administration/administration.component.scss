@@ -27,6 +27,7 @@ h4 {
     // font-size: 1.2rem;
     // margin-top: 15px;
     // border-bottom: 1px solid #fff;
+    width: 100%;
 }
 
 h5 {
@@ -38,21 +39,31 @@ h5 {
 
 .user-permissions.add {
     padding-top: 10px;
+    margin-bottom: 40px;
     color: $primary;
 }
-.user-config input,
-.user-config .add-permission {
+.user-config input {
     border: none !important;
     box-shadow: none !important;
     border-radius: 5px;
     width: 100%;
-    margin-left: -20px;
+    margin-left: -30px;
     padding-left: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.user-config .add-permission {
+    margin-left: 10px;
 }
 .user-config input:hover,
 .user-config input:active,
 .user-config input:focus {
     background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.user-config .remove-permission {
+    color: $danger;
+    position: relative;
+    display: inline-block;
+    padding: 10px 10px 10px 0;
 }
