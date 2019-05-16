@@ -26,7 +26,7 @@ Provider('BackendsService', (BackendConfigurationService, DockerApiClient, RadHu
   return new BackendsService(BackendConfigurationService, DockerApiClient, RadHubClient)
 })
 
-Provider('AuthService', (Users) => {
+Provider('AuthService', (User) => {
   const AuthService = require('../service/AuthService')
-  return new AuthService(Users)
+  return new AuthService(User)
 })

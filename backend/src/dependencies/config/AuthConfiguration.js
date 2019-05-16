@@ -1,13 +1,13 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
-Configuration('AuthConfiguration', (Users) => {
+Configuration('AuthConfiguration', (User) => {
 
     return passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
     }, (username, password, done) => {
-        Users.findOne({ username })
+        User.findOne({ username })
             .then((user) => {
                 if (!user || !user.validatePassword(password)) {
                     return done(null, false, {

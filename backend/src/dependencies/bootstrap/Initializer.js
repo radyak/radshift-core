@@ -1,8 +1,18 @@
 
-Provider('Initializer', (AuthService) => {
+Provider('Initializer', (AuthService, Permission) => {
 
     return {
         run: () => {
+
+            let permission = new Permission({
+                name: 'admin'
+            })
+            permission.save().then((permission) => {
+                console.log(`Created permission "admin"`)
+            }).catch(err => {
+                console.log(`Could not create permission "admin": ${err.errors.name.message}`)
+            })
+
             AuthService.registerNewUser({
                 username: 'admin',
                 password: 'admin',

@@ -6,8 +6,8 @@ const JWT_VALID_PERIOD = 60
 
 class AuthService {
 
-    constructor(Users) {
-        this.Users = Users
+    constructor(User) {
+        this.User = User
     }
 
     registerNewUser(registration) {
@@ -44,14 +44,14 @@ class AuthService {
                 }
             }
         }
-        const user = new this.Users(registration)
+        const user = new this.User(registration)
         user.setPassword(registration.password)
 
         return user.save()
     }
 
     changeUserPermissions(username, permissions) {
-        return this.Users.updateOne({ username }, { permissions })
+        return this.User.updateOne({ username }, { permissions })
     }
 
     generateJWT(user) {
