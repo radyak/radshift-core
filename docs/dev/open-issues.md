@@ -10,9 +10,10 @@
 ## Bootstrap
 
 - [x] Use _Context Profiles_
+* [ ] Configurize (e.g. JWT: issuer, secrets)
 - [ ] Evaluate DNS resonse (badauth, nochg etc.)
 - [ ] _Start Docker Swarm_ on machine startup
-- [ ] Develop routine for _first startup_ of unconfigured cluster
+- [ ] Develop routine for _first startup_ of unconfigured cluster, e.g. separate App on separate port
   - [ ] Set up root user in database
   - [ ] Generate config key on first startup (see also *Security & Configuration*)
   - [ ] Require an validated main configuration before server start
@@ -27,9 +28,30 @@
 
 ## Security & Configuration
 
-- [ ] User management
-- [ ] Login
-- [ ] Secure Admin routes with jwt and roles middleware
+- [x] User management
+- [x] Login
+- [x] Secure Admin routes with jwt and roles middleware
+- [ ] Develop a concept for AuthN & AuthZ for backends; three basic concepts:
+  - [ ] Forward the JWT. Backends can trust it and simply decode it since it has already been verified by authenticationOptional
+  - [ ] Forward the user details from the decoded JWT. Might be more unclean but simpler for testing
+  - [ ] Let backends specify AuthN & AuthZ requirements in their backendConfig for the core to check them, e.g.:
+    ```json
+        ...
+        "myapp": {
+            "securityRules": [
+                {
+                    "path": "/some/path/**",
+                    "authenticated": true,
+                    "permissions": [
+                        "some",
+                        "permissions"
+                    ]
+                }
+            ]
+        },
+        ...
+    ```
+
 - [ ] Develop rock-solid _management for config & secrets_ (Docker Swarm?)
   - [ ] Encryption key?
   - [ ] MongoDB credentials (per database and/or multitenancy)
@@ -50,5 +72,9 @@
 
 - [x] Use App-Information (port, required roles etc.) for proxying requests
 - [x] Slim down images/builds
+- [ ] Pull out library for AppContext
+- [ ] Add tests with AppContext
+- [ ] Refactor Adminstration and Auth
+- [ ] Check refactored DynDNS function on RPI
 - [ ] _Tests_ (use Mock MongoDB)
 - [ ] _Validations_/central model

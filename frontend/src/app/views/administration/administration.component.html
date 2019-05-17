@@ -5,177 +5,38 @@
     Administration
   </h2>
 
-  <form (ngSubmit)="updateConfig()">
 
-
-    <h3>Host</h3>
-
-    <form-input
-      [(value)]="config.hostDomain"
-      property="hostDomain"
-      type="text"
-      label="Domain"
-      help="Your RadShift host registers itself under this domain"
-      [error]="errors['hostDomain']">
-    </form-input>
-
-
-    <h3>Admin</h3>
-
-    <form-input
-      [(value)]="config.adminEmail"
-      property="adminEmail"
-      type="text"
-      label="Email"
-      help="The default email address for the RadShift administrator"
-      [error]="errors['adminEmail']">
-    </form-input>
-
-
-    <h3>DynDNS</h3>
-
-    <form-input
-      [(value)]="config.dynDnsProviderUsername"
-      property="dynDnsProviderUsername"
-      type="text"
-      label="Provider Username"
-      help="Your username for your DNS provider"
-      [error]="errors['dynDnsProviderUsername']">
-    </form-input>
-
-    <form-input
-      [(value)]="config.dynDnsProviderPassword"
-      property="dynDnsProviderPassword"
-      type="password"
-      label="Provider Password"
-      help="Your password for your DNS provider"
-      [error]="errors['dynDnsProviderPassword']">
-    </form-input>
-
-    <form-input
-      [(value)]="config.dynDnsProviderHost"
-      property="dynDnsProviderHost"
-      type="text"
-      label="Provider Host"
-      help="The host name of your DNS provider"
-      [error]="errors['dynDnsProviderHost']">
-    </form-input>
-
-    <form-input
-      [(value)]="config.dynDnsUpdateIntervalMinutes"
-      property="dynDnsUpdateIntervalMinutes"
-      type="number"
-      label="Update Interval (Minutes)"
-      help="How often shall the DNS record be updated"
-      [error]="errors['dynDnsUpdateIntervalMinutes']">
-    </form-input>
-    
-    <button type="submit" class="btn btn-primary pull-right">
-      <fa name="save" class="fa"></fa>
-      Save
-    </button>
-  </form>
-
-  <!-- <form (ngSubmit)="submit()">-->
-
-
-  <h3>Users</h3>
-
-  <ul class="list-group">
-    <li class="list-group-item user-config" *ngFor="let user of users">
-
-      <h4 (click)="showEditUserForm(user)">{{ user.username }}</h4>
-
-      <form *ngIf="user === currentUser">
-
-        <h5>
-          <fa name="edit" class="fa"></fa>
-          Permissions:
-        </h5>
-        <div class="user-permissions" *ngIf="!currentPermissions || !currentPermissions.length">
-          <i>No permissions</i>
-        </div>
-        <div class="user-permissions" *ngFor="let permission of currentPermissions">
-          <div class="remove-permission" (click)="removePermission(permission)">
-            <fa name="times" class="fa"></fa>
-          </div>
-          <input name="permission-input-{{ permission.index }}" type="text" class="" [(ngModel)]="permission.name" autofocus>
-        </div>
-        <div class="user-permissions add" (click)="addPermission('')">
-          <fa name="plus" class="fa"></fa>
-          <span class="add-permission">Add Permission</span>
-        </div>
-
-        <button (click)="updateUser(user)" type="submit" class="btn btn-primary pull-right">
-          <fa name="save" class="fa"></fa>
-          Update
-        </button>
-        <button (click)="showDeleteUserDialog(user)" class="btn btn-danger">
-          <fa name="trash" class="fa"></fa>
-          Delete
-        </button>
-        
-      </form>
-    </li>
-    <li class="list-group-item">
-
-      <h4 (click)="showNewUserForm()">
-        <fa name="plus-square"></fa>
-        New User
-      </h4>
-      
-      <form *ngIf="!currentUser" (ngSubmit)="addNewUser()">
-        
-          <form-input
-            [(value)]="newUserRegistration.username"
-            property="username"
-            type="text"
-            label="Username"
-            help="Specify a username"
-            [error]="errors['username']">
-          </form-input>
-
-          <form-input
-            [(value)]="newUserRegistration.password"
-            property="password"
-            type="password"
-            label="Password"
-            help="Specify a password"
-            [error]="errors['password']">
-          </form-input>
-          
-          <form-input
-            [(value)]="newUserRegistration.passwordRepeat"
-            property="passwordRepeat"
-            type="password"
-            label="Repeat the Password"
-            help="The password must be repeated to avoid errors"
-            [error]="errors['passwordRepeat']">
-          </form-input>
-          
-          <button type="submit" class="btn btn-primary pull-right">
-            <fa name="user-plus" class="fa"></fa>
-            Add user
-          </button>
-      
-      </form>
-
-    </li>
-  </ul>
-
-  <!-- <form-input
-    [(value)]="config.hostDomain"
-    property="hostDomain"
-    type="text"
-    label="Domain"
-    help="Your RadShift host registers itself under this domain"
-    [error]="errors['hostDomain']">
-  </form-input> -->
-  
-  <!-- <button type="submit" class="btn btn-primary pull-right">
-    <fa name="save" class="fa"></fa>
-    Save
-  </button> -->
-  <!--</form> -->
+  <ngb-tabset type="pills" justify="justified">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <fa name="cogs" class="fa"></fa>
+        <br>
+        Config
+      </ng-template>
+      <ng-template ngbTabContent>
+        <administration-config></administration-config>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <fa name="users" class="fa"></fa>
+        <br>
+        Users
+      </ng-template>
+      <ng-template ngbTabContent>
+        <administration-users></administration-users>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <fa name="shield" class="fa"></fa>
+        <br>
+        Permissions
+      </ng-template>
+      <ng-template ngbTabContent>
+        <administration-permissions></administration-permissions>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
 
 </div>

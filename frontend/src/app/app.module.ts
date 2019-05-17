@@ -39,6 +39,9 @@ import { FormsModule } from '@angular/forms';
 import { LabelHelpComponent } from './components/label-help/label-help.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { LabelErrorComponent } from './components/label-error/label-error.component';
+import { AdministrationConfigComponent } from './views/subviews/administration-config/administration-config.component';
+import { AdministrationUsersComponent } from './views/subviews/administration-users/administration-users.component';
+import { AdministrationPermissionsComponent } from './views/subviews/administration-permissions/administration-permissions.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { LabelErrorComponent } from './components/label-error/label-error.compon
     AdministrationComponent,
     LabelHelpComponent,
     FormInputComponent,
-    LabelErrorComponent
+    LabelErrorComponent,
+    AdministrationConfigComponent,
+    AdministrationUsersComponent,
+    AdministrationPermissionsComponent
   ],
   imports: [
     BrowserModule,

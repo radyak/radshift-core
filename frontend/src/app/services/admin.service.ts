@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from '../model/User';
 import { Login } from '../model/Login';
 import { Registration } from '../model/Registration';
+import { Permission } from '../model/Permission';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AdminService {
   }
 
   saveConfig(config: Object): Observable<Object> {
-    return this.http.post<Object>(`/api/admin/config`, config);
+    return this.http.put<Object>(`/api/admin/config`, config);
   }
 
   getUsers(): Observable<User[]> {
@@ -34,6 +35,14 @@ export class AdminService {
 
   deleteUser(user: User): Observable<void> {
     return this.http.delete<void>(`/api/admin/users/${user.username}`);
+  }
+
+  getPermissions(): Observable<Permission[]> {
+    return this.http.get<Permission[]>(`/api/admin/permissions`);
+  }
+
+  savePermissions(permissions: Permission[]): Observable<Permission[]> {
+    return this.http.post<Permission[]>(`/api/admin/permissions`, permissions);
   }
 
 }

@@ -38,6 +38,11 @@ body {
   margin-top: $base-padding;
 }
 
+.btn,
+button {
+  font-size: 1.2rem !important;
+}
+
 .btn-group,
 .btn-group-vertical,
 .btn-group-vertical > .btn,
@@ -126,6 +131,17 @@ input {
       box-shadow: 0 0 5px $danger !important;
     }
   }
+
+  &.btn-danger-outline {
+    background: $background-main !important;
+    color: $danger !important;
+    border-color: $danger !important;
+    &:hover {
+      box-shadow: 0 0 5px $danger !important;
+      color: $background-main !important;
+      background: $danger !important;
+    }
+  }
 }
 
 a {
@@ -162,4 +178,36 @@ a {
       background-color: $danger;
     }
   }
+}
+
+.nav-pills {
+  border-bottom: none !important;
+
+  .nav-item > .nav-link {
+    background-color: none !important;
+    color: $gray !important;
+    border: none !important;
+  }
+
+  .nav-item > .nav-link:hover {
+    background-color: none !important;
+    color: $primary !important;
+  }
+
+  .nav-item.show .nav-link,
+  .nav-link.active,
+  .nav-item > .nav-link.active {
+    background-color: $primary !important;
+    background: $primary !important;
+    color: $dark !important;
+    box-shadow: 0 0 5px $primary !important;
+  }
+}
+
+h3 {
+  border-bottom: 1px solid #fff !important;
+  margin-bottom: 10px !important;
+  margin-top: 50px !important;
+  padding-bottom: 10px !important;
+  padding-top: 10px !important;
 }

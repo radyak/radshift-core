@@ -37,21 +37,6 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
     }
   })
   
-  // router.put('/users/:username/permissions', (req, res) => {
-  //   let username = req.params.username
-  //   AuthService.changeUserPermissions(username, req.body)
-  //       .then((result) => {
-  //         console.log(result)
-  //         if(result.n === 0) {
-  //           return res.status(404).json({
-  //             username: `User '${username}' not found`
-  //           }).send()
-  //         }
-  //         res.status(204).send()
-  //       })
-  //       .catch(err => res.status(400).json(err).send())
-  // })
-  
   router.put('/users/:username', (req, res) => {
     let username = req.params.username
     let user = req.body
@@ -94,36 +79,47 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
   
   router.post('/permissions', (req, res) => {
     try {
-      let permission = new Permission({
-        name: req.body.name
+      Promise.all([
+        // User.find(),
+        Permission.deleteMany({})  
+      ])
+      .then((values) => {
+        // let users = values[0]
+        let newPermissions = req.body.map(
+          newPermission => {
+            let permission = new Permission({
+              name: newPermission.name
+            })
+            permission.save()
+            return permission
+          }
+        )
+        return res.status(200).send(newPermissions)
       })
-      permission.save()
-          .then((permission) => res.status(200).send(permission))
-          .catch(err => res.status(400).send(err))
+      .catch(err => res.status(400).send(err))
     } catch (err) {
       console.error('Err', err)
       return res.status(400).json(err).send()
     }
   })
   
-  router.delete('/permissions/:permission', (req, res) => {
-    let permissionName = req.params.permission
+  // router.delete('/permissions/:permission', (req, res) => {
+  //   let permissionName = req.params.permission
 
-    Permission.deleteOne({
-      name: permissionName
-    })
-    .then((result) => {
-      console.log(permissionName, result)
-      if(result.n === 0) {
-        return res.status(404).json({
-          permission: `Permission '${permissionName}' not found`
-        }).send()
-      }
-      res.status(204).send()
-    })
-    .catch(err => res.status(400).json(err).send())
-          
-  })
+  //   Permission.deleteOne({
+  //     name: permissionName
+  //   })
+  //   .then((result) => {
+  //     console.log(permissionName, result)
+  //     if(result.n === 0) {
+  //       return res.status(404).json({
+  //         permission: `Permission '${permissionName}' not found`
+  //       }).send()
+  //     }
+  //     res.status(204).send()
+  //   })
+  //   .catch(err => res.status(400).json(err).send())
+  // })
 
   router.use('/*', (req, res, next) => {
       res.status(404).send()

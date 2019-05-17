@@ -1,0 +1,71 @@
+<h3>
+  Edit users
+</h3>
+
+<ul class="list-group">
+  <li class="list-group-item user-config" *ngFor="let user of users">
+
+    <h4 (click)="showEditUserForm(user)">
+      <fa name="pencil" class="fa"></fa>
+      {{ user.username }}
+    </h4>
+
+    <form *ngIf="user === currentUser">
+
+      <h5>
+        <fa name="shield" class="fa"></fa>
+        Permissions:
+      </h5>
+      
+      <div class="user-permissions"
+           *ngFor="let permission of permissions"
+           (click)="toggleUserPermission(user, permission)"
+           [ngClass]="{ active: hasPermission(user, permission) }">
+
+        <fa name="check-square" *ngIf="hasPermission(user, permission)" class="fa"></fa>
+        <fa name="square" *ngIf="!hasPermission(user, permission)" class="fa"></fa>
+        {{ permission.name }}
+
+      </div>
+      
+      <div class="user-controls">
+        <button (click)="updateUser(user)" type="submit" class="btn btn-primary pull-right">
+          <fa name="save" class="fa"></fa>
+          Update
+        </button>
+        <button (click)="showDeleteUserDialog(user)" class="btn btn-danger">
+          <fa name="trash" class="fa"></fa>
+          Delete
+        </button>
+      </div>
+
+    </form>
+  </li>
+</ul>
+
+
+<h3>
+  Create new user
+</h3>
+
+<form>
+
+  <form-input [(value)]="newUserRegistration.username" property="username" type="text" label="Username"
+    help="Specify a username" [error]="errors['username']">
+  </form-input>
+
+  <form-input [(value)]="newUserRegistration.password" property="password" type="password" label="Password"
+    help="Specify a password" [error]="errors['password']">
+  </form-input>
+
+  <form-input [(value)]="newUserRegistration.passwordRepeat" property="passwordRepeat" type="password"
+    label="Repeat the Password" help="The password must be repeated to avoid errors"
+    [error]="errors['passwordRepeat']">
+  </form-input>
+
+  <button (click)="addNewUser()" class="btn btn-primary pull-right">
+    <fa name="user-plus" class="fa"></fa>
+    Add user
+  </button>
+
+</form>
