@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +43,12 @@ import { AdministrationConfigComponent } from './views/subviews/administration-c
 import { AdministrationUsersComponent } from './views/subviews/administration-users/administration-users.component';
 import { AdministrationPermissionsComponent } from './views/subviews/administration-permissions/administration-permissions.component';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+library.add(fas);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,8 +75,8 @@ import { AdministrationPermissionsComponent } from './views/subviews/administrat
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    AngularFontAwesomeModule,
     HttpClientModule,
+    FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ToastNoAnimationModule.forRoot({
       maxOpened: 1,

@@ -8,11 +8,11 @@
   </div>
   <div class="details" *ngIf="isActive">
     <button *ngIf="!backend.isInstalled" class="btn" (click)="installDialog(backend)">
-      <fa name="play" class="fa"></fa>
+      <fa-icon icon="play"></fa-icon>
       Install
     </button>
     <button *ngIf="backend.isInstalled" class="btn" (click)="showDetails(backend)">
-      <fa name="list" class="fa"></fa>
+      <fa-icon icon="list"></fa-icon>
       Details
     </button>
   </div>

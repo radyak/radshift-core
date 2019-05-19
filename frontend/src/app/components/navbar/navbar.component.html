@@ -13,19 +13,19 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngIf="canNavigate('dashboard') | async">
           <a routerLink="/dashboard" (click)="collapse()" class="nav-link" routerLinkActive="active">
-            <fa name="th-list" class="fa"></fa>
+            <fa-icon icon="th-list"></fa-icon>
             Dashboard
           </a>
         </li>
         <li class="nav-item" *ngIf="canNavigate('store') | async">
           <a routerLink="/store" (click)="collapse()" class="nav-link" routerLinkActive="active">
-            <fa name="shopping-cart" class="fa"></fa>
+            <fa-icon icon="shopping-cart"></fa-icon>
             App Store
           </a>
         </li>
         <li class="nav-item" *ngIf="canNavigate('administration') | async">
           <a routerLink="/administration" (click)="collapse()" class="nav-link" routerLinkActive="active">
-            <fa name="cogs" class="fa"></fa>
+            <fa-icon icon="cogs"></fa-icon>
             Administration
           </a>
         </li>
@@ -35,13 +35,13 @@
         <li role="separator" class="dropdown-divider"></li>
         <li class="nav-item">
           <a class="nav-link" (click)="collapse(); profile()">
-            <fa name="user-circle" class="fa"></fa>
+            <fa-icon icon="user-circle"></fa-icon>
             {{ auth.name }}
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link logout" (click)="collapse(); logout()">
-            <fa name="sign-out " class="fa"></fa>
+            <fa-icon icon="sign-out-alt"></fa-icon>
             Logout
           </a>
         </li>

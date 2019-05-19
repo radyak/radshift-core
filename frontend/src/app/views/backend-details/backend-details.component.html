@@ -11,13 +11,13 @@
   <section class="controls">
     <div class="d-flex justify-content-between align-items-center">
       <button type="button" class="btn btn-lg btn-outline-secondary" (click)="goBack()">
-        <fa name="angle-left" class="fa"></fa>
+        <fa-icon icon="angle-left"></fa-icon>
         Back
       </button>
       <button type="button" class="btn btn-lg btn-outline-secondary"
         *ngIf="backend.entry && backend.status === 'running'" (click)="open()">
         Open
-        <fa name="angle-right " class="fa"></fa>
+        <fa-icon icon="angle-right "></fa-icon>
       </button>
     </div>
   </section>
@@ -27,17 +27,17 @@
       <div class="btn-group" role="group">
         <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary"
           *ngIf="isRunning()" (click)="stop()">
-          <fa name="stop" class="fa"></fa>
+          <fa-icon icon="stop"></fa-icon>
           Stop
         </button>
         <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary"
           *ngIf="!isRunning()" (click)="start()">
-          <fa name="play" class="fa"></fa>
+          <fa-icon icon="play"></fa-icon>
           Start
         </button>
         <button [attr.disabled]="getDisabled()" type="button" class="btn btn-lg btn-outline-secondary btn-danger"
           (click)="removeDialog()">
-          <fa name="trash" class="fa"></fa>
+          <fa-icon icon="trash"></fa-icon>
           Delete
         </button>
       </div>

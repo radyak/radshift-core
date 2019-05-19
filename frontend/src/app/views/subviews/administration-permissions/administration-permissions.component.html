@@ -6,7 +6,7 @@
     <input type="text" [(ngModel)]="permission.name" class="form-control" disabled>
     <div class="input-group-append" (click)="deletePermission(permission)">
       <span class="input-group-text btn btn-danger-outline">
-          <fa name="trash" class="fa"></fa>
+          <fa-icon icon="trash"></fa-icon>
       </span>
     </div>
   </div>
@@ -16,20 +16,20 @@
       <input #newPermissionName name="newPermissionName" type="text" [(ngModel)]="newPermission.name" class="form-control" autofocus>
       <div class="input-group-append" (click)="addNewPermission()">
         <button class="input-group-text btn btn-primary">
-            <fa name="check" class="fa"></fa>
+            <fa-icon icon="check"></fa-icon>
         </button>
       </div>
     </div>
   </form>
 
   <button *ngIf="!newPermission" (click)="showAddNewPermissionForm()" class="btn btn-primary-outline permission-add">
-    <fa name="plus" class="fa"></fa>
+    <fa-icon icon="plus"></fa-icon>
     New permission
   </button>
 
 </div>
 
 <button (click)="updatePermissions()" class="btn btn-primary pull-right">
-  <fa name="save" class="fa"></fa>
+  <fa-icon icon="save"></fa-icon>
   Update
 </button>

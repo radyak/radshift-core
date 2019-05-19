@@ -6,13 +6,13 @@
   <li class="list-group-item user-config" *ngFor="let user of users">
 
     <h4 (click)="showEditUserForm(user)">
-      <fa name="user" class="fa"></fa>
+      <fa-icon icon="user"></fa-icon>
       {{ user.username }}
 
       <button (click)="showDeleteUserDialog(user)"
               class="btn btn-danger pull-right"
               *ngIf="user === currentUser">
-        <fa name="trash" class="fa"></fa>
+        <fa-icon icon="trash"></fa-icon>
       </button>
 
     </h4>
@@ -20,7 +20,7 @@
     <form *ngIf="user === currentUser">
 
       <h5>
-        <fa name="shield" class="fa"></fa>
+        <fa-icon icon="shield"></fa-icon>
         Permissions:
       </h5>
       
@@ -29,21 +29,21 @@
            (click)="toggleUserPermission(user, permission)"
            [ngClass]="{ active: hasPermission(user, permission) }">
 
-        <fa name="check-square" *ngIf="hasPermission(user, permission)" class="fa"></fa>
-        <fa name="square" *ngIf="!hasPermission(user, permission)" class="fa"></fa>
+        <fa-icon icon="check-square" *ngIf="hasPermission(user, permission)"></fa-icon>
+        <fa-icon icon="square" *ngIf="!hasPermission(user, permission)"></fa-icon>
         {{ permission.name }}
       </div>
       
       <div class="user-controls">
         <button (click)="updateUserPermissions(user)" type="submit" class="btn btn-primary">
-          <fa name="save" class="fa"></fa>
+          <fa-icon icon="save"></fa-icon>
           Update
         </button>
       </div>
   
 
       <h5>
-        <fa name="lock" class="fa"></fa>
+        <fa-icon icon="lock"></fa-icon>
         Change password:
       </h5>
 
@@ -66,7 +66,7 @@
 
       <div class="user-controls">
         <button (click)="updateUserPassword(user)" type="submit" class="btn btn-primary">
-          <fa name="save" class="fa"></fa>
+          <fa-icon icon="save"></fa-icon>
           Update
         </button>
       </div>
@@ -97,7 +97,7 @@
   </form-input>
 
   <button (click)="addNewUser()" class="btn btn-primary pull-right">
-    <fa name="user-plus" class="fa"></fa>
+    <fa-icon icon="user-plus"></fa-icon>
     Add user
   </button>
 
