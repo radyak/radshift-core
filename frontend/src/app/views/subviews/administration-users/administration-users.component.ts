@@ -14,13 +14,13 @@ import { ModalOptions } from 'src/app/components/modal-options';
 })
 export class AdministrationUsersComponent implements OnInit {
 
-  private errors: Object = {};
+  errors: Object = {};
   
-  private users: User[] = [];
-  private permissions: Permission[] = [];
+  users: User[] = [];
+  permissions: Permission[] = [];
 
-  private currentUser: User;
-  private newUserRegistration: Registration;
+  currentUser: User;
+  newUserRegistration: Registration;
 
   constructor(
     private adminService: AdminService,
@@ -38,6 +38,7 @@ export class AdministrationUsersComponent implements OnInit {
       password: '',
       passwordRepeat: ''
     };
+    this.currentUser = null;
     this.adminService.getUsers().subscribe(users => {
       this.users = users;
     });
@@ -55,15 +56,33 @@ export class AdministrationUsersComponent implements OnInit {
     }
   }
 
-  updateUser(user: User) {
-    this.adminService.updateUser(user).subscribe(
+  updateUserPermissions(user: User) {
+    this.adminService.updateUserPermissions(user).subscribe(
       () => {
-        this.notification.success('User updated')
+        this.notification.success('User permissions updated')
       },
       err => {
-        this.notification.error('Could not update user')
+        this.notification.error('Could not update user permissions')
       }
     );
+  }
+
+  updateUserPassword(user: User) {
+    this.adminService.updateUserPassword(user).subscribe(
+      () => {
+        this.notification.success('User password updated')
+      },
+      err => {
+        let errors = err.error.errors;
+        for (let i in errors) {
+          let error = errors[i];
+          this.errors[error.property] = error.message;
+        }
+        this.notification.error('Could not update user password')
+      }
+    );
+    user.password = null;
+    user.passwordRepeat = null;
   }
 
   addNewUser() {

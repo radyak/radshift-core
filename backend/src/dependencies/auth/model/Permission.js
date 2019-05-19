@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 Provider('Permission', (MongoDBConnection) => {
 
@@ -7,15 +7,14 @@ Provider('Permission', (MongoDBConnection) => {
     const PermissionSchema = new Schema({
         name: {
             required: true,
-            type: String
+            type: String,
+            index: true,
+            unique: true
         }
     })
-    
-    PermissionSchema.path('name').validate(async (value) => {
-        const count = await mongoose.models.Permission.countDocuments({ name: value })
-        return !count
-    }, 'Permission already exists')
 
+    PermissionSchema.plugin(uniqueValidator)
+    
     return MongoDBConnection.model('Permission', PermissionSchema)
 })
   

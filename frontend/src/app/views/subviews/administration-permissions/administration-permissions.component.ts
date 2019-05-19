@@ -13,9 +13,9 @@ export class AdministrationPermissionsComponent implements OnInit {
   @ViewChild('newPermissionName')
   permissionNameInput: ElementRef;
 
-  private permissions: Permission[] = [];
-  private newPermission: Permission;
-  private errors: Object = {};
+  permissions: Permission[] = [];
+  newPermission: Permission;
+  errors: Object = {};
 
   constructor(
     private adminService: AdminService,

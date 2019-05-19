@@ -24,8 +24,8 @@ services:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
       - MONGO_DATABASE=core
-      - ACTIVE_CONTEXT_PROFILES=dev
-      - RADHUB_URL=http://localhost:4010
+      - ACTIVE_CONTEXT_PROFILES=dev, dev-cluster
+      - RADHUB_URL=http://radhub:4010
 
   testapp:
     container_name: testapp

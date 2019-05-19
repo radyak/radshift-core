@@ -28,6 +28,7 @@ Configuration('ApiProxyRoutes', (BackendConfigurationService) => {
         var backendConfig = getConfigForBackendUrl(req.url)
 
         if (!backendConfig) {
+          console.warn(`No backend config found for ${req.url}`)
           return null
         }
 
@@ -35,6 +36,7 @@ Configuration('ApiProxyRoutes', (BackendConfigurationService) => {
         var port = backendConfig.port || DEFAULT_PORT
 
         var backendUrl = `http://${host}:${port}`
+        console.log(`Forwarding request to ${backendUrl}`)
         return backendUrl
       },
   
@@ -48,7 +50,9 @@ Configuration('ApiProxyRoutes', (BackendConfigurationService) => {
       ws: true,
   
       onError: function (err, req, res) {
-        console.error('An error occurred while proxying request; request:', req, 'error:', err)
+        console.error('An error occurred while proxying request;')
+        console.error('request:', req)
+        console.error('error:', err)
   
         res.writeHead(502, {
           'Content-Type': 'application/json'

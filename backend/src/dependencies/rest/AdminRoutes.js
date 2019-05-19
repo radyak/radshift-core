@@ -15,7 +15,6 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
       res.status(200).send(config)
     })
     .catch(error => {
-      console.log('Error', error)
       res.status(400).send(error)
     })
   })
@@ -32,25 +31,44 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
           .then((user) => res.status(200).send(user))
           .catch(err => res.status(400).send(err))
     } catch (err) {
-      console.error('Err', err)
       return res.status(400).json(err).send()
     }
   })
   
-  router.put('/users/:username', (req, res) => {
+  router.put('/users/:username/permissions', (req, res) => {
     let username = req.params.username
     let user = req.body
-    console.log(`Updating user ${username}`, user)
+
     AuthService.changeUserPermissions(username, user.permissions)
-        .then((result) => {
+        .then(result => {
           if(result.n === 0) {
-            return res.status(404).json({
+            return res.status(400).send({
               username: `User '${username}' not found`
-            }).send()
+            })
           }
           res.status(204).send()
         })
-        .catch(err => res.status(400).json(err).send())
+        .catch(err => {
+          res.status(400).json(err).send()
+        })
+  })
+
+  router.put('/users/:username/password', (req, res) => {
+    let username = req.params.username
+    let user = req.body
+
+    AuthService.changeUserPassword(user)
+        .then((result) => {
+          if (!result) {
+            return res.status(400).send({
+              username: `Could not change password for user '${username}'`
+            })
+          }
+          res.status(204).send()
+        })
+        .catch(err => {
+          res.status(400).json(err).send()
+        })
   })
   
   router.delete('/users/:username', (req, res) => {
@@ -60,7 +78,6 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
       username: username
     })
     .then((result) => {
-      console.log(result)
       if(result.n === 0) {
         return res.status(404).json({
           username: `User '${username}' not found`
@@ -79,12 +96,8 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
   
   router.post('/permissions', (req, res) => {
     try {
-      Promise.all([
-        // User.find(),
-        Permission.deleteMany({})  
-      ])
-      .then((values) => {
-        // let users = values[0]
+      Permission.deleteMany({})  
+      .then(() => {
         let newPermissions = req.body.map(
           newPermission => {
             let permission = new Permission({
@@ -98,28 +111,9 @@ Configuration('AdminRoutes', (AdministrationService, AuthService, User, Permissi
       })
       .catch(err => res.status(400).send(err))
     } catch (err) {
-      console.error('Err', err)
       return res.status(400).json(err).send()
     }
   })
-  
-  // router.delete('/permissions/:permission', (req, res) => {
-  //   let permissionName = req.params.permission
-
-  //   Permission.deleteOne({
-  //     name: permissionName
-  //   })
-  //   .then((result) => {
-  //     console.log(permissionName, result)
-  //     if(result.n === 0) {
-  //       return res.status(404).json({
-  //         permission: `Permission '${permissionName}' not found`
-  //       }).send()
-  //     }
-  //     res.status(204).send()
-  //   })
-  //   .catch(err => res.status(400).json(err).send())
-  // })
 
   router.use('/*', (req, res, next) => {
       res.status(404).send()

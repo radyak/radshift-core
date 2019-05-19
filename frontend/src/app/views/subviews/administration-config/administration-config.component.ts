@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { NotificationService } from 'src/app/components/notification.service';
 import { ModalService } from 'src/app/components/modal.service';
+import { ServerConfig } from 'src/app/model/ServerConfig';
 
 @Component({
   selector: 'administration-config',
@@ -10,8 +11,8 @@ import { ModalService } from 'src/app/components/modal.service';
 })
 export class AdministrationConfigComponent implements OnInit {
 
-  private config: Object = {};
-  private errors: Object = {};
+  config: ServerConfig = {};
+  errors: Object = {};
 
   constructor(
     private adminService: AdminService,
@@ -37,7 +38,6 @@ export class AdministrationConfigComponent implements OnInit {
         this.errors = {};
       },
       errorResponse => {
-        console.log(errorResponse);
         let errors = errorResponse.error.errors;
         for (let i in errors) {
           let error = errors[i];

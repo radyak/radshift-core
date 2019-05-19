@@ -43,7 +43,7 @@ Dependency('backendsConfig', () => {
         "portainer": {
             "label": "Portainer",
             "description": "Client w/ UI to inspect and manage Docker containers",
-            "host": "portainer",
+            "host": "localhost",
             "port": 9000,
             "image": "portainer/portainer",
             "entry": ""
@@ -51,11 +51,11 @@ Dependency('backendsConfig', () => {
         "mongoclient": {
             "label": "Mongo DB Client",
             "description": "Client w/ UI to work with Mongo DB",
-            "host": "mongoclient",
+            "host": "localhost",
             "port": 3000,
             "image": "mongoclient/mongoclient",
             "entry": ""
         }
     }
     
-}, 'dev')
+}, 'dev-local')

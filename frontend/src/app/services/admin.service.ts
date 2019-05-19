@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../model/User';
-import { Login } from '../model/Login';
 import { Registration } from '../model/Registration';
 import { Permission } from '../model/Permission';
+import { ServerConfig } from '../model/ServerConfig';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,12 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  getConfig(): Observable<Object> {
-    return this.http.get<Object>(`/api/admin/config`);
+  getConfig(): Observable<ServerConfig> {
+    return this.http.get<ServerConfig>(`/api/admin/config`);
   }
 
-  saveConfig(config: Object): Observable<Object> {
-    return this.http.put<Object>(`/api/admin/config`, config);
+  saveConfig(config: ServerConfig): Observable<ServerConfig> {
+    return this.http.put<ServerConfig>(`/api/admin/config`, config);
   }
 
   getUsers(): Observable<User[]> {
@@ -29,8 +29,12 @@ export class AdminService {
     return this.http.post<User>(`/api/admin/users`, registration);
   }
 
-  updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`/api/admin/users/${user.username}`, user);
+  updateUserPermissions(user: User): Observable<User> {
+    return this.http.put<User>(`/api/admin/users/${user.username}/permissions`, user);
+  }
+
+  updateUserPassword(user: User): Observable<User> {
+    return this.http.put<User>(`/api/admin/users/${user.username}/password`, user);
   }
 
   deleteUser(user: User): Observable<void> {

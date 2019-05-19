@@ -6,8 +6,15 @@
   <li class="list-group-item user-config" *ngFor="let user of users">
 
     <h4 (click)="showEditUserForm(user)">
-      <fa name="pencil" class="fa"></fa>
+      <fa name="user" class="fa"></fa>
       {{ user.username }}
+
+      <button (click)="showDeleteUserDialog(user)"
+              class="btn btn-danger pull-right"
+              *ngIf="user === currentUser">
+        <fa name="trash" class="fa"></fa>
+      </button>
+
     </h4>
 
     <form *ngIf="user === currentUser">
@@ -25,21 +32,47 @@
         <fa name="check-square" *ngIf="hasPermission(user, permission)" class="fa"></fa>
         <fa name="square" *ngIf="!hasPermission(user, permission)" class="fa"></fa>
         {{ permission.name }}
-
       </div>
       
       <div class="user-controls">
-        <button (click)="updateUser(user)" type="submit" class="btn btn-primary pull-right">
+        <button (click)="updateUserPermissions(user)" type="submit" class="btn btn-primary">
           <fa name="save" class="fa"></fa>
           Update
         </button>
-        <button (click)="showDeleteUserDialog(user)" class="btn btn-danger">
-          <fa name="trash" class="fa"></fa>
-          Delete
+      </div>
+  
+
+      <h5>
+        <fa name="lock" class="fa"></fa>
+        Change password:
+      </h5>
+
+      <form-input [(value)]="user.password"
+            property="password"
+            type="password"
+            label="Password"
+            help="Specify a password"
+            [error]="errors['changeUserPassword']">
+      </form-input>
+
+      <form-input
+            [(value)]="user.passwordRepeat"
+            property="passwordRepeat"
+            type="password"
+            label="Repeat the Password"
+            help="The password must be repeated to avoid errors"
+            [error]="errors['changeUserPasswordRepeat']">
+      </form-input>
+
+      <div class="user-controls">
+        <button (click)="updateUserPassword(user)" type="submit" class="btn btn-primary">
+          <fa name="save" class="fa"></fa>
+          Update
         </button>
       </div>
 
     </form>
+
   </li>
 </ul>
 

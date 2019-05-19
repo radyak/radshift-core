@@ -50,6 +50,53 @@ class AuthService {
         return user.save()
     }
 
+    changeUserPassword(user) {
+
+        return new Promise((resolve, reject) => {
+            let password = user && user.password
+            let passwordRepeat = user && user.passwordRepeat
+            if (!password || !password.trim()) {
+                return reject({
+                    errors: {
+                        changeUserPassword: {
+                            property: 'changeUserPassword',
+                            message: 'Password is required'
+                        },
+                        changeUserPasswordRepeat: {
+                            property: 'changeUserPasswordRepeat',
+                            message: 'Password and password repition must be identical'
+                        }
+                    }
+                })
+            }
+            if (password !== passwordRepeat) {
+                return reject({
+                    errors: {
+                        changeUserPassword: {
+                            property: 'changeUserPassword',
+                            message: 'Password and password repition must be identical'
+                        },
+                        changeUserPasswordRepeat: {
+                            property: 'changeUserPasswordRepeat',
+                            message: 'Password and password repition must be identical'
+                        }
+                    }
+                })
+            }
+
+            resolve(
+                this.User.findOne({
+                    username: user.username
+                })
+                .then(existingUser => {
+                    existingUser.setPassword(password)
+                    return existingUser.save()
+                })
+            )
+        })
+
+    }
+
     changeUserPermissions(username, permissions) {
         return this.User.updateOne({ username }, { permissions })
     }

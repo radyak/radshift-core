@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
 const crypto = require('crypto')
+const uniqueValidator = require('mongoose-unique-validator')
 
 // TODO: Configurize
 const HASH_ITERATIONS = 10000,
@@ -13,7 +13,9 @@ Provider('User', (MongoDBConnection) => {
     const UserSchema = new Schema({
         username: {
             required: true,
-            type: String
+            type: String,
+            index: true,
+            unique: true
         },
         email: {
             // required: true,
@@ -43,10 +45,7 @@ Provider('User', (MongoDBConnection) => {
         return this.hash === hash
     }
 
-    UserSchema.path('username').validate(async (value) => {
-        const count = await mongoose.models.User.countDocuments({ username: value })
-        return !count
-    }, 'Username already exists')
+    UserSchema.plugin(uniqueValidator)
 
     return MongoDBConnection.model('User', UserSchema)
 })

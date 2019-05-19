@@ -53,19 +53,20 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
                 }
     */
     const backendForwarding = (req, res, next) => {
-        if (!req[TOKEN_PROPERTY]) {
-            return
+        console.log('Appending to ', req[TOKEN_PROPERTY])
+        if (req[TOKEN_PROPERTY]) {
+            req.headers['X-User'] = req[TOKEN_PROPERTY].name
+            req.headers['X-Scope'] = req[TOKEN_PROPERTY].scope
         }
-        req.headers['X-User'] = req.user.name
-        req.headers['X-Scope'] = req.user.scope
+        next()
     }
 
     const errorHandler = function(err, req, res, next) {
-        console.log(`err.name = ${err.name}`)
+        console.error(`An error occurred: `, err)
         if (err.name === 'UnauthorizedError') {
             return res.status(401).send()
         }
-        next(req, res, next)
+        next()
     }
 
     const authorization = (permission) => {
