@@ -1,7 +1,7 @@
 
-Dependency('ConfigService', require('../util/ConfigService'))
+Component('ConfigService', require('../util/ConfigService'))
 
-Dependency('AdministrationService', (ConfigService) => {
+Component('AdministrationService', (ConfigService) => {
   const AdministrationService = require('../service/AdministrationService')
   return new AdministrationService(ConfigService)
 })

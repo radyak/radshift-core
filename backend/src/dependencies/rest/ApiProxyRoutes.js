@@ -2,7 +2,7 @@
 var proxy = require('http-proxy-middleware')
 const DEFAULT_PORT = 3000
 
-Configuration('ApiProxyRoutes', (BackendConfigurationService) => {
+Provider('ApiProxyRoutes', (BackendConfigurationService) => {
 
   const getConfigForBackendUrl = (url) => {
     var regex = new RegExp('/api/([a-zA-Z0-9.-]*)/*(.*)', 'i')

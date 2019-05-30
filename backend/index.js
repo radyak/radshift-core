@@ -1,7 +1,10 @@
-const AppContext = require('./src/util/AppContext')
+const njs = require('@radyak/njs')
 
 
-AppContext
+njs
+  .configure({
+    useGlobals: true
+  })
   .scan([
     'src/dependencies'
   ])

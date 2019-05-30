@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 
-Configuration('BackendStoreRoutes', (BackendsService) => {
+Provider('BackendStoreRoutes', (BackendsService) => {
 
   router.get('/', (request, response) => {
     var filter = request.query.filter || ''

@@ -2,7 +2,7 @@ const passport = require('passport')
 const express = require('express')
 const router = express.Router()
 
-Configuration('AuthRoutes', (AuthService) => {
+Provider('AuthRoutes', (AuthService) => {
 
     router.post('/login', (req, res, next) => {
 

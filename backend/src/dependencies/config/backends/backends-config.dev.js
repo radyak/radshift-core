@@ -1,4 +1,4 @@
-Dependency('backendsConfig', () => {
+Component('backendsConfig', () => {
 
     return {
         "testapp": {
@@ -29,7 +29,7 @@ Dependency('backendsConfig', () => {
     
 })
 
-Dependency('backendsConfig', () => {
+Component('backendsConfig', () => {
 
     return {
         "testapp": {

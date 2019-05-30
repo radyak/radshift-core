@@ -16,6 +16,7 @@
   "author": "florian.vogel84@gmx.net",
   "license": "ISC",
   "dependencies": {
+    "@radyak/njs": "0.0.2",
     "bottlejs": "^1.7.1",
     "deepmerge": "^3.0.0",
     "express": "^4.16.4",

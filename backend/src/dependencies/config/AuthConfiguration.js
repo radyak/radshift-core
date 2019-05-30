@@ -1,7 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
-Configuration('AuthConfiguration', (User) => {
+Provider('AuthConfiguration', (User) => {
 
     return passport.use(new LocalStrategy({
         usernameField: 'username',

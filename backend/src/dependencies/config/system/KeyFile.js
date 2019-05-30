@@ -1,1 +1,1 @@
-Dependency('KeyFile', (process.env.CONF_DIR || process.cwd()) + '/.env.key')
+Component('KeyFile', (process.env.CONF_DIR || process.cwd()) + '/.env.key')
