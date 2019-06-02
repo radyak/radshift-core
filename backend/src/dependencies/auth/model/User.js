@@ -47,6 +47,10 @@ Provider('User', (MongoDBConnection) => {
 
     UserSchema.plugin(uniqueValidator)
 
-    return MongoDBConnection.model('User', UserSchema)
+    try {
+        return MongoDBConnection.model('User')
+    } catch (e) {
+        return MongoDBConnection.model('User', UserSchema)
+    }
 })
   

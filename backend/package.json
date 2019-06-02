@@ -8,7 +8,7 @@
   },
   "repository": "https://github.com/radyak/radshift-core",
   "scripts": {
-    "test": "mocha --recursive",
+    "test": "mocha 'test/**/*.test.js' --recursive",
     "start": "node index.js",
     "watch": "nodemon --signal SIGHUP ./index.js localhost",
     "lint": "standard --fix --verbose"

@@ -1,5 +1,7 @@
 const uniqueValidator = require('mongoose-unique-validator')
 
+console.log('Defining Permission Schema')
+
 Provider('Permission', (MongoDBConnection) => {
 
     var Schema = MongoDBConnection.Schema
@@ -15,6 +17,10 @@ Provider('Permission', (MongoDBConnection) => {
 
     PermissionSchema.plugin(uniqueValidator)
     
-    return MongoDBConnection.model('Permission', PermissionSchema)
+    try {
+        return MongoDBConnection.model('Permission')
+    } catch (e) {
+        return MongoDBConnection.model('Permission', PermissionSchema)
+    }
 })
   
