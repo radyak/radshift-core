@@ -1,86 +1,79 @@
 var chai = require('chai')
 var expect = chai.expect
-var njs = require('@radyak/njs')
-var request = require('request')
+var AppTestUtil = require('../AppTestUtil')
 
-
-const PORT = 3030
-const BASE_URI = `http://localhost:${PORT}/api`
-
-let SERVER
-let GENERATE_TOKEN
 
 describe('Admin Resource', () => {
 
     before((done) => {
-
-        process.env.PORT = PORT
-
-        njs
-        .configure({
-            useGlobals: true
-        })
-        .profiles('dev-local', 'dev')
-        .scan([
-            'src/dependencies'
-        ])
-        .start((Server, Initializer, AuthService) => {
-            SERVER = Server
-            GENERATE_TOKEN = (username, permissions) => {
-                return AuthService.generateJWT({
-                    username: username,
-                    permissions: permissions
-                })
-            }
-            
-            Initializer.run()
-            Server.start()
-            console.log('Started server')
-
+        AppTestUtil.start().then(() => {
             done()
         })
-
     })
 
-    after(() => {
-        SERVER.stop()
-        console.log('Stopped server')
-        njs.clear()
+    after((done) => {
+        AppTestUtil.stop().then(() => {
+            done()
+        })
+    })
+
+    it('should protect config with AuthN', (done) => {
+        AppTestUtil
+            .get('/api/admin/config')
+
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(401)
+                expect(res.body).to.deep.equal({})
+                done()
+            })
+    })
+
+    it('should protect config with AuthZ - admin role', (done) => {
+        AppTestUtil
+            .asUser('admin', ['any'])
+            
+            .get('/api/admin/config')
+
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(403)
+                expect(res.body).to.deep.equal({
+                    "error": "Forbidden"
+                })
+                done()
+            })
     })
 
     it('should retrieve config', (done) => {
-        request({
-            method: 'GET',
-            url: `${BASE_URI}/admin/config`,
-            headers: {
-                Authorization: `Bearer ${GENERATE_TOKEN('admin', ['admin'])}`
-            }
-        }, (err, res) => {
-            expect(res.statusCode).to.equal(200)
-            done()
-        })
-    })
+        AppTestUtil
+            .asUser('admin', ['admin'])
 
-    it('should retrieve users', (done) => {
-        request({
-            method: 'GET',
-            url: `${BASE_URI}/admin/users`,
-            headers: {
-                Authorization: `Bearer ${GENERATE_TOKEN('admin', ['admin'])}`
-            }
-        }, (err, res) => {
-            expect(res.statusCode).to.equal(200)
+            .get('/api/admin/config')
 
-            let users = JSON.parse(res.body)
-            expect(users.length).to.equal(1)
-            expect(users[0]).to.deep.include({
-                permissions: ["admin"],
-                username: "admin"
+            .end((err, res) => {
+                console.log(err)
+                expect(res.statusCode).to.equal(200)
+                done()
             })
-            
-            done()
-        })
     })
 
+    // it('should retrieve users', (done) => {
+    //     AppTestUtil
+    //         .asUser('admin', ['admin'])
+
+    //         .get('/api/admin/users')
+
+    //         .end((err, res) => {
+    //             expect(res.statusCode).to.equal(200)
+
+    //             let users = res.body
+    //             expect(users.length).to.equal(1)
+    //             expect(users[0]).to.deep.include({
+    //                 permissions: ["admin"],
+    //                 username: "admin"
+    //             })
+                
+    //             done()
+    //         })
+    // })
 
 })
