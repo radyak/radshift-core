@@ -3,7 +3,7 @@ var expect = chai.expect
 var AppTestUtil = require('../AppTestUtil')
 
 
-describe('Admin Resource', () => {
+describe('Config Resource', () => {
 
     before((done) => {
         AppTestUtil.start().then(() => {
@@ -55,25 +55,5 @@ describe('Admin Resource', () => {
                 done()
             })
     })
-
-    // it('should retrieve users', (done) => {
-    //     AppTestUtil
-    //         .asUser('admin', ['admin'])
-
-    //         .get('/api/admin/users')
-
-    //         .end((err, res) => {
-    //             expect(res.statusCode).to.equal(200)
-
-    //             let users = res.body
-    //             expect(users.length).to.equal(1)
-    //             expect(users[0]).to.deep.include({
-    //                 permissions: ["admin"],
-    //                 username: "admin"
-    //             })
-                
-    //             done()
-    //         })
-    // })
-
+    
 })

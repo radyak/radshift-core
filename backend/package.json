@@ -8,7 +8,7 @@
   },
   "repository": "https://github.com/radyak/radshift-core",
   "scripts": {
-    "test": "mocha 'test/**/*.test.js' --recursive --grep 'Admin Resource'",
+    "test": "mocha 'test/**/*.test.js' --recursive",
     "start": "node index.js",
     "watch": "nodemon --signal SIGHUP ./index.js localhost",
     "lint": "standard --fix --verbose"
@@ -16,7 +16,7 @@
   "author": "florian.vogel84@gmx.net",
   "license": "ISC",
   "dependencies": {
-    "@radyak/njs": "0.0.2",
+    "@radyak/njs": "0.0.4",
     "bottlejs": "^1.7.1",
     "deepmerge": "^3.0.0",
     "express": "^4.16.4",

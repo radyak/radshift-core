@@ -10,9 +10,9 @@ let TOKEN
 
 class AppTestUtil {
     
-    start() {
+    start(postStartHook) {
 
-        return new Promise((resolve, reject) => {
+        let result = new Promise((resolve, reject) => {
             njs
             .configure({
                 useGlobals: true
@@ -21,22 +21,36 @@ class AppTestUtil {
             .scan([
                 'src/dependencies'
             ])
-            .start((App, Initializer, AuthService) => {
+            .start((App, AuthService) => {
                 APP = App
                 AUTH_SERVICE = AuthService
-                
-                Initializer.run()
+
                 resolve()
             })
         })
+
+        return postStartHook ?
+            result.then(() => {
+                postStartHook()
+            })
+
+            : result
     
     }
 
-    stop() {
-        return new Promise((resolve, reject) => {
-            njs.clear()
-            resolve()
-        })
+    stop(preStopHook) {
+        let result = preStopHook ? preStopHook() : null
+        
+        return result ? 
+            result.then(() => {
+                njs.clear()
+                resolve()
+            })
+
+            :  new Promise((resolve, reject) => {
+                njs.clear()
+                resolve()
+            })
     }
 
     asUser(username, permissions) {
@@ -53,14 +67,14 @@ class AppTestUtil {
         return this
     }
 
-    post(path) {
-        REQUEST = supertest(APP).post(path)
+    post(path, body) {
+        REQUEST = supertest(APP).post(path).send(body)
         this.addHeaders()
         return this
     }
 
-    put(path) {
-        REQUEST = supertest(APP).put(path)
+    put(path, body) {
+        REQUEST = supertest(APP).put(path).send(body)
         this.addHeaders()
         return this
     }
@@ -88,6 +102,24 @@ class AppTestUtil {
         })
         REQUEST = undefined
         TOKEN = undefined
+    }
+
+    clearModel(modelName) {
+        return njs[modelName].then((Model) => {
+            return Model.deleteMany({})
+        })
+    }
+
+    clearDb() {
+        return Promise.all([
+            njs.User
+        ]).then(values => {
+
+            return Promise.all([
+                values[0].deleteMany({})
+            ])
+            
+        })
     }
 
 }

@@ -87,4 +87,18 @@ xdescribe('Experiments', function () {
 
     asyncFunction()
   })
+
+  describe('require cache', () => {
+    
+    before((done) => {
+        require('./AppTestUtil').start().then(() => {
+            done()
+        })
+    })
+
+    it('examine', () => {
+      console.log(Object.keys(require.cache).filter((element) => element.indexOf('dependencies') !== -1))
+      expect(true).to.equal(true)
+    })
+  })
 })
