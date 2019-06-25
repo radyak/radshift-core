@@ -32,7 +32,9 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
           return null
         }
 
-        var host = backendConfig.host || backendName
+        console.log('Using backend config:', backendConfig)
+
+        var host = backendConfig.host
         var port = backendConfig.port || DEFAULT_PORT
 
         var backendUrl = `http://${host}:${port}`
@@ -51,8 +53,8 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
   
       onError: function (err, req, res) {
         console.error('An error occurred while proxying request;')
-        console.error('request:', req)
-        console.error('error:', err)
+        // console.error('request:', req)
+        // console.error('error:', err)
   
         res.writeHead(502, {
           'Content-Type': 'application/json'

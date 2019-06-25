@@ -69,7 +69,16 @@ class DockerApiClient {
         'Image': imageName,
         'Env': [
 
-        ]
+        ],
+
+        // Necessary for Docker-Compose - so for Docker Swarm?
+        'NetworkingConfig': {
+          'EndpointsConfig': {
+              'radshiftcore_internal' : {
+                  'Links':['core']
+              }
+          }
+      }
       }),
       headers: {
         'Content-Type': 'application/json'
