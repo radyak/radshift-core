@@ -34,7 +34,7 @@ deploy.x86: build.x86
 	docker tag  $(REPO)/$(IMAGE):$(TAG_X86) $(REPO)/$(IMAGE):$(TAG_X86)
 	docker push $(REPO)/$(IMAGE):$(TAG_X86)
 
-run.x86: #build.x86
+run.x86: build.x86
 	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
 
 
