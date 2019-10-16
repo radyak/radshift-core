@@ -24,6 +24,15 @@ Component('backendsConfig', () => {
             "port": 3000,
             "image": "mongoclient/mongoclient",
             "entry": ""
+        },
+        "radshift-stream-downloader": {
+            "label": "StreamNoMoreFam",
+            "description": "Download video & audio from streams",
+            "host": "radshift-stream-downloader",
+            "name": "radshift-stream-downloader",
+            "port": 3009,
+            "image": "rpi-workstation/radshift-stream-downloader:x86-latest",
+            "entry": ""
         }
     }
     
@@ -54,6 +63,14 @@ Component('backendsConfig', () => {
             "host": "localhost",
             "port": 3000,
             "image": "mongoclient/mongoclient",
+            "entry": ""
+        },
+        "radshift-stream-downloader": {
+            "label": "StreamNoMoreFam",
+            "description": "Download video & audio from streams",
+            "host": "localhost",
+            "port": 3009,
+            "image": "rpi-workstation/radshift-stream-downloader:x86-latest",
             "entry": ""
         }
     }

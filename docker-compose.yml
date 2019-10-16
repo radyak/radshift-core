@@ -53,12 +53,27 @@ services:
     image: radyak/radhub:x86-latest
     environment:
       - PORT=4010
+      - BACKENDS_FILE=/usr/src/radhub/radhub-backends.json
+    volumes:
+      - "/home/fvo/tmp/test-mounts:/usr/src/radhub"
     ports:
       - 4010:4010
     networks:
       - www
       - internal
 
+  radshift-stream-downloader:
+    container_name: radshift-stream-downloader
+    image: rpi-workstation:5000/radshift-stream-downloader:x86-latest
+    environment:
+      - PORT=3009
+    volumes:
+      - "/home/fvo/tmp/test-mounts:/usr/src/app/output"
+    ports:
+      - 3009:3009
+    networks:
+      - www
+      - internal
 
   # mongoclient:
   #   container_name: mongoclient

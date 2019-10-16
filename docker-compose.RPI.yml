@@ -3,10 +3,11 @@ version: '3'
 services:
 
   core:
-    depends_on:
-      - mongodb
     container_name: core
     image: radyak/radshift-core
+    depends_on:
+      - mongodb
+    restart: on-failure
     ports:
       - 80:80
       - 443:443
@@ -18,28 +19,63 @@ services:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
       - MONGO_DATABASE=core
+    networks:
+      - www
+      - internal
 
-  testapp:
-    container_name: testapp
-    image: radyak/radshift-testapp
-    environment:
-      - PORT=3210
+  # testapp:
+  #   container_name: testapp
+  #   image: radyak/radshift-testapp
+  #   restart: on-failure
+  #   environment:
+  #     - PORT=3210
+  #   networks:
+  #     - internal
   
   mongodb:
     container_name: mongodb
     image: radyak/radshift-mongodb
+    restart: on-failure
+    ports:
+      - 27017
+    networks:
+      - internal
 
-  # mongoclient:
-  #   container_name: mongoclient
-  #   image: mongoclient/mongoclient
-  #   ports:
-  #     - 3000:3000
-  #   network_mode: host
+  radhub:
+    container_name: radhub
+    image: radyak/radhub
+    restart: on-failure
+    environment:
+      - PORT=4010
+      - BACKENDS_FILE=/usr/src/radhub/radhub-backends.json
+    volumes:
+      - "/home/pirate:/usr/src/radhub"
+    ports:
+      - 4010:4010
+    networks:
+      - www
+      - internal
 
-  # portainer:
-  #   container_name: portainer
-  #   image: hypriot/rpi-portainer
-  #   ports:
-  #     - 9000:9000
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  radshift-stream-downloader:
+    container_name: radshift-stream-downloader
+    image: rpi-workstation:5000/radshift-stream-downloader:latest
+    restart: on-failure
+    environment:
+      - PORT=3009
+    volumes:
+      - "/home/pirate/output:/usr/src/app/output"
+    ports:
+      - 3009:3009
+    networks:
+      - www
+      - internal
+
+
+networks:
+
+  www:
+    driver: bridge
+
+  internal:
+    driver: bridge
+    internal: true
