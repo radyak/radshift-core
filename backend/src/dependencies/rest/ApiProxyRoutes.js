@@ -5,7 +5,7 @@ const DEFAULT_PORT = 3000
 Provider('ApiProxyRoutes', (BackendConfigurationService) => {
 
   const getConfigForBackendUrl = (url) => {
-    var regex = new RegExp('/api/([a-zA-Z0-9.-]*)/*(.*)', 'i')
+    var regex = new RegExp('/apps/([a-zA-Z0-9.-]*)/*(.*)', 'i')
     var matches = regex.exec(url)
 
     var backendName = matches[1]
@@ -17,7 +17,7 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
     }
   }
 
-  return proxy('/api/**', {
+  return proxy('/apps/**', {
   
       // Default target
       target: 'http://nirvana:3000',
@@ -44,7 +44,7 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
   
       // Remove base path
       pathRewrite: {
-        '^/api/[a-zA-Z0-9.-]*/': ''
+        '^/apps/[a-zA-Z0-9.-]*/': ''
       },
 
       changeOrigin: true,
