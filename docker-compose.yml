@@ -47,6 +47,7 @@ services:
       - 27017:27017
     networks:
       - internal
+      - www
 
   radhub:
     container_name: radhub
