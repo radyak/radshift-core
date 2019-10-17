@@ -27,6 +27,8 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
       router: function (req) {
         var backendConfig = getConfigForBackendUrl(req.url)
 
+        console.log('DEBUG; req=', req)
+
         if (!backendConfig) {
           console.warn(`No backend config found for ${req.url}`)
           return null
