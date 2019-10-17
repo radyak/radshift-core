@@ -43,18 +43,18 @@ class DynDnsUpdateService {
         )
 
         var base64Credentials = Buffer.from(
-          `${config.username}:${config.password}`
+          `${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
         ).toString('base64')
 
-        const URL = `https://${config.dynDnsHost}/nic/update?hostname=${
-          config.domain
+        const URL = `https://${config.dynDnsProviderHost}/nic/update?hostname=${
+          config.hostDomain
         }&myip=${EXTERNALIP}`
 
         var options = {
           url: URL,
           headers: {
             'User-Agent': 'nodeclient',
-            Host: config.dynDnsHost,
+            Host: config.dynDnsProviderHost,
             Authorization: `Basic ${base64Credentials}`
           }
         }
@@ -91,7 +91,7 @@ class DynDnsUpdateService {
         )
       }
 
-      var cronExpression = `*/${config.updateIntervalMinutes} * * * *`
+      var cronExpression = `*/${config.dynDnsUpdateIntervalMinutes} * * * *`
       cron.validate(cronExpression)
 
       cronJob = cron.schedule(
@@ -106,7 +106,7 @@ class DynDnsUpdateService {
       // Run first update immediately
       this.updateOnce()
       cronJob.start()
-      console.log(`Started cyclic update every ${config.updateIntervalMinutes} minute(s)`)
+      console.log(`Started cyclic update every ${config.dynDnsUpdateIntervalMinutes} minute(s)`)
     })
     return this
   }
