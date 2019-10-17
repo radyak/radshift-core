@@ -4,7 +4,7 @@ services:
 
   core:
     container_name: core
-    image: radyak/radshift-core
+    image: ${REPO}/radshift-core
     depends_on:
       - mongodb
     restart: on-failure
@@ -34,7 +34,7 @@ services:
   
   mongodb:
     container_name: mongodb
-    image: radyak/radshift-mongodb
+    image: ${REPO}/radshift-mongodb
     restart: on-failure
     ports:
       - 27017
@@ -43,7 +43,7 @@ services:
 
   radhub:
     container_name: radhub
-    image: radyak/radhub
+    image: ${REPO}/radhub
     restart: on-failure
     environment:
       - PORT=4010
@@ -58,7 +58,7 @@ services:
 
   radshift-stream-downloader:
     container_name: radshift-stream-downloader
-    image: rpi-workstation:5000/radshift-stream-downloader:latest
+    image: ${REPO}/radshift-stream-downloader:latest
     restart: on-failure
     environment:
       - PORT=3009

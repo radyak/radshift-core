@@ -43,13 +43,16 @@ deploy.rpi.config:
 	scp -P $(PORT) rpi.config/.env.conf $(SSH_USER)@$(HOST):/home/pirate/conf/.env.conf
 	scp -P $(PORT) rpi.config/.env.key $(SSH_USER)@$(HOST):/home/pirate/conf/.env.key
 
+deploy.rpi.env:
+	scp -P $(PORT) .env $(SSH_USER)@$(HOST):.env
+
 deploy.rpi.cluster-config:
 	scp -P $(PORT) docker-compose.RPI.yml $(SSH_USER)@$(HOST):docker-compose.yml
 
 deploy.rpi.radhub-config:
 	scp -P $(PORT) ../radhub/radhub-backends.json $(SSH_USER)@$(HOST):radhub-backends.json
 
-deploy.rpi: deploy.rpi.config deploy.rpi.cluster-config deploy.rpi.radhub-config
+deploy.rpi: deploy.rpi.config deploy.rpi.env deploy.rpi.cluster-config deploy.rpi.radhub-config
 
 
 ## dev

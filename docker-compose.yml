@@ -6,7 +6,7 @@ services:
     depends_on:
       - mongodb
     container_name: core
-    image: radyak/radshift-core:x86-latest
+    image: ${REPO}/radshift-core:x86-latest
     build:
       context: .
       args:
@@ -32,7 +32,7 @@ services:
 
   testapp:
     container_name: testapp
-    image: radyak/radshift-testapp:x86-latest
+    image: ${REPO}/radshift-testapp:x86-latest
     environment:
       - PORT=3210
     ports:
@@ -50,7 +50,7 @@ services:
 
   radhub:
     container_name: radhub
-    image: radyak/radhub:x86-latest
+    image: ${REPO}/radhub:x86-latest
     environment:
       - PORT=4010
       - BACKENDS_FILE=/usr/src/radhub/radhub-backends.json
@@ -64,7 +64,7 @@ services:
 
   radshift-stream-downloader:
     container_name: radshift-stream-downloader
-    image: rpi-workstation:5000/radshift-stream-downloader:x86-latest
+    image: ${REPO}/radshift-stream-downloader:x86-latest
     environment:
       - PORT=3009
     volumes:
