@@ -4,11 +4,11 @@ var bodyParser = require('body-parser')
 
 Provider('App', (AuthRoutes, ApiProxyRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, AuthMiddleware) => {
 
-  app.use(
-    bodyParser.urlencoded({
-      extended: false
-    })
-  )
+  // app.use(
+  //   bodyParser.urlencoded({
+  //     extended: false
+  //   })
+  // )
   
   app.use(bodyParser.raw())
 
