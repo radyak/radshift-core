@@ -3,7 +3,6 @@ include .env
 export
 
 IMAGE=radshift-core
-REPO=radyak
 
 BASE_IMAGE_ARM32=arm32v7/node:lts-slim
 BASE_IMAGE_X86=node:lts-alpine
@@ -41,14 +40,14 @@ run.x86: build.x86
 ## RPI
 
 deploy.rpi.config:
-	scp -P $(PORT) rpi.config/.env.conf $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.conf
-	scp -P $(PORT) rpi.config/.env.key $(SSH_USER)@$(DOMAIN):/home/pirate/conf/.env.key
+	scp -P $(PORT) rpi.config/.env.conf $(SSH_USER)@$(HOST):/home/pirate/conf/.env.conf
+	scp -P $(PORT) rpi.config/.env.key $(SSH_USER)@$(HOST):/home/pirate/conf/.env.key
 
 deploy.rpi.cluster-config:
-	scp -P $(PORT) docker-compose.RPI.yml $(SSH_USER)@$(DOMAIN):docker-compose.yml
+	scp -P $(PORT) docker-compose.RPI.yml $(SSH_USER)@$(HOST):docker-compose.yml
 
 deploy.rpi.radhub-config:
-	scp -P $(PORT) ../radhub/radhub-backends.json $(SSH_USER)@$(DOMAIN):radhub-backends.json
+	scp -P $(PORT) ../radhub/radhub-backends.json $(SSH_USER)@$(HOST):radhub-backends.json
 
 deploy.rpi: deploy.rpi.config deploy.rpi.cluster-config deploy.rpi.radhub-config
 
