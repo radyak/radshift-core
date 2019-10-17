@@ -29,7 +29,7 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
 
         console.log(
           '\n\n',
-          'DEBUG; req=',
+          'Forwarding request',
           {
             originalUrl: req.originalUrl,
             headers: req.headers,
@@ -41,13 +41,11 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
           return null
         }
 
-        console.log('Using backend config:', backendConfig)
-
         var host = backendConfig.host
         var port = backendConfig.port || DEFAULT_PORT
 
         var backendUrl = `http://${host}:${port}`
-        console.log(`Forwarding request to ${backendUrl}`)
+        console.log(`... to ${backendUrl}`)
         return backendUrl
       },
   
