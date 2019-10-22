@@ -5,7 +5,7 @@ Provider('Server', (ConfigService, App) => {
     var server = greenlock.create({
       version: 'draft-11',
       server: 'https://acme-v02.api.letsencrypt.org/directory',
-      configDir: '~/.config/acme/',
+      configDir: '/usr/src/conf/.config/acme/',
       email: config.adminEmail,
       approvedDomains: [config.hostDomain],
       agreeTos: true,
