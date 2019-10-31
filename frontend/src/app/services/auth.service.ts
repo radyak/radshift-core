@@ -24,13 +24,19 @@ export class AuthService {
     private notification: NotificationService
   ) { }
 
-  login(user: Login){
+  login(user: Login, redirectUrl: string = null){
     return this.http.post<Authentication>('/api/auth/login', {
       username: user.username,
       password: user.password
     }).subscribe((auth: Authentication) => {
-      this.setLocalState(auth.token)
-      this.router.navigate(['/dashboard']);
+      if (redirectUrl) {
+        let url: URL = new URL(redirectUrl)
+        url.searchParams.set('token', auth.token)
+        window.location.href = `${url}`
+      } else {
+        this.setLocalState(auth.token);
+        this.router.navigate(['/dashboard']);
+      }
     }, (err) => {
       this.notification.error('Wrong username or password', 'Login Error')
     });

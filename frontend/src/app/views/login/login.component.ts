@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -32,7 +34,7 @@ export class LoginComponent implements OnInit {
   
   onSubmit() {
     if (this.form.valid) {
-      this.authService.login(this.form.value);
+      this.authService.login(this.form.value, this.route.snapshot.queryParamMap.get('origin'));
     }
     this.formSubmitAttempt = true;
   }
