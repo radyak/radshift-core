@@ -25,7 +25,7 @@ class AppTestUtil {
                 APP = App
                 AUTH_SERVICE = AuthService
 
-                resolve()
+                resolve(App)
             })
         })
 

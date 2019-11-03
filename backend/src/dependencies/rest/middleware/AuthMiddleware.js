@@ -5,7 +5,7 @@ const jwt = require('express-jwt')
 const JWT_SECRET = 'secret'
 
 
-Provider('AuthMiddleware', (AuthConfiguration) => {
+Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
 
     const TOKEN_PROPERTY = 'user'
     
@@ -34,30 +34,73 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
     })
 
     /*
-        There are three possibilities to provide AuthN & AuthZ for backends:
-            1. Forward the JWT. Backends can trust it and simply decode it since it has already been verified by authenticationOptional
-            2. Forward the user details from the decoded JWT. Might be more unclean but simpler for testing
-            3. Let backends specify AuthN & AuthZ requirements in their backendConfig for the core to check them, e.g.
-                ...
+        Example security configuration section for backend:
+            {
+                ...,
                 "myapp": {
-                    "securityRules": [
-                        {
-                            path: "/some/path/**",
-                            authenticated: true,
-                            permissions: [
-                                "some",
-                                "permissions"
-                            ]
-                        }
-                    ]
+                    ...,
+                    "security": {
+                        rules: [
+                            {
+                                "resourceMatcher": "*.\.js",
+                                "authenticated": false
+                            },
+                            {
+                                "resourceMatcher": "/admin",        -> mandatory
+                                "authenticated": true,              -> optional; default: false
+                                "permissions": [                    -> optional; default: []; if not empty, interpreted as authenticated = true
+                                    "admin"
+                                ],
+                                "onUnAuthenticated": 401,           -> optional; if nothing specified, redirect to "/login"
+                                "onUnAuthorized": 404,              -> optional; default 403
+                                "mappings": {
+                                    "name": "X-Username",           -> default: X-User
+                                    "scope": "X-Roles"              -> default: X-Scope
+                                }
+                            },
+                            ...
+                        ],
+
+                        "authenticated": false,
+                        ...                                         -> all of the above parameters can be configured as default for all paths
+                    }
                 }
     */
     const backendForwarding = (req, res, next) => {
-        console.log('Appending to ', req[TOKEN_PROPERTY])
-        if (req[TOKEN_PROPERTY]) {
-            req.headers['X-User'] = req[TOKEN_PROPERTY].name
-            req.headers['X-Scope'] = req[TOKEN_PROPERTY].scope
+        var backendConfig = BackendRoutingService.getConfigForBackendUrl(req.baseUrl, '/apps')
+        if (!backendConfig) {
+            next()
+            return
         }
+
+        var user = req[TOKEN_PROPERTY]
+
+        var authRequired = backendConfig.authenticated
+                || (backendConfig.permissions && backendConfig.permissions.length)
+
+        if (authRequired && !user) {
+            if (backendConfig.onUnAuthenticated) {
+                res.status(401).send()
+                return
+            }
+
+            res.redirect(`/login?url=${req.originalUrl}`)
+            return
+        }
+
+        user.scope = user.scope ? user.scope.split(',') : []
+
+        if (backendConfig.permissions && !backendConfig.permissions.some(permission => user.scope.indexOf(permission) > -1)) {
+            res.status(backendConfig.onUnAuthorized || 403).send()
+            return
+        }
+
+        backendConfig.mappings = backendConfig.mappings || {}
+        if (user) {
+            req.headers[backendConfig.mappings.name || 'X-User'] = user.name
+            req.headers[backendConfig.mappings.scope || 'X-Scope'] = user.scope
+        }
+
         next()
     }
 
@@ -112,7 +155,7 @@ Provider('AuthMiddleware', (AuthConfiguration) => {
 })
 
 
-Provider('AuthMiddleware', (AuthConfiguration) => {
+Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
 
     const mockMiddleware = (req, res, next) => {
         return next()

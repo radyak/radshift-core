@@ -7,7 +7,31 @@ Component('backendsConfig', () => {
             "host": "testapp",
             "port": 3210,
             "image": "radyak/radshift-testapp:x86-latest",
-            "entry": ""
+            "entry": "",
+            "security": {
+                "rules": [
+                    {
+                        "resourceMatcher": "\/protected.*",
+                        "authenticated": true
+                    },
+                    {
+                        "resourceMatcher": ".*admin.*",
+                        "permissions": [
+                            "admin"
+                        ],
+                        "mappings": {
+                            "name": "X-User",
+                            "scope": "X-Roles"
+                        }
+                    },
+                ],
+
+                "authenticated": true,
+                "mappings": {
+                    "name": "X-User",
+                    "scope": "X-Roles"
+                }
+            }
         },
         "portainer": {
             "label": "Portainer",
@@ -47,7 +71,33 @@ Component('backendsConfig', () => {
             "host": "localhost",
             "port": 3210,
             "image": "radyak/radshift-testapp:x86-latest",
-            "entry": ""
+            "entry": "",
+            "security": {
+                "rules": [
+                    {
+                        "resourceMatcher": "/protected",
+                        "authenticated": true
+                    },
+                    {
+                        "resourceMatcher": "/admin/*",
+                        "permissions": [
+                            "admin"
+                        ],
+                        // "onUnAuthenticated": 401,
+                        "onUnAuthorized": 403,
+                        "mappings": {
+                            "name": "X-User",
+                            "scope": "X-Roles"
+                        }
+                    },
+                ],
+
+                "authenticated": true,
+                "mappings": {
+                    "name": "X-User",
+                    "scope": "X-Roles"
+                }
+            }
         },
         "portainer": {
             "label": "Portainer",

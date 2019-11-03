@@ -39,6 +39,7 @@ services:
       - 3210:3210
     networks:
       - internal
+      - www
     
   mongodb:
     container_name: mongodb

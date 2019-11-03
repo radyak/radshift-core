@@ -30,3 +30,8 @@ Provider('AuthService', (User) => {
   const AuthService = require('../service/AuthService')
   return new AuthService(User)
 })
+
+Provider('BackendRoutingService', (BackendConfigurationService) => {
+  const BackendRoutingService = require('../service/BackendRoutingService')
+  return new BackendRoutingService(BackendConfigurationService)
+})

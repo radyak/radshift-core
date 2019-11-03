@@ -2,20 +2,7 @@
 var proxy = require('http-proxy-middleware')
 const DEFAULT_PORT = 3000
 
-Provider('ApiProxyRoutes', (BackendConfigurationService) => {
-
-  const getConfigForBackendUrl = (url) => {
-    var regex = new RegExp('/apps/([a-zA-Z0-9.-]*)/*(.*)', 'i')
-    var matches = regex.exec(url)
-
-    var backendName = matches[1]
-
-    var backendConfig = BackendConfigurationService.getBackendConfiguration(backendName)
-
-    return {
-      ...backendConfig
-    }
-  }
+Provider('ApiProxyRoutes', (BackendRoutingService) => {
 
   return proxy('/apps/**', {
   
@@ -25,16 +12,8 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
 
       // Overwrites `target`
       router: function (req) {
-        var backendConfig = getConfigForBackendUrl(req.url)
 
-        console.log(
-          '\n\n',
-          'Forwarding request',
-          {
-            originalUrl: req.originalUrl,
-            headers: req.headers,
-            body: req.body
-          })
+        var backendConfig = BackendRoutingService.getConfigForBackendUrl(req.url, '/apps')
 
         if (!backendConfig) {
           console.warn(`No backend config found for ${req.url}`)
@@ -45,7 +24,16 @@ Provider('ApiProxyRoutes', (BackendConfigurationService) => {
         var port = backendConfig.port || DEFAULT_PORT
 
         var backendUrl = `http://${host}:${port}`
-        console.log(`... to ${backendUrl}`)
+
+        console.log(
+          'Forward request',
+          {
+            originalUrl: req.originalUrl,
+            headers: req.headers,
+            body: req.body
+          },
+          `to ${backendUrl}`)
+
         return backendUrl
       },
   

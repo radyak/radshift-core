@@ -4,7 +4,7 @@ var AppTestUtil = require('../AppTestUtil')
 var njs = require('@radyak/njs')
 
 
-describe.only('Users Resource', () => {
+describe('Users Resource', () => {
 
     beforeEach((done) => {
         // AppTestUtil.clearModel('User').then(() => {
