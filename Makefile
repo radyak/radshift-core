@@ -62,7 +62,6 @@ tests:
 
 tests.continuous:
 	cd backend; npm test -- -w
-	# npm test -- -w --grep 'lists files recursively'
 
 run.dev.dependencies:
 	docker-compose stop mongodb radhub testapp radshift-stream-downloader
