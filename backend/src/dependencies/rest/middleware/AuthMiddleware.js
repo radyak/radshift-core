@@ -8,28 +8,42 @@ const JWT_SECRET = 'secret'
 Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
 
     const TOKEN_PROPERTY = 'user'
+    const AUTH_HEADER_NAME = 'authorization'
+    const AUTH_HEADER_PREFIX = 'Bearer'
+    const AUTH_COOKIE_NAME = 'Authorization'
     
     const getTokenFromHeaders = (req) => {
-        const HEADER_PREFIX = 'Bearer'
 
-        const authorization = req.headers.authorization
+        const authorization = req.headers[AUTH_HEADER_NAME]
 
-        if (authorization && authorization.split(' ')[0] === HEADER_PREFIX) {
+        if (authorization && authorization.split(' ')[0] === AUTH_HEADER_PREFIX) {
             return authorization.split(' ')[1]
         }
         return null
     }
 
+    const getTokenFromCookies = (req) => {
+
+        const authorization = req.cookies[AUTH_COOKIE_NAME]
+
+        console.log('Found Auth cookie: ', authorization)
+        return authorization
+    }
+
+    const getTokenFromRequest = (req) => {
+        return getTokenFromCookies(req) || getTokenFromHeaders(req)
+    }
+
     const authentication = jwt({
         secret: JWT_SECRET,
         userProperty: TOKEN_PROPERTY,
-        getToken: getTokenFromHeaders
+        getToken: getTokenFromRequest
     })
 
     const authenticationOptional = jwt({
         secret: JWT_SECRET,
         userProperty: TOKEN_PROPERTY,
-        getToken: getTokenFromHeaders,
+        getToken: getTokenFromRequest,
         credentialsRequired: false,
     })
 

@@ -1,5 +1,6 @@
 var express = require('express')
 var app = express()
+var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 
 Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, AuthMiddleware) => {
@@ -12,6 +13,8 @@ Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, Au
   // app.use(bodyParser.raw())
 
   app.use(bodyParser.json())
+
+  app.use(cookieParser());
 
   app.use('/api/isalive', function (req, res) {
     res.status(204).end()
