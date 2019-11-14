@@ -5,12 +5,8 @@ class BackendRoutingService {
     }
 
 
-    getConfigForBackendUrl(url, basePath) {
-        var regex = new RegExp(basePath + '/([a-zA-Z0-9.-]*)/*(.*)', 'i')
-        var matches = regex.exec(url)
-
-        var backendName = matches[1]
-        var path = '/' + (matches[2] || '')
+    getConfigByHostname(hostname, path) {
+        var backendName = hostname.split('.')[0]
 
         var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
 
@@ -31,6 +27,8 @@ class BackendRoutingService {
         delete result.security
         delete result.rules
 
+        console.log('Security rule:', result)
+        
         return result
     }
 

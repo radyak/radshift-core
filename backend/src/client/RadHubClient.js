@@ -2,7 +2,7 @@ const request = require('request')
 
 const BASE_URL = process.env.RADHUB_URL
 
-class DockerApiClient {
+class RadHubClient {
 
   request(options) {
     options.url = options.url || `${BASE_URL}${options.path}`
@@ -28,4 +28,4 @@ class DockerApiClient {
 
 }
 
-module.exports = DockerApiClient
+module.exports = RadHubClient
