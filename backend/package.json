@@ -24,9 +24,8 @@
     "express-jwt": "^5.3.1",
     "express-session": "^1.16.1",
     "external-ip": "^2.1.1",
-    "greenlock-express": "^2.5.0",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.4.3",
+    "mongoose": "^5.7.11",
     "mongoose-unique-validator": "^2.0.3",
     "node-cron": "^2.0.3",
     "passport": "^0.4.0",
@@ -36,10 +35,7 @@
     "supertest": "^4.0.2",
     "validate": "^4.5.1"
   },
-  "optionalDependencies": {
-    "le-acme-core": "^2.1.4",
-    "ursa": "^0.9.4"
-  },
+  "optionalDependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
