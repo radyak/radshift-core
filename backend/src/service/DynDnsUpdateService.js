@@ -8,6 +8,53 @@ var state = {
   error: null
 }
 
+
+const DOMAIN_PROVIDER_REQUESTS = {
+
+  "strato": (config, externalIp) => {
+
+    var base64Credentials = Buffer.from(
+      `${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
+    ).toString('base64')
+
+    const url = `https://dyndns.strato.com/nic/update?hostname=${config.hostDomain}&myip=${externalIp}`
+
+    var options = {
+      method: 'GET',
+      url: url,
+      headers: {
+        'User-Agent': 'nodeclient',
+        Host: 'dyndns.strato.com',
+        Authorization: `Basic ${base64Credentials}`
+      }
+    }
+
+    return options
+  },
+
+  "godaddy": (config, externalIp) => {
+
+    const url = `https://api.godaddy.com/v1/domains/${config.hostDomain}/records/A/*`
+
+    var options = {
+      method: 'PUT',
+      url: url,
+      json: true,
+      body: [
+        {
+          "data": `${externalIp}`
+        }
+      ],
+      headers: {
+        Authorization: `sso-key ${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
+      }
+    }
+
+    return options
+  }
+
+}
+
 var cronJob = null
 
 /**
@@ -42,22 +89,7 @@ class DynDnsUpdateService {
           } to ${EXTERNALIP}`
         )
 
-        var base64Credentials = Buffer.from(
-          `${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
-        ).toString('base64')
-
-        const URL = `https://${config.dynDnsProviderHost}/nic/update?hostname=${
-          config.hostDomain
-        }&myip=${EXTERNALIP}`
-
-        var options = {
-          url: URL,
-          headers: {
-            'User-Agent': 'nodeclient',
-            Host: config.dynDnsProviderHost,
-            Authorization: `Basic ${base64Credentials}`
-          }
-        }
+        var options = DOMAIN_PROVIDER_REQUESTS[config.dynDnsProvider](config, EXTERNALIP)
 
         request.get(options, (err, res, body) => {
           if (err) {
@@ -69,7 +101,7 @@ class DynDnsUpdateService {
             throw err
           }
 
-          console.log('DynDNS server responded with: ' + body)
+          console.log('DynDNS server responded with: ', body)
 
           state = {
             previousExternalIP: EXTERNALIP,
