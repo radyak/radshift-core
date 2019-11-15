@@ -4,7 +4,13 @@ const router = express.Router()
 
 const TOKEN_PROPERTY = 'user'
 
-Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
+let CONFIG
+
+Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware, ConfigService) => {
+
+    ConfigService.getConfig().then(configuration => {
+        CONFIG = configuration
+    })
 
     router.post('/login', (req, res, next) => {
 
@@ -27,9 +33,12 @@ Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
 
             if (passportUser) {
                 const token = AuthService.generateJWT(passportUser)
-                return res.status(200).send({
-                    token: token
-                })
+                res.cookie('Authorization', token, { httpOnly: true, domain: `.${CONFIG.hostDomain}` })
+                    .status(200)
+                    .send({
+                        token: token
+                    })
+                return
             }
 
             return res.status(401).send()
@@ -98,9 +107,15 @@ Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
                 return
             }
 
-            console.log('Would redirect here to login, but ...')
-            res.status(401).send()
-            // res.redirect(`/login?url=${req.originalUrl}`)
+            let originalUrl = `${protocol}://${hostname}${path}`
+            let encodedOriginalUrl = encodeURIComponent(originalUrl)
+
+            let loginBaseUrl = `${protocol}://core.${CONFIG.hostDomain}/login`
+            let redirectUrl = `${loginBaseUrl}?origin=${encodedOriginalUrl}`
+
+            console.log(`Redirecting to ${redirectUrl}`)
+            res.redirect(redirectUrl)
+
             return
         }
 

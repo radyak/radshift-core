@@ -2,6 +2,10 @@ var express = require('express')
 var app = express()
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+var path = require('path')
+
+
+const STATIC_RESOURCES_PATH = '/usr/src/frontend/dist/management'
 
 Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, AuthMiddleware) => {
 
@@ -25,8 +29,13 @@ Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, Au
   app.use('/api/store', AuthMiddleware.authenticated, BackendStoreRoutes)
   app.use('/api/auth', AuthRoutes)
 
-  app.use('/', express.static('/usr/src/frontend/dist/management'))
-
+  // Necessary for serving the complete Angular app, also under the different app routes
+  app.use(express.static(STATIC_RESOURCES_PATH))
+  app.use('/', express.static(STATIC_RESOURCES_PATH))
+  app.use('/', (req, res) => {
+    res.sendFile(path.resolve(`${STATIC_RESOURCES_PATH}/index.html`))
+  })
+  
   app.use('*', function (req, res) {
     res.status(404).send({
       message: 'Invalid URL'
