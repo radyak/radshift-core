@@ -12,9 +12,10 @@
     "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
   },
   "env": {
-    "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, Xno-auth",
+    "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, no-auth",
     "PORT": 3000,
-    "RADHUB_URL": "http://localhost:4010"
+    "RADHUB_URL": "http://localhost:4010",
+    "CONF_DIR": "."
   },
   "ext": "js,json"
 }

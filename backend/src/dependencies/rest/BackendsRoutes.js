@@ -108,7 +108,6 @@ Provider('BackendsRoutes', (AuthMiddleware, BackendsService) => {
   router.post('/:name', (request, response) => {
     const name = request.params.name
     BackendsService.create(name, (data) => {
-      console.log(data)
     }).then(() => {
       response.status(204).send()
     }).catch((err) => {
