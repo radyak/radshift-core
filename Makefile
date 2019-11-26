@@ -1,5 +1,5 @@
 #!make
-include ../.env
+include .env
 export
 
 IMAGE=radshift-core
@@ -33,29 +33,8 @@ deploy.x86: build.x86
 	docker tag  $(REPO)/$(IMAGE):$(TAG_X86) $(REPO)/$(IMAGE):$(TAG_X86)
 	docker push $(REPO)/$(IMAGE):$(TAG_X86)
 
-run.x86: build.x86
-	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
 
-
-## RPI
-
-deploy.rpi.config:
-	scp -P $(PORT) rpi.config/.env.conf $(SSH_USER)@$(HOST):/home/pirate/conf/.env.conf
-	scp -P $(PORT) rpi.config/.env.key $(SSH_USER)@$(HOST):/home/pirate/conf/.env.key
-
-deploy.rpi.env:
-	scp -P $(PORT) .env $(SSH_USER)@$(HOST):.env
-
-deploy.rpi.cluster-config:
-	scp -P $(PORT) docker-compose.RPI.yml $(SSH_USER)@$(HOST):docker-compose.yml
-
-deploy.rpi.radhub-config:
-	scp -P $(PORT) ../radhub/radhub-backends.json $(SSH_USER)@$(HOST):radhub-backends.json
-
-deploy.rpi: deploy.rpi.config deploy.rpi.env deploy.rpi.cluster-config deploy.rpi.radhub-config
-
-
-## dev
+## tests
 
 tests:
 	cd backend; npm test
@@ -63,25 +42,24 @@ tests:
 tests.continuous:
 	cd backend; npm test -- -w
 
-run.dev.dependencies:
-	docker-compose stop mongodb radhub testapp radshift-stream-downloader
-	docker-compose up -d mongodb radhub testapp radshift-stream-downloader
 
-run.dev.core:
-	docker-compose stop core
-	docker-compose up -d core
+## run
 
-run.dev.backend: run.dev.dependencies
+run.dev.backend: #run.dev.dependencies
 	cd backend; npm run watch
 
 run.dev.frontend:
 	cd frontend; npm start
 
-run.cluster:
-	docker-compose up --build
+run.db:
+	docker stop mongodb || true && docker rm mongodb || true
+	docker run --name mongodb --network host -d mongo
 
-clean.cluster:
-	docker-compose down
+run.x86: build.x86
+	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
+
+
+## other
 
 lint:
 	npm run lint
