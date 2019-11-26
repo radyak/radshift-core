@@ -1,11 +1,7 @@
 const jwt = require('express-jwt')
 
 
-// TODO: Configurize
-const JWT_SECRET = 'secret'
-
-
-Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
+Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService, AuthService) => {
 
     const TOKEN_PROPERTY = 'user'
     const AUTH_HEADER_NAME = 'authorization'
@@ -23,10 +19,7 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
     }
 
     const getTokenFromCookies = (req) => {
-
         const authorization = req.cookies[AUTH_COOKIE_NAME]
-
-        console.log('Found Auth cookie: ', authorization)
         return authorization
     }
 
@@ -35,13 +28,13 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
     }
 
     const authentication = jwt({
-        secret: JWT_SECRET,
+        secret: AuthService.getJwtSecret(),
         userProperty: TOKEN_PROPERTY,
         getToken: getTokenFromRequest
     })
 
     const authenticationOptional = jwt({
-        secret: JWT_SECRET,
+        secret: AuthService.getJwtSecret(),
         userProperty: TOKEN_PROPERTY,
         getToken: getTokenFromRequest,
         credentialsRequired: false,

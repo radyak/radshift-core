@@ -1,13 +1,18 @@
 const jwt = require('jsonwebtoken')
+const randomstring = require('randomstring')
 
 // TODO: Configurize
-const JWT_SECRET = 'secret'
-const JWT_VALID_PERIOD = 60
+const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60
+const SECRET = process.env.JWT_SECRET || randomstring.generate()
 
 class AuthService {
 
     constructor(User) {
         this.User = User
+    }
+
+    getJwtSecret() {
+        return SECRET
     }
 
     registerNewUser(registration) {
@@ -110,7 +115,7 @@ class AuthService {
             name: user.username,
             scope: user.permissions.join(' '),
             exp: parseInt(expirationDate.getTime() / 1000, 10),
-        }, JWT_SECRET)
+        }, this.getJwtSecret())
     }
 }
 
