@@ -6,9 +6,9 @@ Component('AdministrationService', (ConfigService) => {
   return new AdministrationService(ConfigService)
 })
 
-Provider('BackendConfigurationService', (backendsConfig) => {
-  const DummyBackendConfigurationService = require('../service/DummyBackendConfigurationService')
-  return new DummyBackendConfigurationService(backendsConfig)
+Provider('BackendConfigurationService', () => {
+  const FileBackendConfigurationService = require('../service/FileBackendConfigurationService')
+  return new FileBackendConfigurationService()
 })
 
 Provider('DockerApiClient', () => {

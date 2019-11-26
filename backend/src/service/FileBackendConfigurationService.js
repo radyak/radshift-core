@@ -1,17 +1,22 @@
-var config = {}
+const path = require('path')
 
-class DummyBackendConfigurationService {
+var config
 
-    constructor(backendsConfig) {
-        config = backendsConfig
+class FileBackendConfigurationService {
+
+    constructor() {
     }
 
     getBackendConfigurations() {
+        if (!config) {
+            let confDir = path.resolve(process.env.CONF_DIR)
+            config = require(`${confDir}/backends-config.json`)
+        }
         return config
     }
 
     getBackendConfiguration(name) {
-        return config[name]
+        return this.getBackendConfigurations()[name]
     }
 
     registerBackend(name, config) {
@@ -41,4 +46,4 @@ class DummyBackendConfigurationService {
 
 }
 
-module.exports = DummyBackendConfigurationService
+module.exports = FileBackendConfigurationService
