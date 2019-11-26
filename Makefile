@@ -45,13 +45,13 @@ tests.continuous:
 
 ## run
 
-run.dev.backend: #run.dev.dependencies
+run.dev.backend: run.dev.db
 	cd backend; npm run watch
 
 run.dev.frontend:
 	cd frontend; npm start
 
-run.db:
+run.dev.db:
 	docker stop mongodb || true && docker rm mongodb || true
 	docker run --name mongodb --network host -d mongo
 

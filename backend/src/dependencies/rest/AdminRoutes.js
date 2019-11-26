@@ -1,23 +1,7 @@
 var express = require('express')
 var router = express.Router()
 
-Provider('AdminRoutes', (AdministrationService, AuthService, User, Permission) => {
-  
-  router.get('/config', (req, res) => {
-    AdministrationService.getConfig().then(config => {
-      res.status(200).send(config)
-    })
-  })
-  
-  router.put('/config', (req, res) => {
-    AdministrationService.saveConfig(req.body)
-    .then(config => {
-      res.status(200).send(config)
-    })
-    .catch(error => {
-      res.status(400).send(error)
-    })
-  })
+Provider('AdminRoutes', (AuthService, User, Permission) => {
   
   router.get('/users', (req, res) => {
     User.find((err, users) => {

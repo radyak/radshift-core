@@ -1,10 +1,10 @@
 const DynDnsUpdateService = require('../../service/DynDnsUpdateService')
 
-Provider('DynDns', (ConfigService) => {
-  return new DynDnsUpdateService(ConfigService).updateCyclic()
+Provider('DynDns', () => {
+  return new DynDnsUpdateService().updateCyclic()
 })
 
-Provider('DynDns', (ConfigService) => {
+Provider('DynDns', () => {
   console.log('Environment is not production; no DynDNS required')
   return {
     updateOnce: () => {

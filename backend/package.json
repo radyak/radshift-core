@@ -33,8 +33,7 @@
     "password-hash": "^1.2.2",
     "randomstring": "^1.1.5",
     "request": "^2.88.0",
-    "supertest": "^4.0.2",
-    "validate": "^4.5.1"
+    "supertest": "^4.0.2"
   },
   "optionalDependencies": {},
   "devDependencies": {

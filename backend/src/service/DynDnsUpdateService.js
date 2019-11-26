@@ -11,13 +11,17 @@ var state = {
 
 const DOMAIN_PROVIDER_REQUESTS = {
 
-  "strato": (config, externalIp) => {
+  "strato": (externalIp) => {
+
+    const hostDomain = process.env.HOST_DOMAIN
+    const dynDnsProviderUsername = process.env.DYN_DNS_PROVIDER_USERNAME
+    const dynDnsProviderPassword = process.env.DYN_DNS_PROVIDER_PASSWORD
 
     var base64Credentials = Buffer.from(
-      `${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
+      `${dynDnsProviderUsername}:${dynDnsProviderPassword}`
     ).toString('base64')
 
-    const url = `https://dyndns.strato.com/nic/update?hostname=${config.hostDomain}&myip=${externalIp}`
+    const url = `https://dyndns.strato.com/nic/update?hostname=${hostDomain}&myip=${externalIp}`
 
     var options = {
       method: 'GET',
@@ -34,7 +38,11 @@ const DOMAIN_PROVIDER_REQUESTS = {
 
   "godaddy": (config, externalIp) => {
 
-    const url = `https://api.godaddy.com/v1/domains/${config.hostDomain}/records/A/*`
+    const hostDomain = process.env.HOST_DOMAIN
+    const dynDnsProviderUsername = process.env.DYN_DNS_PROVIDER_USERNAME
+    const dynDnsProviderPassword = process.env.DYN_DNS_PROVIDER_PASSWORD
+
+    const url = `https://api.godaddy.com/v1/domains/${hostDomain}/records/A/*`
 
     var options = {
       method: 'PUT',
@@ -46,7 +54,7 @@ const DOMAIN_PROVIDER_REQUESTS = {
         }
       ],
       headers: {
-        Authorization: `sso-key ${config.dynDnsProviderUsername}:${config.dynDnsProviderPassword}`
+        Authorization: `sso-key ${dynDnsProviderUsername}:${dynDnsProviderPassword}`
       }
     }
 
@@ -62,23 +70,18 @@ var cronJob = null
  * See https://help.dyn.com/remote-access-api/perform-update/
  */
 class DynDnsUpdateService {
-  /**
-   *
-   * @param {*} ConfigService
-   */
-  constructor (ConfigService) {
-    this.configService = ConfigService
+
+  constructor () {
+    
   }
 
   updateOnce () {
-    Promise.all([this.configService.getConfig(), getIP()])
-      .then(values => {
-        const config = values[0]
-        const EXTERNALIP = values[1]
+    getIP()
+      .then(ipAdress => {
 
-        if (state.previousExternalIP === EXTERNALIP) {
+        if (state.previousExternalIP === ipAdress) {
           console.log(
-            `The external IP ${EXTERNALIP} hasn't changed; nothing to do`
+            `The external IP ${ipAdress} hasn't changed; nothing to do`
           )
           return
         }
@@ -86,10 +89,11 @@ class DynDnsUpdateService {
         console.log(
           `The external IP has changed from ${
             state.previousExternalIP
-          } to ${EXTERNALIP}`
+          } to ${ipAdress}`
         )
 
-        var options = DOMAIN_PROVIDER_REQUESTS[config.dynDnsProvider](config, EXTERNALIP)
+        const dynDnsProvider = process.env.DYN_DNS_PROVIDER
+        var options = DOMAIN_PROVIDER_REQUESTS[dynDnsProvider](ipAdress)
 
         request.get(options, (err, res, body) => {
           if (err) {
@@ -104,7 +108,7 @@ class DynDnsUpdateService {
           console.log('DynDNS server responded with: ', body)
 
           state = {
-            previousExternalIP: EXTERNALIP,
+            previousExternalIP: ipAdress,
             error: null
           }
         })
@@ -123,7 +127,8 @@ class DynDnsUpdateService {
         )
       }
 
-      var cronExpression = `*/${config.dynDnsUpdateIntervalMinutes} * * * *`
+      const dynDnsUpdateIntervalMinutes = process.env.DYN_DNS_UPDATE_INTERVAL_MINUTES || 60
+      var cronExpression = `*/${dynDnsUpdateIntervalMinutes} * * * *`
       cron.validate(cronExpression)
 
       cronJob = cron.schedule(
@@ -138,7 +143,7 @@ class DynDnsUpdateService {
       // Run first update immediately
       this.updateOnce()
       cronJob.start()
-      console.log(`Started cyclic update every ${config.dynDnsUpdateIntervalMinutes} minute(s)`)
+      console.log(`Started cyclic update every ${dynDnsUpdateIntervalMinutes} minute(s)`)
     })
     return this
   }

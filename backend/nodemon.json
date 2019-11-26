@@ -14,8 +14,7 @@
   "env": {
     "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, no-auth",
     "PORT": 3000,
-    "RADHUB_URL": "http://localhost:4010",
-    "CONF_DIR": "."
+    "MONGO_HOST": "localhost"
   },
   "ext": "js,json"
 }

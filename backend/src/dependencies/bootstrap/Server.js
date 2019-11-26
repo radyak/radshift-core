@@ -1,4 +1,4 @@
-Provider('Server', (ConfigService, App) => {
+Provider('Server', (App) => {
   console.log('Using unsecured HTTP traffic - FOR DEVELOPMENT ONLY')
 
   var startPromise

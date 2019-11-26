@@ -1,11 +1,3 @@
-
-Component('ConfigService', require('../util/ConfigService'))
-
-Component('AdministrationService', (ConfigService) => {
-  const AdministrationService = require('../service/AdministrationService')
-  return new AdministrationService(ConfigService)
-})
-
 Provider('BackendConfigurationService', () => {
   const FileBackendConfigurationService = require('../service/FileBackendConfigurationService')
   return new FileBackendConfigurationService()
