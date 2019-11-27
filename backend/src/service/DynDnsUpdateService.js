@@ -120,31 +120,29 @@ class DynDnsUpdateService {
   }
 
   updateCyclic () {
-    this.configService.getConfig().then(config => {
-      if (cronJob != null) {
-        throw new Error(
-          'A cyclic update is already running, cannot start another one'
-        )
-      }
-
-      const dynDnsUpdateIntervalMinutes = process.env.DYN_DNS_UPDATE_INTERVAL_MINUTES || 60
-      var cronExpression = `*/${dynDnsUpdateIntervalMinutes} * * * *`
-      cron.validate(cronExpression)
-
-      cronJob = cron.schedule(
-        cronExpression,
-        () => {
-          this.updateOnce()
-        },
-        {
-          scheduled: false
-        }
+    if (cronJob != null) {
+      throw new Error(
+        'A cyclic update is already running, cannot start another one'
       )
-      // Run first update immediately
-      this.updateOnce()
-      cronJob.start()
-      console.log(`Started cyclic update every ${dynDnsUpdateIntervalMinutes} minute(s)`)
-    })
+    }
+
+    const dynDnsUpdateIntervalMinutes = process.env.DYN_DNS_UPDATE_INTERVAL_MINUTES || 60
+    var cronExpression = `*/${dynDnsUpdateIntervalMinutes} * * * *`
+    cron.validate(cronExpression)
+
+    cronJob = cron.schedule(
+      cronExpression,
+      () => {
+        this.updateOnce()
+      },
+      {
+        scheduled: false
+      }
+    )
+    // Run first update immediately
+    this.updateOnce()
+    cronJob.start()
+    console.log(`Started cyclic update every ${dynDnsUpdateIntervalMinutes} minute(s)`)
     return this
   }
 
