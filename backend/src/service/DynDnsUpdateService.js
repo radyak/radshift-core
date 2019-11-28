@@ -36,7 +36,7 @@ const DOMAIN_PROVIDER_REQUESTS = {
     return options
   },
 
-  "godaddy": (config, externalIp) => {
+  "godaddy": (externalIp) => {
 
     const hostDomain = process.env.HOST_DOMAIN
     const dynDnsProviderUsername = process.env.DYN_DNS_PROVIDER_USERNAME
