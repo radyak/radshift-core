@@ -95,7 +95,7 @@ class DynDnsUpdateService {
         const dynDnsProvider = process.env.DYN_DNS_PROVIDER
         var options = DOMAIN_PROVIDER_REQUESTS[dynDnsProvider](ipAdress)
 
-        request.get(options, (err, res, body) => {
+        request(options, (err, res, body) => {
           if (err) {
             console.error(err)
             state = {
@@ -105,7 +105,7 @@ class DynDnsUpdateService {
             throw err
           }
 
-          console.log('DynDNS server responded with: ', body)
+          console.log('DynDNS server responded with status', res.statusCode, body ? body : '')
 
           state = {
             previousExternalIP: ipAdress,
