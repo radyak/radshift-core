@@ -45,15 +45,11 @@ tests.continuous:
 
 ## run
 
-run.dev.backend: run.dev.db
+run.dev.backend:
 	cd backend; npm run watch
 
 run.dev.frontend:
 	cd frontend; npm start
-
-run.dev.db:
-	docker stop mongodb || true && docker rm mongodb || true
-	docker run --name mongodb --network host -d mongo
 
 run.x86: build.x86
 	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
