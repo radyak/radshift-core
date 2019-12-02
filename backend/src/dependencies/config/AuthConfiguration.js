@@ -7,18 +7,17 @@ Provider('AuthConfiguration', (UserService) => {
         usernameField: 'username',
         passwordField: 'password',
     }, (username, password, done) => {
-        UserService.findByName(username)
-            .then((user) => {
-                if (!user || !UserService.validatePassword(user, password)) {
-                    return done(null, false, {
-                        errors: {
-                            'username or password': 'is invalid'
-                        }
-                    })
-                }
+        UserService.validatePassword(username, password).then((user) => {
+            if (!user) {
+                return done(null, false, {
+                    errors: {
+                        error: 'Password is not valide'
+                    }
+                })
+            }
 
-                return done(null, user)
-            }).catch(done)
+            return done(null, user)
+        }).catch(done)
     }))
 
 })

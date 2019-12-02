@@ -170,9 +170,24 @@ Component('UserService', class {
     }
 
 
-    validatePassword(user, password) {
-        const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
-        return user.hash === hash
+    validatePassword(username, password) {
+        return new Promise((resolve, reject) => {
+            let user = db
+                    .get('users')
+                    .find({ username: username })
+                    .value()
+            
+
+            const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
+            let isValid = user.hash === hash
+
+            if (isValid) {
+                resolve(user)
+            }
+            else {
+                reject()
+            }
+        })
     }
 
 
