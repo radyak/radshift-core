@@ -7,10 +7,7 @@ var njs = require('@radyak/njs')
 describe('Users Resource', () => {
 
     beforeEach((done) => {
-        // AppTestUtil.clearModel('User').then(() => {
-        //     done()
-        // })
-        AppTestUtil.clearDb('User').then(() => {
+        AppTestUtil.clearDb().then(() => {
             done()
         })
     })
@@ -23,7 +20,7 @@ describe('Users Resource', () => {
 
     after((done) => {
         AppTestUtil.stop(() => {
-            AppTestUtil.clearModel('User').then(() => {
+            AppTestUtil.clearDb().then(() => {
                 done()
             })
         })
@@ -74,6 +71,60 @@ describe('Users Resource', () => {
     })
 
     it('should create a new user', (done) => {
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+
+            AppTestUtil
+            .asUser('admin', ['admin'])
+
+            .get('/api/admin/users')
+
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(200)
+
+                let users = res.body
+                expect(users).to.deep.equal([
+                    {
+                        permissions: [],
+                        username: 'user'
+                    }
+                ])
+
+                done()
+            })
+
+        })
+    })
+
+    it('should not create a user with duplicate name', (done) => {
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .post('/api/admin/users', {
+                    username: 'user',
+                    password: 'anotherpassword',
+                    passwordRepeat: 'anotherpassword'
+                })
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(400)
+
+                    done()
+
+                })
+        })
+    })
+
+    it('should not create a user with wrong passwordRepeat', (done) => {
 
         AppTestUtil
             .asUser('admin', ['admin'])
@@ -81,32 +132,195 @@ describe('Users Resource', () => {
             .post('/api/admin/users', {
                 username: 'user',
                 password: 'password',
-                passwordRepeat: 'password'
+                passwordRepeat: 'anotherpassword'
             })
+
+            .end((err, res) => {
+                expect(res.statusCode).to.equal(400)
+
+                let user = res.body
+                expect(user).to.deep.equal({
+                    error: 'Password and password repition must be identical'
+                })
+
+                done()
+            })
+    })
+
+    it('should update a users permissions', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+                
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .put('/api/admin/users/user/permissions', [
+                    'newPermission'
+                ])
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(204)
+                    done()
+                })
+        })
+    })
+
+    it('should not update non-existing users permissions', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+            
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .put('/api/admin/users/nonexistinguser/permissions', [
+                    'newPermission'
+                ])
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(404)
+                    done()
+                })
+        })
+    })
+
+    it('should update a users password', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+          
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .put('/api/admin/users/user/password', {
+                    password: 'newPassword',
+                    passwordRepeat: 'newPassword'
+                })
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(204)
+                    done()
+                })
+        })
+    })
+
+    it('should not update a non-existing users password', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+            
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .put('/api/admin/users/nonexistinguser/password', {
+                    password: 'newPassword',
+                    passwordRepeat: 'newPassword'
+                })
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(404)
+                    done()
+                })
+        })
+    })
+
+    it('should not update a users password with wrong passwordRepeat', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+                
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .put('/api/admin/users/user/password', {
+                    password: 'newPassword',
+                    passwordRepeat: 'anotherNewPassword'
+                })
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(400)
+                    done()
+                })
+        })
+    })
+
+    it('should delete a user', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+                
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .delete('/api/admin/users/user')
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(204)
+                    done()
+                })
+        })
+    })
+
+    it('should not delete a non-existing user', (done) => {
+
+        createUserAndCheck({
+            username: 'user',
+            password: 'password',
+            passwordRepeat: 'password'
+        }, () => {
+                
+            AppTestUtil
+                .asUser('admin', ['admin'])
+
+                .delete('/api/admin/users/nonexistinguser')
+
+                .end((err, res) => {
+                    expect(res.statusCode).to.equal(404)
+                    done()
+                })
+        })
+    })
+
+
+    const createUserAndCheck = (user, check) => {
+        AppTestUtil
+            .asUser('admin', ['admin'])
+
+            .post('/api/admin/users', user)
 
             .end((err, res) => {
                 expect(res.statusCode).to.equal(200)
 
                 let user = res.body
-                expect(user).to.deep.include({
+                expect(user).to.deep.equal({
                     permissions: [],
-                    username: 'user'
+                    username: user.username
                 })
 
-                return njs.User
-                    .then(User => {
-                        return User.find({})
-                    })
-                    .then(users => {
-                        
-                        expect(users.length).to.equal(1)
-                        expect(user).to.deep.include({
-                            permissions: [],
-                            username: 'user'
-                        })
-                        done()
-                    })
+                if (check) {
+                    check()
+                }
             })
-    })
+        
+    }
 
 })

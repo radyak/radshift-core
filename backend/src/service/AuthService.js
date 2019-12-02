@@ -7,8 +7,8 @@ const SECRET = process.env.JWT_SECRET || randomstring.generate()
 
 class AuthService {
 
-    constructor(User) {
-        this.User = User
+    constructor(UserService) {
+        this.UserService = UserService
     }
 
     getJwtSecret() {
@@ -16,94 +16,15 @@ class AuthService {
     }
 
     registerNewUser(registration) {
-
-        // TODO: extend registration
-
-        let password = registration && registration.password
-        let passwordRepeat = registration && registration.passwordRepeat
-        if (!password || !password.trim()) {
-            throw {
-                errors: {
-                    password: {
-                        property: 'password',
-                        message: 'Password is required'
-                    },
-                    passwordRepeat: {
-                        property: 'passwordRepeat',
-                        message: 'Password and password repition must be identical'
-                    }
-                }
-            }
-        }
-        if (password !== passwordRepeat) {
-            throw {
-                errors: {
-                    password: {
-                        property: 'password',
-                        message: 'Password and password repition must be identical'
-                    },
-                    passwordRepeat: {
-                        property: 'passwordRepeat',
-                        message: 'Password and password repition must be identical'
-                    }
-                }
-            }
-        }
-        const user = new this.User(registration)
-        user.setPassword(registration.password)
-
-        return user.save()
+        return this.UserService.createUser(registration)
     }
 
-    changeUserPassword(user) {
-
-        return new Promise((resolve, reject) => {
-            let password = user && user.password
-            let passwordRepeat = user && user.passwordRepeat
-            if (!password || !password.trim()) {
-                return reject({
-                    errors: {
-                        changeUserPassword: {
-                            property: 'changeUserPassword',
-                            message: 'Password is required'
-                        },
-                        changeUserPasswordRepeat: {
-                            property: 'changeUserPasswordRepeat',
-                            message: 'Password and password repition must be identical'
-                        }
-                    }
-                })
-            }
-            if (password !== passwordRepeat) {
-                return reject({
-                    errors: {
-                        changeUserPassword: {
-                            property: 'changeUserPassword',
-                            message: 'Password and password repition must be identical'
-                        },
-                        changeUserPasswordRepeat: {
-                            property: 'changeUserPasswordRepeat',
-                            message: 'Password and password repition must be identical'
-                        }
-                    }
-                })
-            }
-
-            resolve(
-                this.User.findOne({
-                    username: user.username
-                })
-                .then(existingUser => {
-                    existingUser.setPassword(password)
-                    return existingUser.save()
-                })
-            )
-        })
-
+    changeUserPassword(username, password, passwordRepeat) {
+        return this.UserService.changePassword(username, password, passwordRepeat)
     }
 
     changeUserPermissions(username, permissions) {
-        return this.User.updateOne({ username }, { permissions })
+        return this.UserService.changePermissions(username, permissions)
     }
 
     generateJWT(user) {

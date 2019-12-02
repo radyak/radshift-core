@@ -1,11 +1,17 @@
 var express = require('express')
 var router = express.Router()
 
-Provider('AdminRoutes', (AuthService, User, Permission) => {
+Provider('AdminRoutes', (AuthService, UserService) => {
   
   router.get('/users', (req, res) => {
-    User.find((err, users) => {
+    UserService.findAll().then((users) => {
       res.status(200).send(users)
+    })
+  })
+  
+  router.get('/users/:name', (req, res) => {
+    UserService.findByName(req.params.name).then((user) => {
+      res.status(200).send(user)
     })
   })
   
@@ -13,21 +19,23 @@ Provider('AdminRoutes', (AuthService, User, Permission) => {
     try {
       AuthService.registerNewUser(req.body)
           .then((user) => res.status(200).send(user))
-          .catch(err => res.status(400).send(err))
+          .catch(err => res.status(400).json({error: err}).send())
     } catch (err) {
-      return res.status(400).json(err).send()
+      return res.status(400).json({
+        error: err
+      }).send()
     }
   })
   
   router.put('/users/:username/permissions', (req, res) => {
     let username = req.params.username
-    let user = req.body
+    let permissions = req.body
 
-    AuthService.changeUserPermissions(username, user.permissions)
+    AuthService.changeUserPermissions(username, permissions)
         .then(result => {
-          if(result.n === 0) {
-            return res.status(400).send({
-              username: `User '${username}' not found`
+          if(!result) {
+            return res.status(404).send({
+              error: `User '${username}' not found`
             })
           }
           res.status(204).send()
@@ -39,13 +47,17 @@ Provider('AdminRoutes', (AuthService, User, Permission) => {
 
   router.put('/users/:username/password', (req, res) => {
     let username = req.params.username
-    let user = req.body
+    let passwordChangeRequest = req.body
 
-    AuthService.changeUserPassword(user)
+    AuthService.changeUserPassword(
+      username,
+      passwordChangeRequest.password,
+      passwordChangeRequest.passwordRepeat
+    )
         .then((result) => {
           if (!result) {
-            return res.status(400).send({
-              username: `Could not change password for user '${username}'`
+            return res.status(404).send({
+              error: `Could not change password for user '${username}'`
             })
           }
           res.status(204).send()
@@ -58,45 +70,17 @@ Provider('AdminRoutes', (AuthService, User, Permission) => {
   router.delete('/users/:username', (req, res) => {
     let username = req.params.username
     
-    User.deleteOne({
-      username: username
-    })
-    .then((result) => {
-      if(result.n === 0) {
-        return res.status(404).json({
-          username: `User '${username}' not found`
-        }).send()
-      }
-      res.status(204).send()
-    })
-    .catch(err => res.status(404).json(err).send())
-  })
-  
-  router.get('/permissions', (req, res) => {
-    Permission.find((err, permissions) => {
-      res.status(200).send(permissions)
-    })
-  })
-  
-  router.post('/permissions', (req, res) => {
-    try {
-      Permission.deleteMany({})  
-      .then(() => {
-        let newPermissions = req.body.map(
-          newPermission => {
-            let permission = new Permission({
-              name: newPermission.name
-            })
-            permission.save()
-            return permission
-          }
-        )
-        return res.status(200).send(newPermissions)
+    UserService.deleteByUsername(username)
+      .then((result) => {
+
+        if(!result) {
+          return res.status(404).json({
+            error: `User '${username}' not found`
+          }).send()
+        }
+        res.status(204).send()
       })
-      .catch(err => res.status(400).send(err))
-    } catch (err) {
-      return res.status(400).json(err).send()
-    }
+      .catch(err => res.status(400).json(err).send())
   })
 
   router.use('/*', (req, res, next) => {

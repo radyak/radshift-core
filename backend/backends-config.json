@@ -39,14 +39,6 @@
         "image": "portainer/portainer",
         "entry": ""
     },
-    "mongoclient": {
-        "label": "Mongo DB Client",
-        "description": "Client w/ UI to work with Mongo DB",
-        "host": "localhost",
-        "port": 3000,
-        "image": "mongoclient/mongoclient",
-        "entry": ""
-    },
     "radshift-stream-downloader": {
         "label": "StreamNoMoreFam",
         "description": "Download video & audio from streams",

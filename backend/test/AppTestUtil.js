@@ -4,6 +4,7 @@ var supertest = require('supertest');
 
 let APP
 let AUTH_SERVICE
+let USER_SERVICE
 let REQUEST
 let TOKEN
 
@@ -21,9 +22,10 @@ class AppTestUtil {
             .scan([
                 'src/dependencies'
             ])
-            .start((App, AuthService) => {
+            .start((App, AuthService, UserService) => {
                 APP = App
                 AUTH_SERVICE = AuthService
+                USER_SERVICE = UserService
 
                 resolve(App)
             })
@@ -104,21 +106,10 @@ class AppTestUtil {
         TOKEN = undefined
     }
 
-    clearModel(modelName) {
-        return njs[modelName].then((Model) => {
-            return Model.deleteMany({})
-        })
-    }
-
     clearDb() {
-        return Promise.all([
-            njs.User
-        ]).then(values => {
-
-            return Promise.all([
-                values[0].deleteMany({})
-            ])
-            
+        return new Promise((resolve, reject) => {
+            USER_SERVICE.deleteAll()
+            resolve()
         })
     }
 
