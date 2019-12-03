@@ -10,7 +10,7 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
   })
   
   router.get('/users/:name', (req, res) => {
-    UserDatabase.findByName(req.params.name).then((user) => {
+    UserDatabase.findByUsername(req.params.name).then((user) => {
       res.status(200).send(user)
     })
   })

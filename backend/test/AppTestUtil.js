@@ -107,10 +107,7 @@ class AppTestUtil {
     }
 
     clearDb() {
-        return new Promise((resolve, reject) => {
-            USER_DATABASE.deleteAll()
-            resolve()
-        })
+        return USER_DATABASE.deleteAll()
     }
 
 }

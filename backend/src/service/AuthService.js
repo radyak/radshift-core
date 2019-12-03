@@ -16,7 +16,7 @@ class AuthService {
     }
 
     registerNewUser(registration) {
-        return this.UserDatabase.createUser(registration)
+        return this.UserDatabase.create(registration)
     }
 
     changeUserPassword(username, password) {
@@ -24,7 +24,14 @@ class AuthService {
     }
 
     changeUserPermissions(username, permissions) {
-        return this.UserDatabase.changePermissions(username, permissions)
+        return this.UserDatabase.findByUsername(username)
+            .then(existingUser => {
+                if (!existingUser) {
+                    return null
+                }
+                existingUser.permissions = permissions
+                return this.UserDatabase.update(existingUser)
+            })
     }
 
     generateJWT(user) {

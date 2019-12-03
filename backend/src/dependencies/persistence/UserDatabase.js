@@ -17,6 +17,30 @@ const HASH_ITERATIONS = 10000,
       HASH_KEYLENGTH = 512,
       HASH_ALGORYTHM = 'sha512'
 
+
+const setPasswordForUser = (user, password) => {
+    user.salt = crypto.randomBytes(16).toString('hex')
+    user.hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
+}
+
+const checkPasswordForUser = (user, password) => {
+    const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
+    return user.hash === hash
+}
+
+const toJSON = (user) => {
+    if (!user) {
+        return user
+    }
+    let result = {
+        ...user
+    }
+    delete result.hash
+    delete result.salt
+
+    return result;
+}
+
     /* User Schema:
         {
             username: String,
@@ -32,53 +56,54 @@ const HASH_ITERATIONS = 10000,
 
 Component('UserDatabase', class UserDatabase {
 
-    findByName(name) {
+    findByUsername(username) {
         return new Promise((resolve, reject) => {
             let user = db
                     .get('users')
-                    .find({ username: name })
+                    .find({ username: username })
                     .value()
-            resolve(this.toJSON(user))
+            resolve(toJSON(user))
         })
     }
+
 
     findAll() {
         return new Promise((resolve, reject) => {
             let users = db
                     .get('users')
-                    .map(this.toJSON)
+                    .map(toJSON)
                     .value()
             resolve(users)
         })
     }
 
-    deleteByUsername(name) {
+
+    deleteByUsername(username) {
         return new Promise((resolve, reject) => {
             let deletedUsers = db
                     .get('users')
-                    .remove({username: name})
+                    .remove({username: username})
                     .write()
             resolve(deletedUsers.length)
         })
     }
 
+
     deleteAll() {
-        db.get('users')
-            .remove({})
-            .write()
+        return new Promise((resolve, reject) => {
+            db.get('users')
+                .remove({})
+                .write()
+            resolve()
+        })
     }
     
-    /*
-    {
-        username
-        password
-    }
-     */
-    createUser(registration) {
+
+    create(registration) {
         let username = registration && registration.username
         let password = registration && registration.password
 
-        return this.findByName(username).then(existingUser => {
+        return this.findByUsername(username).then(existingUser => {
             if (existingUser) {
                 throw `User with username ${username} already exists`
             }
@@ -90,67 +115,37 @@ Component('UserDatabase', class UserDatabase {
                 // firstname: null,
                 // lastname: null,
             }
-            this.setPassword(user, password)
+            setPasswordForUser(user, password)
+
             db.get('users')
                     .push(user)
                     .write()
             
-            return this.toJSON(user)
+            return toJSON(user)
         })
+    }
+
+
+    update(user) {
+        user = db.get('users')
+            .find({ username: user.username })
+            .assign(user)
+            .write()
+        return toJSON(user)
     }
     
 
     changePassword(username, password) {
-        return this.findByName(username)
+        return this.findByUsername(username)
             .then(existingUser => {
                 if (!existingUser) {
                     return null
                 }
         
-                this.setPassword(existingUser, password)
-                this.updateUser(existingUser)
-                return this.findByName(username)
+                setPasswordForUser(existingUser, password)
+                this.update(existingUser)
+                return this.findByUsername(username)
             })
-    }
-
-
-    changePermissions(username, permissions) {
-        return this.findByName(username)
-            .then(existingUser => {
-                if (!existingUser) {
-                    return null
-                }
-                existingUser.permissions = permissions
-                return this.updateUser(existingUser)
-            })
-    }
-
-
-    updateUser(user) {
-        user = db.get('users')
-            .find({ username: user.username })
-            .assign(user)
-            .write()
-        return this.toJSON(user)
-    }
-
-
-    toJSON(user) {
-        if (!user) {
-            return user
-        }
-        let result = {
-            ...user
-        }
-        delete result.hash
-        delete result.salt
-        return result;
-    }
-
-
-    setPassword(user, password) {
-        user.salt = crypto.randomBytes(16).toString('hex')
-        user.hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
     }
 
 
@@ -161,12 +156,10 @@ Component('UserDatabase', class UserDatabase {
                     .find({ username: username })
                     .value()
             
-
-            const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
-            let isValid = user.hash === hash
+            let isValid = checkPasswordForUser(user, password)
 
             if (isValid) {
-                resolve(user)
+                resolve(toJSON(user))
             }
             else {
                 reject()

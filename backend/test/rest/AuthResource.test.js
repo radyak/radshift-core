@@ -39,7 +39,7 @@ describe('Auth Resource', () => {
     })
 
 
-    it.only('should log a user in', (done) => {
+    it('should log a user in', (done) => {
                 
         AppTestUtil
             .post('/api/auth/login', {
@@ -57,7 +57,7 @@ describe('Auth Resource', () => {
     })
 
 
-    it.only('should deny log in with invalid credentials', (done) => {
+    it('should deny log in with invalid credentials', (done) => {
                 
         AppTestUtil
             .post('/api/auth/login', {
