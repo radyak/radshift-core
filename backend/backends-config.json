@@ -24,7 +24,7 @@
                     }
                 }
             ],
-            "authenticated": true,
+            "authenticated": false,
             "mappings": {
                 "name": "X-User",
                 "scope": "X-Roles"

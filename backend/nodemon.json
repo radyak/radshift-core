@@ -15,7 +15,8 @@
   "env": {
     "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, no-auth",
     "PORT": 3000,
-    "PERSISTENCE_FILE": "./data.json"
+    "PERSISTENCE_FILE": "./data.json",
+    "CONF_DIR": "."
   },
   "ext": "js,json"
 }

@@ -1,7 +1,7 @@
 const jwt = require('express-jwt')
 
 
-Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService, AuthService) => {
+Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
 
     const TOKEN_PROPERTY = 'user'
     const AUTH_HEADER_NAME = 'authorization'
@@ -86,7 +86,7 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService, AuthServic
 })
 
 
-Provider('AuthMiddleware', (AuthConfiguration, BackendRoutingService) => {
+Provider('AuthMiddleware', (AuthConfiguration, BackendService) => {
 
     const mockMiddleware = (req, res, next) => {
         return next()

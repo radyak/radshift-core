@@ -7,7 +7,7 @@ var path = require('path')
 
 const STATIC_RESOURCES_PATH = '/usr/src/frontend/dist/management'
 
-Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, AuthMiddleware) => {
+Provider('App', (AuthRoutes, AdminRoutes, AuthMiddleware) => {
 
   app.use(
     bodyParser.urlencoded({
@@ -25,8 +25,6 @@ Provider('App', (AuthRoutes, AdminRoutes, BackendsRoutes, BackendStoreRoutes, Au
   })
 
   app.use('/api/admin', AuthMiddleware.hasPermission('admin'), AdminRoutes)
-  app.use('/api/backends', AuthMiddleware.authenticated, BackendsRoutes)
-  app.use('/api/store', AuthMiddleware.authenticated, BackendStoreRoutes)
   app.use('/api/auth', AuthRoutes)
 
   // Necessary for serving the complete Angular app, also under the different app routes

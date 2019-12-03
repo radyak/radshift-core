@@ -3,27 +3,12 @@ Provider('BackendConfigurationService', () => {
   return new FileBackendConfigurationService()
 })
 
-Provider('DockerApiClient', () => {
-  const DockerApiClient = require('../client/DockerApiClient')
-  return new DockerApiClient()
-})
-
-Provider('RadHubClient', () => {
-  const RadHubClient = require('../client/RadHubClient')
-  return new RadHubClient()
-})
-
-Provider('BackendsService', (BackendConfigurationService, DockerApiClient, RadHubClient) => {
-  const BackendsService = require('../service/BackendsService')
-  return new BackendsService(BackendConfigurationService, DockerApiClient, RadHubClient)
-})
-
 Provider('AuthService', (UserDatabase) => {
   const AuthService = require('../service/AuthService')
   return new AuthService(UserDatabase)
 })
 
-Provider('BackendRoutingService', (BackendConfigurationService) => {
-  const BackendRoutingService = require('../service/BackendRoutingService')
-  return new BackendRoutingService(BackendConfigurationService)
+Provider('BackendService', (BackendConfigurationService) => {
+  const BackendService = require('../service/BackendService')
+  return new BackendService(BackendConfigurationService)
 })

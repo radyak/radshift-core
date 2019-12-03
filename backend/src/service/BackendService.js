@@ -1,4 +1,4 @@
-class BackendRoutingService {
+class BackendService {
 
     constructor(BackendConfigurationService) {
         this.BackendConfigurationService = BackendConfigurationService
@@ -50,4 +50,4 @@ class BackendRoutingService {
 
 }
 
-module.exports = BackendRoutingService
+module.exports = BackendService

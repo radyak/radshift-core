@@ -4,7 +4,7 @@ const router = express.Router()
 
 const TOKEN_PROPERTY = 'user'
 
-Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
+Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
 
     router.post('/login', (req, res, next) => {
 
@@ -82,7 +82,7 @@ Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
         var method = req.headers['x-forwarded-method']
         var ip = req.headers['x-forwarded-for']
 
-        var backendConfig = BackendRoutingService.getConfigByHostname(hostname, path)
+        var backendConfig = BackendService.getConfigByHostname(hostname, path)
 
         if (!backendConfig) {
           console.warn(`No backend config found for ${hostname}${path}`)
@@ -115,7 +115,7 @@ Provider('AuthRoutes', (AuthService, BackendRoutingService, AuthMiddleware) => {
             return
         }
 
-        let userPermissions = user.scope ? user.scope.split(',') : []
+        let userPermissions = user && user.scope ? user.scope.split(',') : []
 
         if (backendConfig.permissions && !backendConfig.permissions.some(permission => userPermissions.indexOf(permission) > -1)) {
             console.warn(`User ${user} not authorized for ${hostname}/${path}`)
