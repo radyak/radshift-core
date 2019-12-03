@@ -1,9 +1,18 @@
+const fs = require('fs')
+const path = require('path')
 const crypto = require('crypto')
 
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
-const adapter = new FileSync(process.env.PERSISTENCE_FILE || '/var/shared/data.json')
+
+const dataFile = process.env.PERSISTENCE_FILE || '/var/shared/data.json'
+const dataDir = path.dirname(dataFile)
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir)
+}
+
+const adapter = new FileSync(dataFile)
 const db = low(adapter)
 
 db.defaults({
