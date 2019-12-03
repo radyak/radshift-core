@@ -70,17 +70,13 @@ Component('UserDatabase', class UserDatabase {
     
     /*
     {
-        password
-        passwordRepeat
         username
+        password
     }
      */
     createUser(registration) {
         let username = registration && registration.username
         let password = registration && registration.password
-        let passwordRepeat = registration && registration.passwordRepeat
-
-        this.checkNewPassword(password, passwordRepeat)
 
         return this.findByName(username).then(existingUser => {
             if (existingUser) {
@@ -104,15 +100,13 @@ Component('UserDatabase', class UserDatabase {
     }
     
 
-    changePassword(username, password, passwordRepeat) {
+    changePassword(username, password) {
         return this.findByName(username)
             .then(existingUser => {
                 if (!existingUser) {
                     return null
                 }
         
-                this.checkNewPassword(password, passwordRepeat)
-
                 this.setPassword(existingUser, password)
                 this.updateUser(existingUser)
                 return this.findByName(username)
@@ -151,16 +145,6 @@ Component('UserDatabase', class UserDatabase {
         delete result.hash
         delete result.salt
         return result;
-    }
-
-
-    checkNewPassword(password, passwordRepeat) {
-        if (!password || !password.trim()) {
-            throw 'No password is set'
-        }
-        if (password !== passwordRepeat) {
-            throw 'Password and password repition must be identical'
-        }
     }
 
 

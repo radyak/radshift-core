@@ -19,8 +19,8 @@ class AuthService {
         return this.UserDatabase.createUser(registration)
     }
 
-    changeUserPassword(username, password, passwordRepeat) {
-        return this.UserDatabase.changePassword(username, password, passwordRepeat)
+    changeUserPassword(username, password) {
+        return this.UserDatabase.changePassword(username, password)
     }
 
     changeUserPermissions(username, permissions) {

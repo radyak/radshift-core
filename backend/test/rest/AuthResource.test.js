@@ -14,8 +14,7 @@ describe('Auth Resource', () => {
 
                 .post('/api/admin/users', {
                     username: 'user',
-                    password: 'password',
-                    passwordRepeat: 'password'
+                    password: 'password'
                 })
 
                 .end((err, res) => {

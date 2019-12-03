@@ -73,8 +73,7 @@ describe('Users Resource', () => {
     it('should create a new user', (done) => {
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
 
             AppTestUtil
@@ -102,8 +101,7 @@ describe('Users Resource', () => {
     it('should not create a user with duplicate name', (done) => {
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
 
             AppTestUtil
@@ -111,8 +109,7 @@ describe('Users Resource', () => {
 
                 .post('/api/admin/users', {
                     username: 'user',
-                    password: 'anotherpassword',
-                    passwordRepeat: 'anotherpassword'
+                    password: 'anotherpassword'
                 })
 
                 .end((err, res) => {
@@ -124,35 +121,11 @@ describe('Users Resource', () => {
         })
     })
 
-    it('should not create a user with wrong passwordRepeat', (done) => {
-
-        AppTestUtil
-            .asUser('admin', ['admin'])
-
-            .post('/api/admin/users', {
-                username: 'user',
-                password: 'password',
-                passwordRepeat: 'anotherpassword'
-            })
-
-            .end((err, res) => {
-                expect(res.statusCode).to.equal(400)
-
-                let user = res.body
-                expect(user).to.deep.equal({
-                    error: 'Password and password repition must be identical'
-                })
-
-                done()
-            })
-    })
-
     it('should update a users permissions', (done) => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
                 
             AppTestUtil
@@ -173,8 +146,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
             
             AppTestUtil
@@ -195,16 +167,14 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
           
             AppTestUtil
                 .asUser('admin', ['admin'])
 
                 .put('/api/admin/users/user/password', {
-                    password: 'newPassword',
-                    passwordRepeat: 'newPassword'
+                    password: 'newPassword'
                 })
 
                 .end((err, res) => {
@@ -218,16 +188,14 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
             
             AppTestUtil
                 .asUser('admin', ['admin'])
 
                 .put('/api/admin/users/nonexistinguser/password', {
-                    password: 'newPassword',
-                    passwordRepeat: 'newPassword'
+                    password: 'newPassword'
                 })
 
                 .end((err, res) => {
@@ -237,35 +205,11 @@ describe('Users Resource', () => {
         })
     })
 
-    it('should not update a users password with wrong passwordRepeat', (done) => {
-
-        createUserAndCheck({
-            username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
-        }, () => {
-                
-            AppTestUtil
-                .asUser('admin', ['admin'])
-
-                .put('/api/admin/users/user/password', {
-                    password: 'newPassword',
-                    passwordRepeat: 'anotherNewPassword'
-                })
-
-                .end((err, res) => {
-                    expect(res.statusCode).to.equal(400)
-                    done()
-                })
-        })
-    })
-
     it('should delete a user', (done) => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
                 
             AppTestUtil
@@ -284,8 +228,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password',
-            passwordRepeat: 'password'
+            password: 'password'
         }, () => {
                 
             AppTestUtil
