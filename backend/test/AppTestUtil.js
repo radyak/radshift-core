@@ -4,7 +4,7 @@ var supertest = require('supertest');
 
 let APP
 let AUTH_SERVICE
-let USER_SERVICE
+let USER_DATABASE
 let REQUEST
 let TOKEN
 
@@ -22,10 +22,10 @@ class AppTestUtil {
             .scan([
                 'src/dependencies'
             ])
-            .start((App, AuthService, UserService) => {
+            .start((App, AuthService, UserDatabase) => {
                 APP = App
                 AUTH_SERVICE = AuthService
-                USER_SERVICE = UserService
+                USER_DATABASE = UserDatabase
 
                 resolve(App)
             })
@@ -108,7 +108,7 @@ class AppTestUtil {
 
     clearDb() {
         return new Promise((resolve, reject) => {
-            USER_SERVICE.deleteAll()
+            USER_DATABASE.deleteAll()
             resolve()
         })
     }

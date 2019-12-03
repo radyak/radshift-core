@@ -30,7 +30,7 @@ const HASH_ITERATIONS = 10000,
     */
 
 
-Component('UserService', class {
+Component('UserDatabase', class UserDatabase {
 
     findByName(name) {
         return new Promise((resolve, reject) => {

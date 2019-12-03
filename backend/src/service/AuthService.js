@@ -7,8 +7,8 @@ const SECRET = process.env.JWT_SECRET || randomstring.generate()
 
 class AuthService {
 
-    constructor(UserService) {
-        this.UserService = UserService
+    constructor(UserDatabase) {
+        this.UserDatabase = UserDatabase
     }
 
     getJwtSecret() {
@@ -16,15 +16,15 @@ class AuthService {
     }
 
     registerNewUser(registration) {
-        return this.UserService.createUser(registration)
+        return this.UserDatabase.createUser(registration)
     }
 
     changeUserPassword(username, password, passwordRepeat) {
-        return this.UserService.changePassword(username, password, passwordRepeat)
+        return this.UserDatabase.changePassword(username, password, passwordRepeat)
     }
 
     changeUserPermissions(username, permissions) {
-        return this.UserService.changePermissions(username, permissions)
+        return this.UserDatabase.changePermissions(username, permissions)
     }
 
     generateJWT(user) {

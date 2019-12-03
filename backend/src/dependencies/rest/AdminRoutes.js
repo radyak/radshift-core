@@ -1,16 +1,16 @@
 var express = require('express')
 var router = express.Router()
 
-Provider('AdminRoutes', (AuthService, UserService) => {
+Provider('AdminRoutes', (AuthService, UserDatabase) => {
   
   router.get('/users', (req, res) => {
-    UserService.findAll().then((users) => {
+    UserDatabase.findAll().then((users) => {
       res.status(200).send(users)
     })
   })
   
   router.get('/users/:name', (req, res) => {
-    UserService.findByName(req.params.name).then((user) => {
+    UserDatabase.findByName(req.params.name).then((user) => {
       res.status(200).send(user)
     })
   })
@@ -70,7 +70,7 @@ Provider('AdminRoutes', (AuthService, UserService) => {
   router.delete('/users/:username', (req, res) => {
     let username = req.params.username
     
-    UserService.deleteByUsername(username)
+    UserDatabase.deleteByUsername(username)
       .then((result) => {
 
         if(!result) {
