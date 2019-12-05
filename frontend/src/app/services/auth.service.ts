@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Login } from '../model/Login';
 import { HttpClient } from '@angular/common/http';
-import { NotificationService } from '../components/notification.service';
+// import { NotificationService } from '../components/notification.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Authentication } from '../model/Authentication';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -21,24 +21,27 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private notification: NotificationService
+    // private notification: NotificationService
   ) { }
 
-  login(user: Login, redirectUrl: string = null){
+  login(login: Login, redirectUrl: string = null){
     return this.http.post<Authentication>('/api/auth/login', {
-      username: user.username,
-      password: user.password
+      username: login.username,
+      password: login.password
     }).subscribe((auth: Authentication) => {
+      console.log('Success:', auth);
       if (redirectUrl) {
         let url: URL = new URL(redirectUrl)
         url.searchParams.set('token', auth.token)
         window.location.href = `${url}`
       } else {
         this.setLocalState(auth.token);
-        this.router.navigate(['/dashboard']);
+        console.log('Yess');
+        // this.router.navigate(['/dashboard']);
       }
     }, (err) => {
-      this.notification.error('Wrong username or password', 'Login Error')
+      console.error('Error:', err);
+      // this.notification.error('Wrong username or password', 'Login Error')
     });
   }
 

@@ -1,0 +1,54 @@
+<mat-toolbar color="primary">
+  <mat-icon>view_stream</mat-icon>
+  <span>
+    Login
+  </span>
+</mat-toolbar>
+
+<div class="container">
+
+  <logo [color]="'#009688'" size="100"></logo>
+  <h1>RadShift</h1>
+
+  <section>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput
+               placeholder="Username"
+               name="Username"
+               type="text"
+               id="username"
+               formControlName="username">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput
+               placeholder="Password"
+               name="Password"
+               type="password"
+               id="password"
+               formControlName="password">
+      </mat-form-field>
+
+      <button type="submit" mat-flat-button color="primary">
+        Login {{ form.value.username }}
+      </button>
+
+    </form>
+  </section>
+
+</div>
+
+<!-- <nav mat-tab-nav-bar mat-stretch-tabs class="full-width">
+    <a mat-tab-link
+    *ngFor="let link of navLinks"
+    [routerLink]="link.link"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive">
+      {{ link.label }}
+    </a>
+  </nav> -->
