@@ -33,6 +33,14 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
         getToken: getTokenFromRequest
     })
 
+    const errorHandler = function(err, req, res, next) {
+        console.error(`An error occurred: `, err)
+        if (err.name === 'UnauthorizedError') {
+            return res.status(401).send()
+        }
+        next()
+    }
+
     const authenticationOptional = jwt({
         secret: AuthService.getJwtSecret(),
         userProperty: TOKEN_PROPERTY,
@@ -40,11 +48,8 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
         credentialsRequired: false,
     })
 
-    const errorHandler = function(err, req, res, next) {
-        console.error(`An error occurred: `, err)
-        if (err.name === 'UnauthorizedError') {
-            return res.status(401).send()
-        }
+    const errorHandlerOptional = function(err, req, res, next) {
+        console.warn(`An error occurred: `, err)
         next()
     }
 
@@ -77,7 +82,7 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
         ],
         authenticatedOptional: [
             authenticationOptional,
-            errorHandler
+            errorHandlerOptional
         ],
         hasPermission: authorization
     }
