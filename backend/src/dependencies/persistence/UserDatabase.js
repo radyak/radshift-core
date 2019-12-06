@@ -33,6 +33,9 @@ const setPasswordForUser = (user, password) => {
 }
 
 const checkPasswordForUser = (user, password) => {
+    if (!user || !password) {
+        return false;
+    }
     const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
     return user.hash === hash
 }
