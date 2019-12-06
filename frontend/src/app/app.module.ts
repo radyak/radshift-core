@@ -1,6 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSnackBarModule } from '@angular/material'; 
+import {
+  MatToolbarModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatSnackBarModule,
+  MatTabsModule,
+  MatExpansionModule,
+  MatChipsModule
+} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,6 +21,7 @@ import { LoginComponent } from './views/login/login.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { AdministrationComponent } from './views/administration/administration.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +29,8 @@ import { AdministrationComponent } from './views/administration/administration.c
     LoginComponent,
     LogoComponent,
     NotificationComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +45,10 @@ import { AdministrationComponent } from './views/administration/administration.c
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

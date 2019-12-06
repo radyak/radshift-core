@@ -72,7 +72,6 @@ export class AuthService {
     return this.getAuthentication().pipe(
       take(1),
       map((auth: any) => {
-        console.log('User has', auth)
         if (!role) {
           return true;
         }

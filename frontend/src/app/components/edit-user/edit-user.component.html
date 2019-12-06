@@ -1,0 +1,65 @@
+<section>
+    <h3>
+        <mat-icon>account_circle</mat-icon>
+        User details
+    </h3>
+    <form [formGroup]="userDetailsForm" (ngSubmit)="submitUserDetails()">
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput
+                   placeholder="Username"
+                   name="username"
+                   type="text"
+                   id="username"
+                   formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Permissions</mat-label>
+            <mat-chip-list #chipList aria-label="Permissions">
+                <mat-chip *ngFor="let permission of user.permissions"
+                          [selectable]="selectable"
+                          [removable]="removable"
+                          (removed)="remove(fruit)">
+                    {{ permission }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="addOnBlur"
+                       (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+        </mat-form-field>
+
+        <button type="submit" mat-flat-button color="primary" class="md-button-right" [disabled]="!userDetailsForm.valid">
+            <mat-icon>save</mat-icon>
+            Update
+        </button>
+    </form>
+</section>
+
+<hr />
+
+<section>
+    <h3>
+        <mat-icon>lock</mat-icon>
+        Change password
+    </h3>
+    <form [formGroup]="userPasswordForm" (ngSubmit)="submitUserPassword()">
+        <mat-form-field appearance="outline">
+            <mat-label>New password</mat-label>
+            <input matInput placeholder="New password" name="newPassword" type="password" id="newPassword"
+                formControlName="newPassword">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Repeat new password</mat-label>
+            <input matInput placeholder="Repeat new password" name="newPasswordRepeat" type="password"
+                id="newPasswordRepeat" formControlName="newPasswordRepeat">
+        </mat-form-field>
+
+        <button type="submit" mat-flat-button color="primary" [disabled]="!userPasswordForm.valid">
+            <mat-icon>save</mat-icon>
+            Change
+        </button>
+    </form>
+</section>

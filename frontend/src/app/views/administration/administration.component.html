@@ -1,10 +1,81 @@
 <mat-toolbar color="primary">
     <logo class="toolbar-icon" [color]="'white'" size="30"></logo>
     <span>
-        Administration
+        User Administration
     </span>
 </mat-toolbar>
 
 <div class="container">
+
+    <h2>
+        <mat-icon>group</mat-icon>
+        User Administration
+    </h2>
+
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>edit</mat-icon>
+                Edit
+            </ng-template>
+            <div class="tab-content">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let user of users">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>person</mat-icon>
+                                {{ user.username }}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+
+                        <edit-user [user]="user"></edit-user>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+
+
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon>add_box</mat-icon>
+                Add user
+            </ng-template>
+            <div class="tab-content">
+                <mat-accordion>
+
+                    <form [formGroup]="newUserForm" (ngSubmit)="submitNewUser()">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Username</mat-label>
+                            <input matInput placeholder="Username" name="username" type="text" id="username"
+                                formControlName="username">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Password</mat-label>
+                            <input matInput placeholder="Password" name="password" type="password" id="password"
+                                formControlName="password">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Repeat password</mat-label>
+                            <input matInput placeholder="Repeat password" name="passwordRepeat" type="password"
+                                id="passwordRepeat" formControlName="passwordRepeat">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Permissions</mat-label>
+                            <input matInput placeholder="Permissions" name="permissions" type="text" id="permissions"
+                                formControlName="permissions">
+                        </mat-form-field>
+
+                        <button type="submit" mat-flat-button color="primary" [disabled]="!newUserForm.valid">
+                            <mat-icon>person_add</mat-icon>
+                            Create user
+                        </button>
+                    </form>
+
+                </mat-accordion>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 
 </div>

@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
   
   form: FormGroup;
-  private formSubmitAttempt: boolean;
   
   constructor(
     private fb: FormBuilder,
@@ -20,8 +19,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: ['admin', Validators.required],
-      password: ['admin', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -29,7 +28,6 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.authService.login(this.form.value, this.route.snapshot.queryParamMap.get('origin'));
     }
-    this.formSubmitAttempt = true;
   }
 
 }
