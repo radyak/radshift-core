@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Authentication } from '../model/Authentication';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, take } from 'rxjs/operators';
+import { NotificationService } from './notification.service';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    // private notification: NotificationService
+    private notificationService: NotificationService
   ) { }
 
   login(login: Login, redirectUrl: string = null){
@@ -29,19 +30,18 @@ export class AuthService {
       username: login.username,
       password: login.password
     }).subscribe((auth: Authentication) => {
-      console.log('Success:', auth);
       if (redirectUrl) {
         let url: URL = new URL(redirectUrl)
         url.searchParams.set('token', auth.token)
         window.location.href = `${url}`
       } else {
         this.setLocalState(auth.token);
-        console.log('Yess');
         // this.router.navigate(['/dashboard']);
       }
     }, (err) => {
       console.error('Error:', err);
-      // this.notification.error('Wrong username or password', 'Login Error')
+      this.notificationService.error('Wrong username or password');
+
     });
   }
 
