@@ -46,4 +46,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         background: mat-color($frontend-warn);
         color: white;
     }
+
+    &.warning {
+        background: mat-color($frontend-accent);
+        color: white;
+    }
+
+    &.info {
+        background: mat-color($frontend-primary);
+        color: white;
+    }
 }

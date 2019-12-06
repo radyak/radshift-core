@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './views/login/login.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LogoComponent
+    LogoComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +34,9 @@ import { LogoComponent } from './components/logo/logo.component';
     MatSnackBarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NotificationComponent
+  ]
 })
 export class AppModule { }
