@@ -15,8 +15,8 @@ class AuthService {
         return SECRET
     }
 
-    registerNewUser(registration) {
-        return this.UserDatabase.create(registration)
+    registerNewUser(username, password, permissions = []) {
+        return this.UserDatabase.create(username, password, permissions)
     }
 
     changeUserPassword(username, password) {

@@ -111,10 +111,7 @@ Component('UserDatabase', class UserDatabase {
     }
     
 
-    create(registration) {
-        let username = registration && registration.username
-        let password = registration && registration.password
-
+    create(username, password, permissions = []) {
         return this.findByUsername(username).then(existingUser => {
             if (existingUser) {
                 throw `User with username ${username} already exists`
@@ -122,7 +119,7 @@ Component('UserDatabase', class UserDatabase {
 
             let user = {
                 username: username,
-                permissions: [],
+                permissions: permissions || [],
                 // email: null,
                 // firstname: null,
                 // lastname: null,
