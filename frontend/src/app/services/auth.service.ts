@@ -36,7 +36,7 @@ export class AuthService {
         window.location.href = `${url}`
       } else {
         this.setLocalState(auth.token);
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/administration']);
       }
     }, (err) => {
       console.error('Error:', err);
@@ -68,9 +68,11 @@ export class AuthService {
   }
 
   public hasRole(role: string): Observable<boolean> {
+    console.log('Checking for role', role)
     return this.getAuthentication().pipe(
       take(1),
       map((auth: any) => {
+        console.log('User has', auth)
         if (!role) {
           return true;
         }

@@ -10,13 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './views/login/login.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { AdministrationComponent } from './views/administration/administration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LogoComponent,
-    NotificationComponent
+    NotificationComponent,
+    AdministrationComponent
   ],
   imports: [
     BrowserModule,
