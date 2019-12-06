@@ -3,6 +3,7 @@ import { AdminService } from 'src/app/services/admin.service';
 import { User } from 'src/app/model/User';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { mustMatch } from 'src/app/functions/mustMatch';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-administration',
@@ -17,19 +18,21 @@ export class AdministrationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private notificationService: NotificationService
   ) {
+  }
+
+  ngOnInit() {
     this.newUserForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
       passwordRepeat: ['', Validators.required],
-      permissions: ['', Validators.required]
+      permissions: ['']
     }, {
       validator: mustMatch('password', 'passwordRepeat')
     });
-  }
 
-  ngOnInit() {
     this.adminService.getUsers().subscribe(users => {
       this.users = users;
     })
@@ -39,6 +42,18 @@ export class AdministrationComponent implements OnInit {
     if (!this.newUserForm.valid) {
       return
     }
+    this.adminService.createNewUser({
+      username: this.newUserForm.controls.username.value,
+      password: this.newUserForm.controls.password.value
+    }).subscribe(user => {
+      this.newUserForm.controls.username.patchValue('');
+      this.newUserForm.controls.password.patchValue('');
+      this.newUserForm.controls.passwordRepeat.patchValue('');
+      this.newUserForm.controls.permissions.patchValue('');
+      this.notificationService.info('User created');
+    }, (err) => {
+      this.notificationService.error('Could not create user');
+    })
   }
 
 }

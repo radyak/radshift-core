@@ -16,8 +16,11 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
   })
   
   router.post('/users', (req, res) => {
+    let username = req.body.username
+    let password = req.body.password
+    let permissions = req.body.permissions
     try {
-      AuthService.registerNewUser(req.body)
+      AuthService.registerNewUser(username, password, permissions)
           .then((user) => res.status(200).send(user))
           .catch(err => res.status(400).json({error: err}).send())
     } catch (err) {
