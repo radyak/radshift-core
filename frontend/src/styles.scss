@@ -183,15 +183,24 @@ logo.toolbar-icon {
 .mat-stroked-button {
     border-width: 2px !important;
 
-    &:not(:disabled) {
+    &.mat-primary:not(:disabled) {
         border-color: map-get($brand, 900) !important;
+    }
+
+    &.mat-warn:not(:disabled) {
+        border-color: map-get($brand-red, 900) !important;
     }
 }
 
-.mat-stroked-button:hover,
-.mat-flat-button:hover {
-    &:not(:disabled) {
+.mat-stroked-button,
+.mat-flat-button {
+
+    &.mat-primary:hover:not(:disabled) {
         box-shadow: 0 0 5px map-get($brand, 900);
+    }
+
+    &.mat-warn:hover:not(:disabled) {
+        box-shadow: 0 0 5px map-get($brand-red, 900);
     }
 }
 

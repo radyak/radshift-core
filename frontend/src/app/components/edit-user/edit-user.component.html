@@ -7,22 +7,19 @@
 
         <mat-form-field appearance="outline">
             <mat-chip-list #chipList aria-label="Permissions">
-                <mat-chip *ngFor="let permission of user.permissions"
-                          [selectable]="selectable"
-                          [removable]="removable"
-                          (removed)="remove(permission)">
+                <mat-chip *ngFor="let permission of user.permissions" [selectable]="selectable" [removable]="removable"
+                    (removed)="remove(permission)">
                     {{ permission }}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
-                <input [matChipInputFor]="chipList"
-                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                       [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="add($event)">
+                <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
         </mat-form-field>
 
         <div class="control-container">
-            <button type="submit" mat-stroked-button color="primary" class="md-button-right" [disabled]="!userDetailsForm.valid">
+            <button type="submit" mat-stroked-button color="primary" class="md-button-right"
+                [disabled]="!userDetailsForm.valid">
                 <mat-icon>save</mat-icon>
                 Update
             </button>
@@ -58,4 +55,20 @@
             </button>
         </div>
     </form>
+</section>
+
+<hr />
+
+<section>
+    <h3>
+        <mat-icon>lock</mat-icon>
+        Delete user
+    </h3>
+
+    <div class="control-container">
+        <button mat-stroked-button color="warn">
+            <mat-icon>delete</mat-icon>
+            Delete {{ user.username }}
+        </button>
+    </div>
 </section>

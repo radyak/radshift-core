@@ -56,6 +56,8 @@ export class AdministrationComponent implements OnInit {
       this.newUserForm.controls.password.patchValue('');
       this.newUserForm.controls.passwordRepeat.patchValue('');
       this.notificationService.info('User created');
+
+      this.users.push(user);
     }, (err) => {
       this.notificationService.error('Could not create user');
     })

@@ -3,7 +3,7 @@
     <span>
         RadShift
     </span>
-    
+
     <span class="fill-space"></span>
 
     <span class="account">
@@ -19,70 +19,53 @@
         User Administration
     </h2>
 
-    <mat-tab-group>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon>edit</mat-icon>
-                Edit
-            </ng-template>
-            <div class="tab-content">
-                <mat-accordion>
-                    <mat-expansion-panel *ngFor="let user of users">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <mat-icon>person</mat-icon>
-                                {{ user.username }}
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
+    <mat-expansion-panel *ngFor="let user of users">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>person</mat-icon>
+                {{ user.username }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
 
-                        <edit-user [user]="user"></edit-user>
+        <edit-user [user]="user"></edit-user>
+    </mat-expansion-panel>
 
-                    </mat-expansion-panel>
-                </mat-accordion>
+    <mat-expansion-panel class="create-user-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>person_add</mat-icon>
+                Create new user
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="newUserForm" (ngSubmit)="submitNewUser()">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Username" name="username" type="text" id="username"
+                    formControlName="username">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Password" name="password" type="password" id="password"
+                    formControlName="password">
+                <mat-icon matSuffix>security</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Repeat password</mat-label>
+                <input matInput placeholder="Repeat password" name="passwordRepeat" type="password" id="passwordRepeat"
+                    formControlName="passwordRepeat">
+                <mat-icon matSuffix>security</mat-icon>
+            </mat-form-field>
+
+
+            <div class="control-container">
+                <button type="submit" mat-stroked-button color="primary" [disabled]="!newUserForm.valid">
+                    <mat-icon>person_add</mat-icon>
+                    Create user
+                </button>
             </div>
-        </mat-tab>
+        </form>
 
-
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon>add_box</mat-icon>
-                Add user
-            </ng-template>
-            <div class="tab-content">
-                <mat-accordion>
-
-                    <form [formGroup]="newUserForm" (ngSubmit)="submitNewUser()">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Username</mat-label>
-                            <input matInput placeholder="Username" name="username" type="text" id="username"
-                                formControlName="username">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Password</mat-label>
-                            <input matInput placeholder="Password" name="password" type="password" id="password"
-                                formControlName="password">
-                            <mat-icon matSuffix>security</mat-icon>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Repeat password</mat-label>
-                            <input matInput placeholder="Repeat password" name="passwordRepeat" type="password"
-                                id="passwordRepeat" formControlName="passwordRepeat">
-                            <mat-icon matSuffix>security</mat-icon>
-                        </mat-form-field>
-
-
-                        <div class="control-container">
-                            <button type="submit" mat-stroked-button color="primary" [disabled]="!newUserForm.valid">
-                                <mat-icon>person_add</mat-icon>
-                                Create user
-                            </button>
-                        </div>
-                    </form>
-
-                </mat-accordion>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+    </mat-expansion-panel>
 
 </div>

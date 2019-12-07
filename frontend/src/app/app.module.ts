@@ -7,7 +7,6 @@ import {
   MatInputModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatTabsModule,
   MatExpansionModule,
   MatChipsModule
 } from '@angular/material';
@@ -46,7 +45,6 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatTabsModule,
     MatExpansionModule,
     MatChipsModule
   ],

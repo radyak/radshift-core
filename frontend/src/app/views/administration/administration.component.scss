@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .tab-content {
     padding: 20px;
 }
@@ -16,5 +18,19 @@
 
     mat-icon {
         margin-top: .2rem;
+    }
+}
+
+h2 {
+    width: 100%;
+    text-align: center;
+    color: map-get($brand, 500);
+}
+
+.mat-expansion-panel {
+    margin: 10px 0;
+
+    &.create-user-panel {
+        border: 2px solid map-get($brand, 500);
     }
 }
