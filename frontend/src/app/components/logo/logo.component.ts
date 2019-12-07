@@ -13,6 +13,6 @@ export class LogoComponent implements OnInit {
   }
 
   @Input() size: string = '100%';
-  @Input() color: string = 'white';
+  @Input() color: string;
 
 }

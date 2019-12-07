@@ -1,7 +1,14 @@
 <mat-toolbar color="primary">
-    <logo class="toolbar-icon" [color]="'white'" size="30"></logo>
+    <logo class="toolbar-icon" size="30"></logo>
     <span>
-        User Administration
+        RadShift
+    </span>
+    
+    <span class="fill-space"></span>
+
+    <span class="account">
+        <span class="username">{{ authentication.name }}</span>
+        <mat-icon>account_box</mat-icon>
     </span>
 </mat-toolbar>
 

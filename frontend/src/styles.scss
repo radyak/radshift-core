@@ -195,6 +195,21 @@ logo.toolbar-icon {
     }
 }
 
+.mat-toolbar.mat-primary {
+    color: map-get($brand, 500);
+    background: rgba(0, 0, 0, 0.2) !important;
+
+    svg {
+        g {
+            stroke: map-get($brand, 500);
+        }
+
+        path {
+            fill: map-get($brand, 500);
+        }
+    }
+}
+
 .control-container {
     display: flex;
     justify-content: flex-end;

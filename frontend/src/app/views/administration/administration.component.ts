@@ -4,6 +4,7 @@ import { User } from 'src/app/model/User';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { mustMatch } from 'src/app/functions/mustMatch';
 import { NotificationService } from 'src/app/services/notification.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-administration',
@@ -12,6 +13,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class AdministrationComponent implements OnInit {
 
+  authentication: any;
+
   users: User[];
   newUserForm: FormGroup;
 
@@ -19,8 +22,12 @@ export class AdministrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) {
+    this.authService.getAuthentication().subscribe(authentication => {
+      this.authentication = authentication;
+    })
   }
 
   ngOnInit() {
