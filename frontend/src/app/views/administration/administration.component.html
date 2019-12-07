@@ -64,10 +64,13 @@
                             <mat-icon matSuffix>security</mat-icon>
                         </mat-form-field>
 
-                        <button type="submit" mat-flat-button color="primary" [disabled]="!newUserForm.valid">
-                            <mat-icon>person_add</mat-icon>
-                            Create user
-                        </button>
+
+                        <div class="control-container">
+                            <button type="submit" mat-stroked-button color="primary" [disabled]="!newUserForm.valid">
+                                <mat-icon>person_add</mat-icon>
+                                Create user
+                            </button>
+                        </div>
                     </form>
 
                 </mat-accordion>

@@ -21,10 +21,12 @@
             </mat-chip-list>
         </mat-form-field>
 
-        <button type="submit" mat-flat-button color="primary" class="md-button-right" [disabled]="!userDetailsForm.valid">
-            <mat-icon>save</mat-icon>
-            Update
-        </button>
+        <div class="control-container">
+            <button type="submit" mat-stroked-button color="primary" class="md-button-right" [disabled]="!userDetailsForm.valid">
+                <mat-icon>save</mat-icon>
+                Update
+            </button>
+        </div>
     </form>
 </section>
 
@@ -49,9 +51,11 @@
             <mat-icon matSuffix>security</mat-icon>
         </mat-form-field>
 
-        <button type="submit" mat-flat-button color="primary" [disabled]="!userPasswordForm.valid">
-            <mat-icon>save</mat-icon>
-            Change
-        </button>
+        <div class="control-container">
+            <button type="submit" mat-stroked-button color="primary" [disabled]="!userPasswordForm.valid">
+                <mat-icon>save</mat-icon>
+                Change
+            </button>
+        </div>
     </form>
 </section>
