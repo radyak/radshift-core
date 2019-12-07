@@ -1,21 +1,11 @@
 <section>
     <h3>
-        <mat-icon>account_circle</mat-icon>
-        User details
+        <mat-icon>security</mat-icon>
+        Permissions
     </h3>
     <form [formGroup]="userDetailsForm" (ngSubmit)="submitUserDetails()">
-        <mat-form-field appearance="outline">
-            <mat-label>Username</mat-label>
-            <input matInput
-                   placeholder="Username"
-                   name="username"
-                   type="text"
-                   id="username"
-                   formControlName="username">
-        </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Permissions</mat-label>
             <mat-chip-list #chipList aria-label="Permissions">
                 <mat-chip *ngFor="let permission of user.permissions"
                           [selectable]="selectable"
@@ -50,11 +40,13 @@
             <mat-label>New password</mat-label>
             <input matInput placeholder="New password" name="newPassword" type="password" id="newPassword"
                 formControlName="newPassword">
+            <mat-icon matSuffix>security</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Repeat new password</mat-label>
             <input matInput placeholder="Repeat new password" name="newPasswordRepeat" type="password"
                 id="newPasswordRepeat" formControlName="newPasswordRepeat">
+            <mat-icon matSuffix>security</mat-icon>
         </mat-form-field>
 
         <button type="submit" mat-flat-button color="primary" [disabled]="!userPasswordForm.valid">

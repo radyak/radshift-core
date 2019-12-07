@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const randomstring = require('randomstring')
+const fs = require('fs')
 
 // TODO: Configurize
 const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60
@@ -16,7 +17,15 @@ class AuthService {
     }
 
     registerNewUser(username, password, permissions = []) {
-        return this.UserDatabase.create(username, password, permissions)
+        return this.UserDatabase.create(username, password, permissions).then(user => {
+            try {
+                fs.mkdirSync(`/home/${username}`, { recursive: true })
+            } catch(e) {
+                console.error('Could not create user directory', e)
+                throw 'Could not create user directory'
+            }
+            return user
+        })
     }
 
     changeUserPassword(username, password) {

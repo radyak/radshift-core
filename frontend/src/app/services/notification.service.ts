@@ -22,7 +22,7 @@ export class NotificationService {
 
   warning(message: string) {
     this.snackBar.openFromComponent(NotificationComponent, {
-      duration: 8 * 1000,
+      duration: 5 * 1000,
       data: {
         message: message,
         type: 'warning'
@@ -33,7 +33,7 @@ export class NotificationService {
 
   info(message: string) {
     this.snackBar.openFromComponent(NotificationComponent, {
-      duration: 8 * 1000,
+      duration: 3 * 1000,
       data: {
         message: message,
         type: 'info'

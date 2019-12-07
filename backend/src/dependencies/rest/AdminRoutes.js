@@ -41,7 +41,7 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
               error: `User '${username}' not found`
             })
           }
-          res.status(204).send()
+          res.status(204).send(result)
         })
         .catch(err => {
           res.status(400).json(err).send()

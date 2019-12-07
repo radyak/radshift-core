@@ -55,16 +55,13 @@
                             <mat-label>Password</mat-label>
                             <input matInput placeholder="Password" name="password" type="password" id="password"
                                 formControlName="password">
+                            <mat-icon matSuffix>security</mat-icon>
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Repeat password</mat-label>
                             <input matInput placeholder="Repeat password" name="passwordRepeat" type="password"
                                 id="passwordRepeat" formControlName="passwordRepeat">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Permissions</mat-label>
-                            <input matInput placeholder="Permissions" name="permissions" type="text" id="permissions"
-                                formControlName="permissions">
+                            <mat-icon matSuffix>security</mat-icon>
                         </mat-form-field>
 
                         <button type="submit" mat-flat-button color="primary" [disabled]="!newUserForm.valid">

@@ -36,7 +36,6 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.userDetailsForm = this.fb.group({
-      username: [this.user.username, Validators.required],
       permissions: [this.user.permissions]
     });
     this.userPasswordForm = this.fb.group({
@@ -72,10 +71,10 @@ export class EditUserComponent implements OnInit {
     if (!this.userDetailsForm.valid) {
       return
     }
-    this.adminService.updateUserPermissions({
-      username: this.userDetailsForm.controls.username.value,
-      permissions: this.userDetailsForm.controls.permissions.value
-    }).subscribe(user => {
+    this.adminService.updateUserPermissions(
+      this.user.username,
+      this.userDetailsForm.controls.permissions.value
+    ).subscribe(user => {
       this.user = user || this.user;
       this.notificationService.info('User updated');
     }, (err) => {

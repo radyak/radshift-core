@@ -27,8 +27,7 @@ export class AdministrationComponent implements OnInit {
     this.newUserForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
-      passwordRepeat: ['', Validators.required],
-      permissions: ['']
+      passwordRepeat: ['', Validators.required]
     }, {
       validator: mustMatch('password', 'passwordRepeat')
     });
@@ -49,7 +48,6 @@ export class AdministrationComponent implements OnInit {
       this.newUserForm.controls.username.patchValue('');
       this.newUserForm.controls.password.patchValue('');
       this.newUserForm.controls.passwordRepeat.patchValue('');
-      this.newUserForm.controls.permissions.patchValue('');
       this.notificationService.info('User created');
     }, (err) => {
       this.notificationService.error('Could not create user');

@@ -19,8 +19,8 @@ export class AdminService {
     return this.http.post<User>(`/api/admin/users`, registration);
   }
 
-  updateUserPermissions(user: User): Observable<User> {
-    return this.http.put<User>(`/api/admin/users/${user.username}/permissions`, user.permissions);
+  updateUserPermissions(username: string, permissions: string[]): Observable<User> {
+    return this.http.put<User>(`/api/admin/users/${username}/permissions`, permissions);
   }
 
   updateUserPassword(user: User, password: string): Observable<User> {
