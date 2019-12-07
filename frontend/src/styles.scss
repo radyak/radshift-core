@@ -1,130 +1,15 @@
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import "~@angular/material/theming";
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-$brand: (
-  50: #e1fbe9,
-  100: #b5f6c8,
-  200: #84f0a4,
-  300: #52e980,
-  400: #2de564,
-  500: #08e049,
-  600: #07dc42,
-  700: #06d839,
-  800: #04d331,
-  900: #02cb21,
-  A100: #f3fff4,
-  A200: #c0ffc6,
-  A400: #8dff99,
-  A700: #74ff82,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: white
-  )
-);
-
-$brand-red: (
-  50: fbe2eb,
-  100: #f6b7cd,
-  200: #f087ac,
-  300: #e9568a,
-  400: #e53271,
-  500: #e00e58,
-  600: #dc0c50,
-  700: #d80a47,
-  800: #d3083d,
-  900: #cb042d,
-  A100: #fff3f5,
-  A200: #ffc0ca,
-  A400: #ff8d9f,
-  A700: #ff7489,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: white
-  )
-);
-
-$brand-orange: (
-  50: #ffffff,
-  100: #fff7f4,
-  200: #fecdbd,
-  300: #fc9977,
-  400: #fc8259,
-  500: #fb6c3b,
-  600: #fa551d,
-  700: #f44205,
-  800: #d63a04,
-  900: #b83204,
-  A100: #ffffff,
-  A200: #fff7f4,
-  A400: #fc8259,
-  A700: #f44205,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: white
-  )
-);
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$frontend-primary: mat-palette($brand);
-$frontend-accent: mat-palette($brand-orange, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$frontend-warn: mat-palette($brand-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$frontend-theme: mat-dark-theme($frontend-primary, $frontend-accent, $frontend-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($frontend-theme);
+@import "./colors";
+// @include angular-material-theme($frontend-theme);
 
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: Brand;
+  src: url(assets/fonts/OpenSans/OpenSans-Light.ttf) format("truetype");
+//   src: url(assets/fonts/Roboto/Roboto-Light.ttf) format("truetype");
+//   src: url(assets/fonts/Rubik/Rubik-Light.ttf) format("truetype");
+//   src: url(assets/fonts/Varela_Round/VarelaRound-Regular.ttf) format("truetype");
+}
 
 html,
 body {
@@ -132,7 +17,9 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+*:not(.mat-icon) {
+  font-family: "Brand", "arial", sans-serif !important;
 }
 
 .container {
@@ -181,45 +68,44 @@ logo.toolbar-icon {
 }
 
 .mat-stroked-button {
-    border-width: 2px !important;
+  border-width: 2px !important;
 
-    &.mat-primary:not(:disabled) {
-        border-color: map-get($brand, 900) !important;
-    }
+  &.mat-primary:not(:disabled) {
+    border-color: map-get($brand, 900) !important;
+  }
 
-    &.mat-warn:not(:disabled) {
-        border-color: map-get($brand-red, 900) !important;
-    }
+  &.mat-warn:not(:disabled) {
+    border-color: map-get($brand-red, 900) !important;
+  }
 }
 
 .mat-stroked-button,
 .mat-flat-button {
+  &.mat-primary:hover:not(:disabled) {
+    box-shadow: 0 0 5px map-get($brand, 900);
+  }
 
-    &.mat-primary:hover:not(:disabled) {
-        box-shadow: 0 0 5px map-get($brand, 900);
-    }
-
-    &.mat-warn:hover:not(:disabled) {
-        box-shadow: 0 0 5px map-get($brand-red, 900);
-    }
+  &.mat-warn:hover:not(:disabled) {
+    box-shadow: 0 0 5px map-get($brand-red, 900);
+  }
 }
 
 .mat-toolbar.mat-primary {
-    color: map-get($brand, 500);
-    background: rgba(0, 0, 0, 0.2) !important;
+  color: map-get($brand, 500) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
 
-    svg {
-        g {
-            stroke: map-get($brand, 500);
-        }
-
-        path {
-            fill: map-get($brand, 500);
-        }
+  svg {
+    g {
+      stroke: map-get($brand, 500);
     }
+
+    path {
+      fill: map-get($brand, 500);
+    }
+  }
 }
 
 .control-container {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
