@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Delete user</h1>
+<div mat-dialog-content>
+  <p>Are you sure to delete user {{ data.username }}?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="onCancel()">Cancel</button>
+  <button mat-stroked-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>
+      Confirm
+    </button>
+</div>

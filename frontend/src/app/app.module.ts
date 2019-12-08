@@ -8,7 +8,8 @@ import {
   MatButtonModule,
   MatSnackBarModule,
   MatExpansionModule,
-  MatChipsModule
+  MatChipsModule,
+  MatDialogModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,6 +22,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { AdministrationComponent } from './views/administration/administration.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { HeaderComponent } from './components/header/header.component';
+import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     LogoComponent,
     NotificationComponent,
     AdministrationComponent,
-    EditUserComponent
+    EditUserComponent,
+    HeaderComponent,
+    DeleteUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,12 +51,14 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
     MatButtonModule,
     MatSnackBarModule,
     MatExpansionModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    NotificationComponent
+    NotificationComponent,
+    DeleteUserDialogComponent
   ]
 })
 export class AppModule { }

@@ -61,14 +61,14 @@
 
 <section>
     <h3>
-        <mat-icon>lock</mat-icon>
-        Delete user
+        <mat-icon>delete</mat-icon>
+        Delete user "{{ user.username }}"
     </h3>
 
     <div class="control-container">
-        <button mat-stroked-button color="warn">
-            <mat-icon>delete</mat-icon>
-            Delete {{ user.username }}
+        <button mat-stroked-button color="warn" (click)="openDeleteDialog()">
+            <mat-icon>close</mat-icon>
+            Delete
         </button>
     </div>
 </section>

@@ -6,6 +6,8 @@ import { mustMatch } from 'src/app/functions/mustMatch';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { NotificationService } from 'src/app/services/notification.service';
+import { MatDialog } from '@angular/material';
+import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
 
 
 @Component({
@@ -30,7 +32,8 @@ export class EditUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public dialog: MatDialog
   ) {
   }
 
@@ -93,6 +96,18 @@ export class EditUserComponent implements OnInit {
     }, (err) => {
       this.notificationService.error('Could not update password');
     })
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      width: '250px',
+      data: {username: this.user.username}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed, result was:', result);
+    });
+
   }
 
 }

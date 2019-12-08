@@ -1,26 +1,5 @@
 @import "../../../colors";
 
-.tab-content {
-    padding: 20px;
-}
-
-.fill-space {
-    flex: 1 1 auto;
-}
-
-.username {
-    font-size: 1rem;
-}
-
-.account {
-    display: inline-flex;
-    vertical-align: middle !important;
-    color: map-get($brand-red, 500);
-    mat-icon {
-        margin-top: .2rem;
-    }
-}
-
 h2 {
     width: 100%;
     text-align: center;

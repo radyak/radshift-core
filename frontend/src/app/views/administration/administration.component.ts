@@ -13,8 +13,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdministrationComponent implements OnInit {
 
-  authentication: any;
-
   users: User[];
   newUserForm: FormGroup;
 
@@ -25,9 +23,6 @@ export class AdministrationComponent implements OnInit {
     private notificationService: NotificationService,
     private authService: AuthService
   ) {
-    this.authService.getAuthentication().subscribe(authentication => {
-      this.authentication = authentication;
-    })
   }
 
   ngOnInit() {
@@ -61,10 +56,6 @@ export class AdministrationComponent implements OnInit {
     }, (err) => {
       this.notificationService.error('Could not create user');
     })
-  }
-
-  logout(): void {
-    this.authService.logout()
   }
 
 }
