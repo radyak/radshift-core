@@ -28,6 +28,10 @@ class AuthService {
         })
     }
 
+    validatePassword(username, password) {
+        return this.UserDatabase.validatePassword(username, password)
+    }
+
     changeUserPassword(username, password) {
         return this.UserDatabase.changePassword(username, password)
     }

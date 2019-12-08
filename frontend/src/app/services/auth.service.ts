@@ -36,7 +36,14 @@ export class AuthService {
         window.location.href = `${url}`
       } else {
         this.setLocalState(auth.token);
-        this.router.navigate(['/administration']);
+
+        this.hasRole('admin').subscribe(isAdmin => {
+          if (isAdmin) {
+            this.router.navigate(['/administration']);
+          } else {
+            this.router.navigate(['/settings']);
+          }
+        })
       }
     }, (err) => {
       console.error('Error:', err);
@@ -70,8 +77,14 @@ export class AuthService {
     );
   }
 
+  public updateUserPassword(oldPassword: string, newPassword: string) {
+    return this.http.put<void>(`/api/auth/password`, {
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    });  
+  }
+
   public hasRole(role: string): Observable<boolean> {
-    console.log('Checking for role', role)
     return this.getAuthentication().pipe(
       take(1),
       map((auth: any) => {

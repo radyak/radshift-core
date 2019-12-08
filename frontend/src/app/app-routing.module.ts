@@ -4,6 +4,7 @@ import { LoginComponent } from './views/login/login.component';
 import { AdministrationComponent } from './views/administration/administration.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissionGuard } from './guards/permission.guard';
+import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       requiredRole: 'admin'
     }
   },
+  {
+    path: 'settings',
+    component: UserSettingsComponent
+  }
 ];
 
 @NgModule({

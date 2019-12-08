@@ -24,6 +24,7 @@ import { AdministrationComponent } from './views/administration/administration.c
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
+import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DeleteUserDialogComponent } from './components/delete-user-dialog/delet
     AdministrationComponent,
     EditUserComponent,
     HeaderComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

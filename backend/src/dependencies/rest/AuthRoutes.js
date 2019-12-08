@@ -28,7 +28,11 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
             if (passportUser) {
                 const hostDomain = process.env.HOST_DOMAIN
                 const token = AuthService.generateJWT(passportUser)
-                res.cookie('Authorization', token, { httpOnly: true, domain: `.${hostDomain}` })
+                let cookieConfig = {
+                    httpOnly: true,
+                    domain: hostDomain
+                }
+                res.cookie('Authorization', token, cookieConfig)
                     .status(200)
                     .send({
                         token: token
@@ -38,6 +42,33 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
 
             return res.status(401).send()
         })(req, res, next)
+    })
+
+    router.put('/password', (req, res, next) => {
+
+        const oldPassword = req.body.oldPassword
+        const newPassword = req.body.newPassword
+        const username = req[TOKEN_PROPERTY].name
+
+        if (!oldPassword || !newPassword) {
+            return res.status(400)
+                .json({
+                    error: 'Old and new password are required'
+                })
+                .send()
+        }
+
+        AuthService.validatePassword(username, oldPassword)
+            .then(user => {
+                return AuthService.changeUserPassword(username, newPassword)
+            })
+            .then(user => {
+                return res.status(204).send()
+            })
+            .catch(err => {
+                console.error(err)
+                return res.status(401).send()
+            })
     })
 
     router.get('/logout', (req, res, next) => {

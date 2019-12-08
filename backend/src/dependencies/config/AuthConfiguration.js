@@ -1,13 +1,13 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
-Provider('AuthConfiguration', (UserDatabase) => {
+Provider('AuthConfiguration', (AuthService) => {
 
     return passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
     }, (username, password, done) => {
-        UserDatabase.validatePassword(username, password).then((user) => {
+        AuthService.validatePassword(username, password).then((user) => {
             if (!user) {
                 return done(null, false, {
                     error: 'Username and/or password is not valid'

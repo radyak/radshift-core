@@ -13,10 +13,11 @@
     "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
   },
   "env": {
-    "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, no-auth",
+    "ACTIVE_CONTEXT_PROFILES": "dev-local, dev, Xno-auth",
     "PORT": 3000,
     "PERSISTENCE_FILE": "./data.json",
-    "CONF_DIR": "."
+    "CONF_DIR": ".",
+    "JWT_SECRET": "dev-secret"
   },
   "ext": "js,json"
 }
