@@ -58,4 +58,14 @@ export class AdministrationComponent implements OnInit {
     })
   }
 
+  deleteUser(user: User): void {
+    this.adminService.deleteUser(user).subscribe(() => {
+      const index = this.users.indexOf(user);
+      if (index >= 0) {
+        this.users.splice(index, 1);
+      }
+      this.notificationService.info(`User ${user.username} deleted`);
+    })
+  }
+
 }

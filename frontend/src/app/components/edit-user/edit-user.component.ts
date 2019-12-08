@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/model/User';
 import { AdminService } from 'src/app/services/admin.service';
@@ -16,6 +16,9 @@ import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dia
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+  
+  @Output()
+  onDeleteUser: EventEmitter<User> = new EventEmitter();
 
   @Input('user')
   user: User;
@@ -105,7 +108,9 @@ export class EditUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed, result was:', result);
+      if (result) {
+        this.onDeleteUser.emit(this.user);
+      }
     });
 
   }
