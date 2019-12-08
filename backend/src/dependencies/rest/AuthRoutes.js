@@ -40,6 +40,12 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
         })(req, res, next)
     })
 
+    router.get('/logout', (req, res, next) => {
+        return res.clearCookie('Authorization')
+                .status(204)
+                .send()
+    })
+
 
     /*
         Example security configuration section for backend:

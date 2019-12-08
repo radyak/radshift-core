@@ -15,7 +15,7 @@
 .account {
     display: inline-flex;
     vertical-align: middle !important;
-
+    color: map-get($brand-red, 500);
     mat-icon {
         margin-top: .2rem;
     }

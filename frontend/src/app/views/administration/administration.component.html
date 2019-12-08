@@ -6,16 +6,16 @@
 
     <span class="fill-space"></span>
 
-    <span class="account">
+    <button mat-button class="account" (click)="logout()">
         <span class="username">{{ authentication.name }}</span>
-        <mat-icon>account_box</mat-icon>
-    </span>
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
 </mat-toolbar>
 
 <div class="container">
 
     <h2>
-        <mat-icon>group</mat-icon>
+        <mat-icon [inline]="true">group</mat-icon>
         User Administration
     </h2>
 

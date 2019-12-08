@@ -45,9 +45,12 @@ export class AuthService {
     });
   }
 
-  logout() {
-    this.clearLocalState();
-    this.router.navigate(['/login']);
+  logout(): void {
+    this.http.get<any>('/api/auth/logout').subscribe(() => {
+      this.clearLocalState();
+      this.router.navigate(['/login']);
+      return;
+    });
   }
   
   public getToken(): String {
@@ -97,7 +100,6 @@ export class AuthService {
   private clearLocalState() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('authentication');
-
     this.auth$.next(null);
   }
 

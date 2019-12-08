@@ -63,4 +63,8 @@ export class AdministrationComponent implements OnInit {
     })
   }
 
+  logout(): void {
+    this.authService.logout()
+  }
+
 }

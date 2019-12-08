@@ -93,7 +93,9 @@ logo.toolbar-icon {
 .mat-toolbar.mat-primary {
   color: map-get($brand, 500) !important;
   background: rgba(0, 0, 0, 0.2) !important;
+}
 
+logo {
   svg {
     g {
       stroke: map-get($brand, 500);
