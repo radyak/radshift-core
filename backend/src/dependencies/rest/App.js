@@ -5,7 +5,7 @@ var bodyParser = require('body-parser')
 var path = require('path')
 
 
-const STATIC_RESOURCES_PATH = '/usr/src/frontend/dist/management'
+const STATIC_RESOURCES_PATH = '/usr/src/frontend'
 
 Provider('App', (AuthRoutes, AdminRoutes, AuthMiddleware) => {
 

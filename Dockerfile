@@ -21,7 +21,7 @@ WORKDIR /usr/src/app
 COPY ./backend/package*.json ./
 RUN npm install --only=production
 COPY ./backend .
-COPY --from=frontend-build /usr/src/frontend/dist/frontend /usr/src/frontend/dist/frontend
+COPY --from=frontend-build /usr/src/frontend/dist/frontend /usr/src/frontend
 
 EXPOSE 3000:3000
 
