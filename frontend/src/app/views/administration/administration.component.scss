@@ -1,16 +1,15 @@
-@import "../../../variables.scss";
+@import "../../../colors";
 
-.container {
-    padding-bottom: 150px;
-    font-size: 1.2rem;
-    color: #fff;
+h2 {
+    width: 100%;
+    text-align: center;
+    color: map-get($brand, 500);
 }
 
-input {
-    font-size: 1.2rem;
-    color: #fff;
-}
+.mat-expansion-panel {
+    margin: 10px 0;
 
-button {
-    font-size: 1.2rem;
+    &.create-user-panel {
+        border: 2px solid map-get($brand, 500);
+    }
 }

@@ -1,42 +1,61 @@
-<div class="container administration">
+<header></header>
 
-  <h2>
-    <fa-icon icon="cogs"></fa-icon>
-    Administration
-  </h2>
+<div class="container">
+
+    <h2>
+        <mat-icon [inline]="true">group</mat-icon>
+        User Administration
+    </h2>
+
+    <mat-expansion-panel *ngFor="let user of users">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>person</mat-icon>
+                {{ user.username }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <edit-user [user]="user"
+                   (onDeleteUser)="deleteUser(user)"
+        ></edit-user>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="create-user-panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>person_add</mat-icon>
+                Create new user
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="newUserForm" (ngSubmit)="submitNewUser()">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Username" name="username" type="text" id="username"
+                    formControlName="username">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Password" name="password" type="password" id="password"
+                    formControlName="password">
+                <mat-icon matSuffix>security</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Repeat password</mat-label>
+                <input matInput placeholder="Repeat password" name="passwordRepeat" type="password" id="passwordRepeat"
+                    formControlName="passwordRepeat">
+                <mat-icon matSuffix>security</mat-icon>
+            </mat-form-field>
 
 
-  <ngb-tabset type="pills" justify="justified">
-    <ngb-tab>
-      <ng-template ngbTabTitle>
-        <fa-icon icon="tools" size="lg"></fa-icon>
-        <br>
-        Config
-      </ng-template>
-      <ng-template ngbTabContent>
-        <administration-config></administration-config>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab>
-      <ng-template ngbTabTitle>
-        <fa-icon icon="users" size="lg"></fa-icon>
-        <br>
-        Users
-      </ng-template>
-      <ng-template ngbTabContent>
-        <administration-users></administration-users>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab>
-      <ng-template ngbTabTitle>
-        <fa-icon icon="shield-alt" size="lg"></fa-icon>
-        <br>
-        Permissions
-      </ng-template>
-      <ng-template ngbTabContent>
-        <administration-permissions></administration-permissions>
-      </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+            <div class="control-container">
+                <button type="submit" mat-stroked-button color="primary" [disabled]="!newUserForm.valid">
+                    <mat-icon>person_add</mat-icon>
+                    Create user
+                </button>
+            </div>
+        </form>
+
+    </mat-expansion-panel>
 
 </div>

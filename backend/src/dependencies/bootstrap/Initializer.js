@@ -3,15 +3,12 @@ Provider('Initializer', (AuthService) => {
 
     return {
         run: () => {
-            AuthService.registerNewUser({
-                username: 'admin',
-                password: 'admin',
-                passwordRepeat: 'admin',
-                permissions: ['admin']
-            }).then(admin => {
-                console.error(`Created default user 'admin' - CHANGE THE PASSWORD !!!`)
+            AuthService.registerNewUser(
+                'admin', 'admin', ['admin']
+            ).then(admin => {
+                console.log(`Created default user 'admin' - CHANGE THE PASSWORD !!!`)
             }).catch(err => {
-                console.log(`Could not create default user 'admin': ${err}`)
+                console.error(`Could not create default user 'admin': ${err}`)
             })
         }
     }

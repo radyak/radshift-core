@@ -1,5 +1,5 @@
 export interface Registration {
     username: string;
     password: string;
-    passwordRepeat: string;
+    // permissions: string[];
 }

@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Login } from '../model/Login';
 import { HttpClient } from '@angular/common/http';
-import { NotificationService } from '../components/notification.service';
+// import { NotificationService } from '../components/notification.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Authentication } from '../model/Authentication';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, take } from 'rxjs/operators';
+import { NotificationService } from './notification.service';
 
 
 @Injectable({
@@ -21,13 +22,13 @@ export class AuthService {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private notification: NotificationService
+    private notificationService: NotificationService
   ) { }
 
-  login(user: Login, redirectUrl: string = null){
+  login(login: Login, redirectUrl: string = null){
     return this.http.post<Authentication>('/api/auth/login', {
-      username: user.username,
-      password: user.password
+      username: login.username,
+      password: login.password
     }).subscribe((auth: Authentication) => {
       if (redirectUrl) {
         let url: URL = new URL(redirectUrl)
@@ -35,16 +36,28 @@ export class AuthService {
         window.location.href = `${url}`
       } else {
         this.setLocalState(auth.token);
-        this.router.navigate(['/dashboard']);
+
+        this.hasRole('admin').subscribe(isAdmin => {
+          if (isAdmin) {
+            this.router.navigate(['/administration']);
+          } else {
+            this.router.navigate(['/settings']);
+          }
+        })
       }
     }, (err) => {
-      this.notification.error('Wrong username or password', 'Login Error')
+      console.error('Error:', err);
+      this.notificationService.error('Wrong username or password');
+
     });
   }
 
-  logout() {
-    this.clearLocalState();
-    this.router.navigate(['/login']);
+  logout(): void {
+    this.http.get<any>('/api/auth/logout').subscribe(() => {
+      this.clearLocalState();
+      this.router.navigate(['/login']);
+      return;
+    });
   }
   
   public getToken(): String {
@@ -62,6 +75,13 @@ export class AuthService {
         return !!auth;
       })
     );
+  }
+
+  public updateUserPassword(oldPassword: string, newPassword: string) {
+    return this.http.put<void>(`/api/auth/password`, {
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    });  
   }
 
   public hasRole(role: string): Observable<boolean> {
@@ -93,7 +113,6 @@ export class AuthService {
   private clearLocalState() {
     localStorage.removeItem('id_token');
     localStorage.removeItem('authentication');
-
     this.auth$.next(null);
   }
 

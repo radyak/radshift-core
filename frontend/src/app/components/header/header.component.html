@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <logo class="toolbar-icon" size="30"></logo>
+    <span>{{ title }}
+    </span>
+
+    <span class="fill-space"></span>
+
+    <button mat-button class="account" (click)="logout()" *ngIf="authentication">
+        <span class="username">{{ authentication.name }}</span>
+        <mat-icon>exit_to_app</mat-icon>
+    </button>
+</mat-toolbar>

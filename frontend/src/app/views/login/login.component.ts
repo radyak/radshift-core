@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 export class LoginComponent implements OnInit {
   
   form: FormGroup;
-  private formSubmitAttempt: boolean;
   
   constructor(
     private fb: FormBuilder,
@@ -25,18 +24,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  isFieldInvalid(field: string) {
-    return (
-      (!this.form.get(field).valid && this.form.get(field).touched) ||
-      (this.form.get(field).untouched && this.formSubmitAttempt)
-    );
-  }
-  
   onSubmit() {
     if (this.form.valid) {
       this.authService.login(this.form.value, this.route.snapshot.queryParamMap.get('origin'));
     }
-    this.formSubmitAttempt = true;
   }
 
 }

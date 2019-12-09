@@ -1,48 +1,37 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { StoreComponent } from './views/store/store.component';
-import { BackendDetailsComponent } from './views/backend-details/backend-details.component';
 import { LoginComponent } from './views/login/login.component';
+import { AdministrationComponent } from './views/administration/administration.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissionGuard } from './guards/permission.guard';
-import { AdministrationComponent } from './views/administration/administration.component';
+import { UserSettingsComponent } from './views/user-settings/user-settings.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
+    component: LoginComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'administration',
     component: AdministrationComponent,
-    canActivate: [AuthGuard, PermissionGuard],
+    canActivate: [
+      AuthGuard,
+      PermissionGuard
+    ],
     data: {
       requiredRole: 'admin'
     }
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'store',
-    component: StoreComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'backend/:name',
-    component: BackendDetailsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'login',
-    component: LoginComponent
+    path: 'settings',
+    component: UserSettingsComponent
   }
 ];
-export { routes };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

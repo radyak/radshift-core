@@ -33,6 +33,9 @@ const setPasswordForUser = (user, password) => {
 }
 
 const checkPasswordForUser = (user, password) => {
+    if (!user || !password) {
+        return false;
+    }
     const hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
     return user.hash === hash
 }
@@ -108,10 +111,7 @@ Component('UserDatabase', class UserDatabase {
     }
     
 
-    create(registration) {
-        let username = registration && registration.username
-        let password = registration && registration.password
-
+    create(username, password, permissions = []) {
         return this.findByUsername(username).then(existingUser => {
             if (existingUser) {
                 throw `User with username ${username} already exists`
@@ -119,7 +119,7 @@ Component('UserDatabase', class UserDatabase {
 
             let user = {
                 username: username,
-                permissions: [],
+                permissions: permissions || [],
                 // email: null,
                 // firstname: null,
                 // lastname: null,

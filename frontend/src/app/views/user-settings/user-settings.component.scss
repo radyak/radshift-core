@@ -1,0 +1,7 @@
+@import "../../../colors";
+
+h2 {
+    width: 100%;
+    text-align: center;
+    color: map-get($brand, 500);
+}
