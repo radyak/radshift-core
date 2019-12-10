@@ -25,12 +25,14 @@
                     <input matInput placeholder="New password" name="newPassword" type="password" id="newPassword"
                         formControlName="newPassword">
                     <mat-icon matSuffix>security</mat-icon>
+                    <error-hint [control]="userPasswordForm?.controls?.newPassword" validatorRule="PASSWORD"></error-hint>
                 </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Repeat new password</mat-label>
                 <input matInput placeholder="Repeat new password" name="newPasswordRepeat" type="password"
                     id="newPasswordRepeat" formControlName="newPasswordRepeat">
                 <mat-icon matSuffix>security</mat-icon>
+                <error-hint [control]="userPasswordForm?.controls?.newPasswordRepeat" message="New password and password repeat must match"></error-hint>
             </mat-form-field>
 
             <div class="control-container">

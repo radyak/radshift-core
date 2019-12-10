@@ -22,11 +22,9 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
     try {
       AuthService.registerNewUser(username, password, permissions)
           .then((user) => res.status(200).send(user))
-          .catch(err => res.status(400).json({error: err}).send())
+          .catch(err => res.status(400).json(err).send())
     } catch (err) {
-      return res.status(400).json({
-        error: err
-      }).send()
+      return res.status(400).json(err).send()
     }
   })
   
@@ -37,9 +35,7 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
     AuthService.changeUserPermissions(username, permissions)
         .then(result => {
           if(!result) {
-            return res.status(404).send({
-              error: `User '${username}' not found`
-            })
+            return res.status(404).send(`User '${username}' not found`)
           }
           res.status(204).send(result)
         })
@@ -54,14 +50,11 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
 
     AuthService.changeUserPassword(
       username,
-      passwordChangeRequest.password,
-      passwordChangeRequest.passwordRepeat
+      passwordChangeRequest.password
     )
         .then((result) => {
           if (!result) {
-            return res.status(404).send({
-              error: `Could not change password for user '${username}'`
-            })
+            return res.status(404).send(`User '${username}' not found`)
           }
           res.status(204).send()
         })
@@ -77,9 +70,7 @@ Provider('AdminRoutes', (AuthService, UserDatabase) => {
       .then((result) => {
 
         if(!result) {
-          return res.status(404).json({
-            error: `User '${username}' not found`
-          }).send()
+          return res.status(404).json(`User '${username}' not found`).send()
         }
         res.status(204).send()
       })

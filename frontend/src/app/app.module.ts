@@ -25,6 +25,7 @@ import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { HeaderComponent } from './components/header/header.component';
 import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
+import { ErrorHintComponent } from './components/error-hint/error-hint.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UserSettingsComponent } from './views/user-settings/user-settings.compo
     EditUserComponent,
     HeaderComponent,
     DeleteUserDialogComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    ErrorHintComponent
   ],
   imports: [
     BrowserModule,

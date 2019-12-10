@@ -33,18 +33,21 @@
                 <mat-label>Username</mat-label>
                 <input matInput placeholder="Username" name="username" type="text" id="username"
                     formControlName="username">
+                <error-hint [control]="newUserForm?.controls?.username" validatorRule="USERNAME"></error-hint>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input matInput placeholder="Password" name="password" type="password" id="password"
                     formControlName="password">
                 <mat-icon matSuffix>security</mat-icon>
+                <error-hint [control]="newUserForm?.controls?.password" validatorRule="PASSWORD"></error-hint>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Repeat password</mat-label>
                 <input matInput placeholder="Repeat password" name="passwordRepeat" type="password" id="passwordRepeat"
                     formControlName="passwordRepeat">
                 <mat-icon matSuffix>security</mat-icon>
+                <error-hint [control]="newUserForm?.controls?.passwordRepeat" message="Password and password repeat must match"></error-hint>
             </mat-form-field>
 
 

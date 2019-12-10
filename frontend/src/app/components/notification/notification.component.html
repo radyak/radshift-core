@@ -1,6 +1,6 @@
 <span>
     <mat-icon *ngIf="data.type">{{ data.type }}</mat-icon>
-    <span class="message">
+    <span class="message {{ data.type }}">
         {{ data.message }}
     </span>
 </span>

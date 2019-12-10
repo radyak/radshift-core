@@ -8,6 +8,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { NotificationService } from 'src/app/services/notification.service';
 import { MatDialog } from '@angular/material';
 import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dialog.component';
+import ValidatorPatterns from 'src/app/model/ValidatorPatterns';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class EditUserComponent implements OnInit {
       permissions: [this.user.permissions]
     });
     this.userPasswordForm = this.fb.group({
-      newPassword: ['', Validators.required],
+      newPassword: ['', [Validators.pattern(ValidatorPatterns.PASSWORD.pattern)]],
       newPasswordRepeat: ['']
     }, {
       validator: mustMatch('newPassword', 'newPasswordRepeat')
@@ -84,7 +85,7 @@ export class EditUserComponent implements OnInit {
       this.user = user || this.user;
       this.notificationService.info('User updated');
     }, (err) => {
-      this.notificationService.error('Could not update user');
+      this.notificationService.error('Could not update user' + (err.error ? `: ${err.error}` : '.'));
     })
   }
 
@@ -97,7 +98,7 @@ export class EditUserComponent implements OnInit {
       this.userPasswordForm.controls.newPasswordRepeat.patchValue('')
       this.notificationService.info('Password updated');
     }, (err) => {
-      this.notificationService.error('Could not update password');
+      this.notificationService.error('Could not update password' + (err.error ? `: ${err.error}` : '.'));
     })
   }
 

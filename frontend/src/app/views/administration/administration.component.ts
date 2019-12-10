@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { mustMatch } from 'src/app/functions/mustMatch';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AuthService } from 'src/app/services/auth.service';
+import ValidatorPatterns from 'src/app/model/ValidatorPatterns';
 
 @Component({
   selector: 'app-administration',
@@ -15,6 +16,7 @@ export class AdministrationComponent implements OnInit {
 
   users: User[];
   newUserForm: FormGroup;
+  ValidatorPatterns = ValidatorPatterns;
 
 
   constructor(
@@ -27,8 +29,8 @@ export class AdministrationComponent implements OnInit {
 
   ngOnInit() {
     this.newUserForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      username: ['', [Validators.required, Validators.pattern(ValidatorPatterns.USERNAME.pattern)]],
+      password: ['', [Validators.required, Validators.pattern(ValidatorPatterns.PASSWORD.pattern)]],
       passwordRepeat: ['', Validators.required]
     }, {
       validator: mustMatch('password', 'passwordRepeat')
@@ -54,7 +56,8 @@ export class AdministrationComponent implements OnInit {
 
       this.users.push(user);
     }, (err) => {
-      this.notificationService.error('Could not create user');
+      console.log(err)
+      this.notificationService.error('Could not create user' + (err.error ? `: ${err.error}` : '.'));
     })
   }
 

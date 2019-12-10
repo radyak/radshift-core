@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/model/User';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AdminService } from 'src/app/services/admin.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { mustMatch } from 'src/app/functions/mustMatch';
+import ValidatorPatterns from 'src/app/model/ValidatorPatterns';
 
 @Component({
   selector: 'app-user-settings',
@@ -24,7 +23,7 @@ export class UserSettingsComponent implements OnInit {
   ngOnInit() {
     this.userPasswordForm = this.fb.group({
       oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.pattern(ValidatorPatterns.PASSWORD.pattern)]],
       newPasswordRepeat: ['']
     }, {
       validator: mustMatch('newPassword', 'newPasswordRepeat')
@@ -45,7 +44,7 @@ export class UserSettingsComponent implements OnInit {
       this.userPasswordForm.controls.newPasswordRepeat.patchValue('')
       this.notificationService.info('Password updated');
     }, (err) => {
-      this.notificationService.error('Could not update password');
+      this.notificationService.error('Could not update password' + (err.error ? `: ${err.error}` : '.'));
     })
   }
 

@@ -1,0 +1,8 @@
+@import "../../../colors";
+
+.error {
+    color: map-get($brand-red, 500);
+    font-size: .75rem;
+    margin-top: 10px;
+    font-weight: bold;
+}

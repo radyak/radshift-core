@@ -1,0 +1,4 @@
+<div class="error" *ngIf="control?.invalid && control?.touched && control?.dirty">
+    <mat-icon [inline]="true">error</mat-icon>
+    {{ errorMessage() }}
+</div>
