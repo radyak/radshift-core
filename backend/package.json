@@ -8,7 +8,7 @@
   },
   "repository": "https://github.com/radyak/radshift-core",
   "scripts": {
-    "test": "env PERSISTENCE_FILE=./data.json mocha 'test/**/*.test.js' --recursive",
+    "test": "env PERSISTENCE_FILE=./data.json FS_ROOT=.tmp mocha 'test/**/*.test.js' --recursive",
     "start": "node index.js",
     "watch": "nodemon --signal SIGHUP ./index.js localhost",
     "lint": "standard --fix --verbose"

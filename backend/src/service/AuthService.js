@@ -19,7 +19,8 @@ class AuthService {
     registerNewUser(username, password, permissions = []) {
         return this.UserDatabase.create(username, password, permissions).then(user => {
             try {
-                fs.mkdirSync(`/home/${username}`, { recursive: true })
+                const fsRoot = process.env.FS_ROOT || ''
+                fs.mkdirSync(`${fsRoot}/home/${username}`, { recursive: true })
             } catch(e) {
                 console.error('Could not create user directory', e)
                 throw 'Could not create user directory'
