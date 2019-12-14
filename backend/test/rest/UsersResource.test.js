@@ -73,7 +73,7 @@ describe('Users Resource', () => {
     it('should create a new user', (done) => {
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
 
             AppTestUtil
@@ -101,7 +101,7 @@ describe('Users Resource', () => {
     it('should not create a user with duplicate name', (done) => {
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
 
             AppTestUtil
@@ -109,7 +109,7 @@ describe('Users Resource', () => {
 
                 .post('/api/admin/users', {
                     username: 'user',
-                    password: 'anotherpassword'
+                    password: 'anotherPa$sw0rd'
                 })
 
                 .end((err, res) => {
@@ -125,7 +125,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
                 
             AppTestUtil
@@ -146,7 +146,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
             
             AppTestUtil
@@ -167,14 +167,14 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
           
             AppTestUtil
                 .asUser('admin', ['admin'])
 
                 .put('/api/admin/users/user/password', {
-                    password: 'newPassword'
+                    password: 'newPa$sw0rd'
                 })
 
                 .end((err, res) => {
@@ -188,14 +188,14 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
             
             AppTestUtil
                 .asUser('admin', ['admin'])
 
                 .put('/api/admin/users/nonexistinguser/password', {
-                    password: 'newPassword'
+                    password: 'newPa$sw0rd'
                 })
 
                 .end((err, res) => {
@@ -209,7 +209,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
                 
             AppTestUtil
@@ -228,7 +228,7 @@ describe('Users Resource', () => {
 
         createUserAndCheck({
             username: 'user',
-            password: 'password'
+            password: 'Pa$sw0rd'
         }, () => {
                 
             AppTestUtil

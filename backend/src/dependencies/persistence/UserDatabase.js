@@ -21,44 +21,16 @@ db.defaults({
 .write()
 
 
-// TODO: Configurize
 const HASH_ITERATIONS = 10000,
       HASH_KEYLENGTH = 512,
       HASH_ALGORYTHM = 'sha512',
 
-      USERNAME_PATTERN = /^[a-zA-Z0-9.\-_@]{5,32}$/g,
-      PASSWORD_PATTERN = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/g,
-      PERMISSION_PATTERN = /^[a-zA-Z0-9.\-_]{3,32}$/g
-
-
-const checkPermissions = (permissions) => {
-    if (!permissions || !permissions.length > 0) {
-        return
-    }
-    for (let permission of permissions) {
-        if (!PERMISSION_PATTERN.test(permission)) {
-            throw 'A permission name is invalid. Must only contain letters, numbers and following symbols: . - _'
-        }
-    }
-}
-
-
-const checkUsername = (username) => {
-    if (!username || !USERNAME_PATTERN.test(username)) {
-        throw 'Username is invalid. Must only contain letters, numbers and following symbols: . - _ @'
-    }
-}
-
-    
-const checkPassword = (password) => {
-    if (!password || !PASSWORD_PATTERN.test(password)) {
-        throw 'Password is invalid. Must have at least 8 letters, 1 lower case and 1 upper case character, 1 number and 1 special character (!@#$%^&)'
-    }
-}
+      USERNAME_PATTERN = /^[a-zA-Z0-9.\-_@]{3,32}$/,
+      PASSWORD_PATTERN = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*\.\-\_])[\w!@#$%^&*\.\-\_]{8,128}$/,
+      PERMISSION_PATTERN = /^[a-zA-Z0-9.\-_]{3,32}$/
 
 
 const setPasswordForUser = (user, password) => {
-    checkPassword(password)
     user.salt = crypto.randomBytes(16).toString('hex')
     user.hash = crypto.pbkdf2Sync(password, user.salt, HASH_ITERATIONS, HASH_KEYLENGTH, HASH_ALGORYTHM).toString('hex')
 }
@@ -90,9 +62,6 @@ const toJSON = (user) => {
     /* User Schema:
         {
             username: String,
-            email: String,
-            firstname: String,
-            lastname: String,
             permissions: [ String ],
             hash: String,
             salt: String,
@@ -100,7 +69,31 @@ const toJSON = (user) => {
     */
 
 
-Component('UserDatabase', class UserDatabase {
+module.exports = class UserDatabase {
+
+
+    checkUsername(username) {
+        if ((!username) || (!USERNAME_PATTERN.test(username))) {
+            throw `Username ${username} is invalid. Must contain 3 - 32 letters, numbers and following symbols: . - _ @`
+        }
+    }
+
+
+    checkPassword(password) {
+        if (!password || !PASSWORD_PATTERN.test(password)) {
+            throw 'Password is invalid. Must contain 8 - 128 characters: 1 lower case and 1 upper case character, 1 number and 1 special character ! @ # $ % ^ & * . - _'
+        }
+    }
+
+
+    checkPermissions(permissions = []) {
+        for (let permission of permissions) {
+            if (!PERMISSION_PATTERN.test(permission)) {
+                throw `Permission ${permission} is invalid. Must contain 3 - 32 letters, numbers and following symbols: . - _`
+            }
+        }
+    }
+
 
     findByUsername(username) {
         return new Promise((resolve, reject) => {
@@ -150,10 +143,10 @@ Component('UserDatabase', class UserDatabase {
             if (existingUser) {
                 throw `User with username ${username} already exists`
             }
-            checkUsername(username)
-            checkPassword(password)
-            checkPermissions(permissions)
-
+            this.checkUsername(username)
+            this.checkPassword(password)
+            this.checkPermissions(permissions)
+     
             let user = {
                 username: username,
                 permissions: permissions || [],
@@ -161,6 +154,7 @@ Component('UserDatabase', class UserDatabase {
                 // firstname: null,
                 // lastname: null,
             }
+            this.checkPassword(password)
             setPasswordForUser(user, password)
 
             db.get('users')
@@ -173,8 +167,8 @@ Component('UserDatabase', class UserDatabase {
 
 
     update(user) {
-        checkUsername(user.username)
-        checkPermissions(user.permissions)
+        this.checkUsername(user.username)
+        this.checkPermissions(user.permissions)
 
         user = db.get('users')
             .find({ username: user.username })
@@ -194,6 +188,7 @@ Component('UserDatabase', class UserDatabase {
                     return null
                 }
         
+                this.checkPassword(password)
                 setPasswordForUser(existingUser, password)
                 this.update(existingUser)
                 return this.findByUsername(username)
@@ -218,5 +213,4 @@ Component('UserDatabase', class UserDatabase {
     }
 
 
-})
-  
+}

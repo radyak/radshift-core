@@ -4,8 +4,7 @@ Provider('Initializer', (AuthService) => {
     return {
         run: () => {
             AuthService.registerNewUser(
-                'admin', 'ADMINadmin', ['admin']
-                // 'admin', 'admin', ['admin']
+                'admin', 'admin@M1N', ['admin']
             ).then(admin => {
                 console.log(`Created default user 'admin' - CHANGE THE PASSWORD !!!`)
             }).catch(err => {

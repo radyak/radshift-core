@@ -1,7 +1,6 @@
 var chai = require('chai')
 var expect = chai.expect
 var AppTestUtil = require('../AppTestUtil')
-var njs = require('@radyak/njs')
 
 
 describe('Auth Resource', () => {
@@ -14,7 +13,7 @@ describe('Auth Resource', () => {
 
                 .post('/api/admin/users', {
                     username: 'user',
-                    password: 'password'
+                    password: 'Pa$sw0rd'
                 })
 
                 .end((err, res) => {
@@ -44,7 +43,7 @@ describe('Auth Resource', () => {
         AppTestUtil
             .post('/api/auth/login', {
                 username: 'user',
-                password: 'password'
+                password: 'Pa$sw0rd'
             })
 
             .end((err, res) => {
@@ -62,7 +61,7 @@ describe('Auth Resource', () => {
         AppTestUtil
             .post('/api/auth/login', {
                 username: 'user',
-                password: 'wrongpassword'
+                password: 'wrongPa$sw0rd'
             })
 
             .end((err, res) => {

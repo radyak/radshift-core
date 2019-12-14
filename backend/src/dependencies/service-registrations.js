@@ -12,3 +12,8 @@ Provider('BackendService', (BackendConfigurationService) => {
   const BackendService = require('../service/BackendService')
   return new BackendService(BackendConfigurationService)
 })
+
+Provider('UserDatabase', () => {
+  const UserDatabase = require('./persistence/UserDatabase')
+  return new UserDatabase()
+})

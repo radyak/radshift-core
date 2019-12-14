@@ -1,14 +1,14 @@
 export default {
     USERNAME: {
-        pattern: /^[a-zA-Z0-9.\-_@]{5,32}$/i,
-        errorMessage: "The username must only contain letters, numbers and following symbols: . - _ @"
+        pattern: /^[a-zA-Z0-9.\-_@]{3,32}$/,
+        errorMessage: "The username must contain 3 - 32 letters, numbers and following symbols: . - _ @"
     },
     PASSWORD: {
-        pattern: /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/g,
-        errorMessage: "The password must have at least 8 characters - at least one of each group: a-z, A-Z, 0-9"
+        pattern: /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*\.\-\_])[\w!@#$%^&*\.\-\_]{8,128}$/,
+        errorMessage: "The password must contain 8 - 128 characters: 1 lower case and 1 upper case character, 1 number and 1 special character ! @ # $ % ^ & * . - _"
     },
     PERMISSION: {
-        pattern: /^[a-zA-Z0-9.\-_]{3,32}$/i,
-        errorMessage: "Permissions may only contain letters, numbers and following symbols: . - _"
+        pattern: /^[a-zA-Z0-9.\-_]{3,32}$/,
+        errorMessage: "Permissions must contain 3 - 32 letters, numbers and following symbols: . - _"
     },
 }
