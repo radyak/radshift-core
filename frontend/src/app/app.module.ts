@@ -26,6 +26,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { DeleteUserDialogComponent } from './components/delete-user-dialog/delete-user-dialog.component';
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 import { ErrorHintComponent } from './components/error-hint/error-hint.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { ErrorHintComponent } from './components/error-hint/error-hint.component
     MatSnackBarModule,
     MatExpansionModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent],
