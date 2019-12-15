@@ -1,7 +1,6 @@
-<mat-toolbar color="primary">
-    <logo class="toolbar-icon" size="30"></logo>
-    <span>{{ title }}
-    </span>
+<mat-toolbar color="primary" *ngIf="isAuthenticated()">
+    <logo class="toolbar-icon" size="30" (click)="logoClicked()"></logo>
+    <span>{{ title }}</span>
 
     <span class="fill-space"></span>
 

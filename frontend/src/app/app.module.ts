@@ -9,7 +9,9 @@ import {
   MatSnackBarModule,
   MatExpansionModule,
   MatChipsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSidenavModule,
+  MatListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -61,6 +63,8 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
     MatExpansionModule,
     MatChipsModule,
     MatDialogModule,
+    MatSidenavModule,
+    MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

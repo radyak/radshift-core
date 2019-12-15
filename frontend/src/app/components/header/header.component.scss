@@ -1,5 +1,11 @@
 @import "../../../colors";
 
+logo.toolbar-icon {
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
 .fill-space {
     flex: 1 1 auto;
 }

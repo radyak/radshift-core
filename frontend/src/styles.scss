@@ -37,9 +37,8 @@ body {
   }
 }
 
-logo.toolbar-icon {
-  margin-top: 10px;
-  margin-right: 10px;
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgb(0, 0, 0, 0.6);
 }
 
 .mat-form-field {

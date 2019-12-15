@@ -1,7 +1,23 @@
-<!-- <navbar></navbar> -->
+<div class="page-container"
+    [class.is-mobile]="mobileQuery.matches">
+  <header title="RadShift"
+          (onLogoClicked)="sidenav.toggle()"></header>
 
-<main role="main">
+  <mat-sidenav-container
+      class="sidenav-container">
+    <mat-sidenav #sidenav
+        [mode]="mobileQuery.matches ? 'over' : 'side'"
+        [fixedInViewport]="mobileQuery.matches"
+        fixedTopGap="56">
+      <mat-nav-list>
+        <div class="nav-item">Item 1</div>
+        <div class="nav-item">Item 2</div>
+        <div class="nav-item">Item 3</div>
+      </mat-nav-list>
+    </mat-sidenav>
 
-  <router-outlet></router-outlet>
-
-</main>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
