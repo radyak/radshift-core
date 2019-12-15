@@ -5,17 +5,21 @@ import { AdministrationComponent } from './views/administration/administration.c
 import { AuthGuard } from './guards/auth.guard';
 import { PermissionGuard } from './guards/permission.guard';
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
+    redirectTo: '/settings',
+    pathMatch: 'full'
   },
+  
   {
     path: 'login',
     component: LoginComponent
   },
+
   {
     path: 'administration',
     component: AdministrationComponent,
@@ -27,10 +31,21 @@ const routes: Routes = [
       requiredRole: 'admin'
     }
   },
+
   {
     path: 'settings',
-    component: UserSettingsComponent
-  }
+    component: UserSettingsComponent,
+    canActivate: [
+      AuthGuard
+    ],
+  },
+
+  {
+    path: 'notfound',
+    component: NotFoundComponent
+  },
+
+  { path: '**', redirectTo: '/notfound', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -28,6 +28,7 @@ import { UserSettingsComponent } from './views/user-settings/user-settings.compo
 import { ErrorHintComponent } from './components/error-hint/error-hint.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { NotFoundComponent } from './views/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     DeleteUserDialogComponent,
     UserSettingsComponent,
-    ErrorHintComponent
+    ErrorHintComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
