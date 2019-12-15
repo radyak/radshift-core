@@ -96,7 +96,15 @@ export class AuthService {
     );
   }
 
-  private readAuthentication(): String {
+  public hasRoleSync(role: string): boolean {
+    if (!role) {
+      return true;
+    }
+    let auth = this.readAuthentication();
+    return auth && auth.scope.split(' ').indexOf(role) !== -1;
+  }
+
+  private readAuthentication(): any {
     return JSON.parse(localStorage.getItem('authentication'));
   }
 

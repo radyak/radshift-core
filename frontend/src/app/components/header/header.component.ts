@@ -32,8 +32,4 @@ export class HeaderComponent implements OnInit {
     this.onLogoClicked.emit();
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
-
 }

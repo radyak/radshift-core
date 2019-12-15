@@ -4,8 +4,8 @@
 
     <span class="fill-space"></span>
 
-    <button mat-button class="account" (click)="logout()" *ngIf="authentication">
+    <div mat-button class="account" *ngIf="authentication">
         <span class="username">{{ authentication.name }}</span>
-        <mat-icon>exit_to_app</mat-icon>
-    </button>
+        <mat-icon>account_box</mat-icon>
+    </div>
 </mat-toolbar>

@@ -1,26 +1,54 @@
+@import "../colors";
+
 .page-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .sidenav-container {
-    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
        causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-    flex: 1;
-  }
-  
-  .is-mobile .sidenav-container {
-    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+  flex: 1;
+}
+
+.is-mobile .sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
        `<body>` to be our scrolling element for mobile layouts. */
-    flex: 1 0 auto;
+  flex: 1 0 auto;
+}
+
+.nav-item {
+  min-width: 7rem;
+  padding: 10px;
+  display: block;
+  outline: 0;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
   }
-  
-  .nav-item {
-      min-width: 7rem;
-      padding: 10px;
+  &.is-active {
+    background-color: rgba(0, 0, 0, 0.45);
   }
+}
+
+.username {
+  min-width: 7rem;
+  padding: 10px;
+  display: block;
+  font-weight: bold;
+}
+
+.logout {
+    color: rgba(map-get($brand-red, 500), 1);
+    bottom: 0;
+    cursor: pointer;
+
+    &:hover {
+        color: #fff !important;
+        background-color: rgba(map-get($brand-red, 500), 1) !important;
+    }
+}

@@ -28,7 +28,9 @@ const routes: Routes = [
       PermissionGuard
     ],
     data: {
-      requiredRole: 'admin'
+      requiredRole: 'admin',
+      label: 'Administration',
+      icon: 'group'
     }
   },
 
@@ -38,6 +40,10 @@ const routes: Routes = [
     canActivate: [
       AuthGuard
     ],
+    data: {
+      label: 'Settings',
+      icon: 'settings_applications'
+    }
   },
 
   {

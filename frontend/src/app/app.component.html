@@ -10,9 +10,26 @@
         [fixedInViewport]="mobileQuery.matches"
         fixedTopGap="56">
       <mat-nav-list>
-        <div class="nav-item">Item 1</div>
-        <div class="nav-item">Item 2</div>
-        <div class="nav-item">Item 3</div>
+        <div class="username">
+          <mat-icon>account_box</mat-icon>
+          {{ authentication?.name }}
+        </div>
+        <a class="nav-item logout" (click)="logout(); sidenav.toggle()">
+          <mat-icon [inline]="true">exit_to_app</mat-icon>
+          Logout
+        </a>
+
+        <hr>
+        
+        <a *ngFor="let route of getRoutes()"
+           class="nav-item"
+           [routerLink]="route.path"
+           [routerLinkActive]="['is-active']"
+           (click)="sidenav.toggle()">
+          <mat-icon [inline]="true">{{ route.data.icon }}</mat-icon>
+          {{ route.data.label }}
+        </a>
+
       </mat-nav-list>
     </mat-sidenav>
 
