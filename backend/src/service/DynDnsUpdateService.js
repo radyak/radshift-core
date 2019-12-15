@@ -42,11 +42,9 @@ const DOMAIN_PROVIDER_REQUESTS = {
     const dynDnsProviderUsername = process.env.DYN_DNS_PROVIDER_USERNAME
     const dynDnsProviderPassword = process.env.DYN_DNS_PROVIDER_PASSWORD
 
-    const url = `https://api.godaddy.com/v1/domains/${hostDomain}/records/A/*`
-
-    var options = {
+    var optionsTemplate = {
       method: 'PUT',
-      url: url,
+      url: `https://api.godaddy.com/v1/domains/${hostDomain}/records/A/*`,
       json: true,
       body: [
         {
@@ -58,7 +56,16 @@ const DOMAIN_PROVIDER_REQUESTS = {
       }
     }
 
-    return options
+    return [ 
+      {
+        ...optionsTemplate,
+        url: `https://api.godaddy.com/v1/domains/${hostDomain}/records/A/*`
+      },
+      {
+        ...optionsTemplate,
+        url: `https://api.godaddy.com/v1/domains/${hostDomain}/records/A/@`
+      },
+    ]
   }
 
 }
@@ -95,28 +102,38 @@ class DynDnsUpdateService {
         const dynDnsProvider = process.env.DYN_DNS_PROVIDER
         var options = DOMAIN_PROVIDER_REQUESTS[dynDnsProvider](ipAdress)
 
-        request(options, (err, res, body) => {
-          if (err) {
-            Logger.error(err)
-            state = {
-              previousExternalIP: null,
-              error: err
-            }
-            throw err
-          }
-
-          Logger.info('DynDNS server responded with status', res.statusCode, body ? body : '')
-
-          state = {
-            previousExternalIP: ipAdress,
-            error: null
-          }
-        })
+        if (options.forEach) {
+          options.forEach(option => {
+            this.update(option)
+          })
+        } else {
+          this.update(options)
+        }
       })
       .catch(error => {
         Logger.error(error)
       })
     return this
+  }
+
+  update(options) {
+    request(options, (err, res, body) => {
+      if (err) {
+        Logger.error(err)
+        state = {
+          previousExternalIP: null,
+          error: err
+        }
+        throw err
+      }
+
+      Logger.info('DynDNS server responded with status', res.statusCode, body ? body : '')
+
+      state = {
+        previousExternalIP: ipAdress,
+        error: null
+      }
+    })
   }
 
   updateCyclic () {
