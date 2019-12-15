@@ -4,20 +4,20 @@ Provider('DynDns', () => {
   return new DynDnsUpdateService().updateCyclic()
 })
 
-Provider('DynDns', () => {
-  console.log('Environment is not production; no DynDNS required')
+Provider('DynDns', (Logger) => {
+  Logger.debug('Environment is not production; no DynDNS required')
   return {
     updateOnce: () => {
-      console.log('DynDns Mock: updateOnce')
+      Logger.debug('DynDns Mock: updateOnce')
     },
     updateCyclic: () => {
-      console.log('DynDns Mock: updateCyclic')
+      Logger.debug('DynDns Mock: updateCyclic')
     },
     stopUpdateCyclic: () => {
-      console.log('DynDns Mock: stopUpdateCyclic')
+      Logger.debug('DynDns Mock: stopUpdateCyclic')
     },
     restartUpdateCyclic: () => {
-      console.log('DynDns Mock: restartUpdateCyclic')
+      Logger.debug('DynDns Mock: restartUpdateCyclic')
     }
   }
 }, 'dev')

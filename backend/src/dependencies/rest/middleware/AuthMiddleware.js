@@ -34,7 +34,7 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
     })
 
     const errorHandler = function(err, req, res, next) {
-        console.error(`An error occurred: `, err)
+        Logger.error(`An error occurred: `, err)
         if (err.name === 'UnauthorizedError') {
             return res.status(401).send()
         }
@@ -49,7 +49,7 @@ Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
     })
 
     const errorHandlerOptional = function(err, req, res, next) {
-        console.warn(`An error occurred: `, err)
+        Logger.error(`An error occurred: `, err)
         next()
     }
 

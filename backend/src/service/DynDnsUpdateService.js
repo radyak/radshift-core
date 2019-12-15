@@ -80,13 +80,13 @@ class DynDnsUpdateService {
       .then(ipAdress => {
 
         if (state.previousExternalIP === ipAdress) {
-          console.log(
+          Logger.debug(
             `The external IP ${ipAdress} hasn't changed; nothing to do`
           )
           return
         }
 
-        console.log(
+        Logger.info(
           `The external IP has changed from ${
             state.previousExternalIP
           } to ${ipAdress}`
@@ -97,7 +97,7 @@ class DynDnsUpdateService {
 
         request(options, (err, res, body) => {
           if (err) {
-            console.error(err)
+            Logger.error(err)
             state = {
               previousExternalIP: null,
               error: err
@@ -105,7 +105,7 @@ class DynDnsUpdateService {
             throw err
           }
 
-          console.log('DynDNS server responded with status', res.statusCode, body ? body : '')
+          Logger.info('DynDNS server responded with status', res.statusCode, body ? body : '')
 
           state = {
             previousExternalIP: ipAdress,
@@ -114,7 +114,7 @@ class DynDnsUpdateService {
         })
       })
       .catch(error => {
-        console.error(error)
+        Logger.error(error)
       })
     return this
   }
@@ -142,18 +142,18 @@ class DynDnsUpdateService {
     // Run first update immediately
     this.updateOnce()
     cronJob.start()
-    console.log(`Started cyclic update every ${dynDnsUpdateIntervalMinutes} minute(s)`)
+    Logger.info(`Started cyclic update every ${dynDnsUpdateIntervalMinutes} minute(s)`)
     return this
   }
 
   stopUpdateCyclic () {
     if (cronJob == null) {
-      console.warn('Cannot stop cyclic update - none was started')
+      Logger.warn('Cannot stop cyclic update - none was started')
       return
     }
     cronJob.destroy()
     cronJob = null
-    console.log(`Cyclic update stopped`)
+    Logger.info(`Cyclic update stopped`)
     return this
   }
 }

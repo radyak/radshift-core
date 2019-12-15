@@ -27,7 +27,7 @@ class BackendService {
         delete result.security
         delete result.rules
 
-        console.log('Security rule:', result)
+        Logger.debug('Security rule:', result)
         
         return result
     }

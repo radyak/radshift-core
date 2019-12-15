@@ -1,5 +1,5 @@
-Provider('Server', (App) => {
-  console.log('Using unsecured HTTP traffic - FOR DEVELOPMENT ONLY')
+Provider('Server', (App, Logger) => {
+  Logger.warn('Using unsecured HTTP traffic - FOR DEVELOPMENT ONLY')
 
   var startPromise
   var server
@@ -9,14 +9,14 @@ Provider('Server', (App) => {
       startPromise = new Promise((resolve, reject) => {
         var port = process.env.PORT || 80
         server = App.listen(port, () => {
-          console.log(`Server listening on port ${port}`)
+          Logger.info(`Server listening on port ${port}`)
           resolve({port: port})
         })
       })
     },
     stop: () => {
       startPromise.then((portConfig) => {
-        console.log(`Stopping server`)
+        Logger.info(`Stopping server`)
         server.close()
       })
     }

@@ -22,7 +22,7 @@ class AuthService {
                 const fsRoot = process.env.FS_ROOT || ''
                 fs.mkdirSync(`${fsRoot}/home/${username}`, { recursive: true })
             } catch(e) {
-                console.error('Could not create user directory', e)
+                Logger.error('Could not create user directory', e)
                 throw 'Could not create user directory'
             }
             return user
