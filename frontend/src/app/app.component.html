@@ -15,7 +15,7 @@
           {{ authentication?.name }}
         </div>
         <a class="nav-item logout" (click)="logout(); sidenav.toggle()">
-          <mat-icon [inline]="true">exit_to_app</mat-icon>
+          <mat-icon>exit_to_app</mat-icon>
           Logout
         </a>
 
@@ -26,7 +26,7 @@
            [routerLink]="route.path"
            [routerLinkActive]="['is-active']"
            (click)="sidenav.toggle()">
-          <mat-icon [inline]="true">{{ route.data.icon }}</mat-icon>
+          <mat-icon>{{ route.data.icon }}</mat-icon>
           {{ route.data.label }}
         </a>
 

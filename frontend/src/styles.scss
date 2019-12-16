@@ -41,12 +41,17 @@ body {
   background-color: rgb(0, 0, 0, 0.6);
 }
 
+.mat-drawer {
+  background-color: rgb(0, 0, 0, 0.2) !important;
+}
+
 .mat-form-field {
   width: 100%;
 }
 
 .mat-icon {
   margin-right: 7px;
+  vertical-align: middle;
 }
 
 .mat-snack-bar-container {
