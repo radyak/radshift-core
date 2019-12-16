@@ -105,10 +105,10 @@ class DynDnsUpdateService {
 
         if (options.forEach) {
           options.forEach(option => {
-            this.update(option)
+            this.update(option, ipAdress)
           })
         } else {
-          this.update(options)
+          this.update(options, ipAdress)
         }
       })
       .catch(error => {
@@ -117,7 +117,7 @@ class DynDnsUpdateService {
     return this
   }
 
-  update(options) {
+  update(options, ipAdress) {
     request(options, (err, res, body) => {
       if (err) {
         Logger.error(err)
