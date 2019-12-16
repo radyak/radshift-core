@@ -3,6 +3,11 @@ const express = require('express')
 const router = express.Router()
 
 const TOKEN_PROPERTY = 'user'
+const COOKIE_CONFIG = {
+    httpOnly: true,
+    domain: process.env.HOST_DOMAIN,
+    path: '/'
+}
 
 Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => {
 
@@ -26,13 +31,8 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
             }
 
             if (passportUser) {
-                const hostDomain = process.env.HOST_DOMAIN
                 const token = AuthService.generateJWT(passportUser)
-                let cookieConfig = {
-                    httpOnly: true,
-                    domain: hostDomain
-                }
-                res.cookie('Authorization', token, cookieConfig)
+                res.cookie('Authorization', token, COOKIE_CONFIG)
                     .status(200)
                     .send({
                         token: token
@@ -72,7 +72,7 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
     })
 
     router.get('/logout', (req, res, next) => {
-        return res.clearCookie('Authorization')
+        return res.clearCookie('Authorization', COOKIE_CONFIG)
             .status(204)
             .send()
     })

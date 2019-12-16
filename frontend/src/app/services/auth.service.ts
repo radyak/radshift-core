@@ -53,7 +53,9 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.get<any>('/api/auth/logout').subscribe(() => {
+    this.http.get<any>('/api/auth/logout', {
+      withCredentials: true
+    }).subscribe(() => {
       this.clearLocalState();
       this.router.navigate(['/login']);
       return;
