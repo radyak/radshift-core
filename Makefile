@@ -16,7 +16,7 @@ default:
 
 ## arm32
 
-build.arm32:
+build.arm32: prepare
 	docker build -t $(REPO)/$(IMAGE):$(TAG) --build-arg BASE_IMAGE=$(BASE_IMAGE_ARM32) .
 
 deploy.arm32: build.arm32
@@ -26,7 +26,7 @@ deploy.arm32: build.arm32
 
 ## x86
 
-build.x86:
+build.x86: prepare
 	docker build -t $(REPO)/$(IMAGE):$(TAG_X86) --build-arg BASE_IMAGE=$(BASE_IMAGE_X86) .
 
 deploy.x86: build.x86
@@ -56,6 +56,9 @@ run.x86: build.x86
 
 
 ## other
+
+prepare:
+	git pull
 
 lint:
 	npm run lint
