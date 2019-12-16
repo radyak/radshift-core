@@ -28,7 +28,12 @@ export class LoginComponent implements OnInit {
     });
 
     this.origin = this.route.snapshot.queryParamMap.get('origin');
-    console
+    
+    this.authService.isAuthenticated().subscribe(isAuthenticated => {
+      if(isAuthenticated && !this.origin) {
+        this.redirectToDefaultRoute();
+      }
+    });
   }
 
   removeOriginQueryParameter(): Promise<any> {
