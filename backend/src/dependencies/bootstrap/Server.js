@@ -1,4 +1,6 @@
-Provider('Server', (App, Logger) => {
+const Logger = require('../../logging/Logger')
+
+Provider('Server', (App) => {
   Logger.warn('Using unsecured HTTP traffic - FOR DEVELOPMENT ONLY')
 
   var startPromise

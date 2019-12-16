@@ -1,5 +1,6 @@
 const jwt = require('express-jwt')
 
+const Logger = require('../../../logging/Logger')
 
 Provider('AuthMiddleware', (AuthConfiguration, BackendService, AuthService) => {
 

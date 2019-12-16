@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 const randomstring = require('randomstring')
 const fs = require('fs')
 
+const Logger = require('../logging/Logger')
+
 // TODO: Configurize
 const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60
 const SECRET = process.env.JWT_SECRET || randomstring.generate()

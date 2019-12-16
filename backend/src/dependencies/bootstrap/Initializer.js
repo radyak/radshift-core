@@ -1,5 +1,6 @@
+const Logger = require('../../logging/Logger')
 
-Provider('Initializer', (AuthService, Logger) => {
+Provider('Initializer', (AuthService) => {
 
     return {
         run: () => {

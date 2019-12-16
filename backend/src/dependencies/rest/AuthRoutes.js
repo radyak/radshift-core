@@ -2,6 +2,8 @@ const passport = require('passport')
 const express = require('express')
 const router = express.Router()
 
+const Logger = require('../../logging/Logger')
+
 const TOKEN_PROPERTY = 'user'
 const COOKIE_CONFIG = {
     httpOnly: true,
@@ -9,7 +11,7 @@ const COOKIE_CONFIG = {
     path: '/'
 }
 
-Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => {
+Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
 
     router.post('/login', (req, res, next) => {
 
@@ -96,8 +98,7 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
                                 "permissions": [                    -> optional; default: []; if not empty, interpreted as authenticated = true
                                     "admin"
                                 ],
-                                "onUnAuthenticated": 401,           -> optional; if nothing specified, redirect to "/login"
-                                "onUnAuthorized": 404,              -> optional; default 403
+                                "redirectUnauthenticated": true,    -> optional; if true, redirect to "/login"; default false
                                 "mappings": {
                                     "name": "X-Username",           -> default: X-User
                                     "scope": "X-Roles"              -> default: X-Scope
@@ -134,11 +135,6 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
         if (isAuthRequired && !user) {
             Logger.debug(`Not authenticated for ${hostname}${path}`)
 
-            if (backendConfig.onUnAuthenticated) {
-                res.status(401).send()
-                return
-            }
-
             let originalUrl = `${protocol}://${hostname}${path}`
             let encodedOriginalUrl = encodeURIComponent(originalUrl)
 
@@ -146,9 +142,15 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
             let loginBaseUrl = `${protocol}://core.${hostDomain}/login`
             let redirectUrl = `${loginBaseUrl}?origin=${encodedOriginalUrl}`
 
-            Logger.debug(`Redirecting to ${redirectUrl}`)
-            res.redirect(redirectUrl)
+            if (backendConfig.redirectUnauthenticated) {
+                Logger.debug(`Redirecting to ${redirectUrl}`)
+                res.redirect(redirectUrl)
+                return
+            }
 
+            res.status(401).json({
+                loginUrl: loginBaseUrl
+            }).send()
             return
         }
 
@@ -156,7 +158,7 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware, Logger) => 
 
         if (backendConfig.permissions && !backendConfig.permissions.some(permission => userPermissions.indexOf(permission) > -1)) {
             Logger.debug(`User ${user} not authorized for ${hostname}/${path}`)
-            res.status(backendConfig.onUnAuthorized || 403).send()
+            res.status(403).send()
             return
         }
 

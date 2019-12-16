@@ -3,6 +3,8 @@ const getIP = promisify(require('external-ip')())
 const request = require('request')
 var cron = require('node-cron')
 
+const Logger = require('../logging/Logger')
+
 var state = {
   previousExternalIP: null,
   error: null
@@ -79,7 +81,6 @@ var cronJob = null
 class DynDnsUpdateService {
 
   constructor () {
-    
   }
 
   updateOnce () {

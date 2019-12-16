@@ -1,3 +1,5 @@
+const Logger = require('../logging/Logger')
+
 class BackendService {
 
     constructor(BackendConfigurationService) {
