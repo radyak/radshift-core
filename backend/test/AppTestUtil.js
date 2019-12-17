@@ -55,7 +55,7 @@ class AppTestUtil {
             })
     }
 
-    asUser(username, permissions) {
+    asUser(username, permissions = []) {
         TOKEN = AUTH_SERVICE.generateJWT({
             username: username,
             permissions: permissions

@@ -159,10 +159,10 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
             return
         }
 
-        let userPermissions = user && user.scope ? user.scope.split(',') : []
+        let userPermissions = user && user.scope ? user.scope.split(/\s+/) : []
 
         if (backendConfig.permissions && !backendConfig.permissions.some(permission => userPermissions.indexOf(permission) > -1)) {
-            Logger.debug(`User ${user} not authorized for ${hostname}/${path}`)
+            Logger.debug(`User ${user} not authorized for ${hostname}/${path}; required:`, backendConfig.permissions, 'provided:', userPermissions)
             res.status(403).send()
             return
         }

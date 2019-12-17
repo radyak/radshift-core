@@ -14,26 +14,29 @@
         "security": {
             "rules": [
                 {
-                    "resourceMatcher": "\/protected.*",
-                    "authenticated": true
+                    "resourceMatcher": "\\.js",
+                    "authenticated": false
                 },
                 {
-                    "resourceMatcher": ".*admin.*",
+                    "resourceMatcher": "\/authz-protected\/",
                     "permissions": [
-                        "admin"
+                        "admin1",
+                        "admin2",
+                        "admin3"
                     ],
                     "mappings": {
-                        "name": "X-User",
-                        "scope": "X-Roles"
+                        "name": "X-Custom-User",
+                        "scope": "X-Custom-Roles"
                     }
+                },
+                {
+                    "resourceMatcher": "/redirectpath/",
+                    "authenticated": true,
+                    "redirectUnauthenticated": true
                 }
             ],
 
-            "authenticated": true,
-            "mappings": {
-                "name": "X-User",
-                "scope": "X-Roles"
-            }
+            "authenticated": true
         }
     }
 }
