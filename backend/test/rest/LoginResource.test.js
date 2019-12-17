@@ -3,7 +3,7 @@ var expect = chai.expect
 var AppTestUtil = require('../AppTestUtil')
 
 
-describe('Auth Resource', () => {
+describe('Login Resource', () => {
 
     beforeEach((done) => {
         AppTestUtil.clearDb().then(() => {
