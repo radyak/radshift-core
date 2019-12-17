@@ -12,6 +12,10 @@ class BackendService {
 
         var backendConfig = this.BackendConfigurationService.getBackendConfiguration(backendName)
 
+        if (!backendConfig) {
+            return null
+        }
+
         let security = backendConfig.security || {}
         
         var rule = this.getSecurityRule(security.rules, path)

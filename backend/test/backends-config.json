@@ -1,0 +1,39 @@
+{
+    
+    "appwithoutsecurity": {
+        "host": "appwithoutsecurity"
+    },
+    
+    "appwithemptysecurity": {
+        "host": "appwithemptysecurity",
+        "security": { }
+    },
+
+    "testapp": {
+        "host": "testapp",
+        "security": {
+            "rules": [
+                {
+                    "resourceMatcher": "\/protected.*",
+                    "authenticated": true
+                },
+                {
+                    "resourceMatcher": ".*admin.*",
+                    "permissions": [
+                        "admin"
+                    ],
+                    "mappings": {
+                        "name": "X-User",
+                        "scope": "X-Roles"
+                    }
+                }
+            ],
+
+            "authenticated": true,
+            "mappings": {
+                "name": "X-User",
+                "scope": "X-Roles"
+            }
+        }
+    }
+}

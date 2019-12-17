@@ -120,11 +120,16 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
         var method = req.headers['x-forwarded-method']
         var ip = req.headers['x-forwarded-for']
 
+        if (!hostname || !path || !protocol) {
+            Logger.info(`At least one required header was not provided: x-forwarded-host${hostname}, x-forwarded-uri=${path}, x-forwarded-proto=${protocol}`)
+            return res.status(400).send()
+        }
+
         var backendConfig = BackendService.getConfigByHostname(hostname, path)
 
         if (!backendConfig) {
             Logger.info(`No backend config found for ${hostname}${path}`)
-            res.status(204).send()
+            return res.status(204).send()
         }
 
         var user = req[TOKEN_PROPERTY]
