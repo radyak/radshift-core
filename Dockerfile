@@ -2,7 +2,7 @@ ARG BASE_IMAGE=arm32v7/node:lts-slim
 
 
 ## Frontend
-FROM node:10 AS frontend-build
+FROM ${BASE_IMAGE} AS frontend-build
 
 WORKDIR /usr/src/frontend
 
