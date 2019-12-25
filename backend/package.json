@@ -8,7 +8,7 @@
   },
   "repository": "https://github.com/radyak/radshift-core",
   "scripts": {
-    "test": "env PERSISTENCE_FILE=./data.json FS_ROOT=.tmp CONF_DIR=test HOST_DOMAIN=test-domain.net mocha 'test/**/*.test.js' --recursive",
+    "test": "env PERSISTENCE_FILE=./data.json FS_ROOT=.tmp CONF_DIR=test MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MILLISECONDS=1500 HOST_DOMAIN=test-domain.net mocha 'test/**/*.test.js' --recursive",
     "start": "node index.js",
     "watch": "nodemon --signal SIGHUP ./index.js localhost",
     "lint": "standard --fix --verbose"

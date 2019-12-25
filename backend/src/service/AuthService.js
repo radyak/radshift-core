@@ -7,7 +7,7 @@ const Logger = require('../logging/Logger')
 const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60,
       SECRET = process.env.JWT_SECRET || randomstring.generate(),
       MAX_AUTH_ATTEMPTS = process.env.MAX_AUTH_ATTEMPTS || 5,
-      MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS = process.env.MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS || 300000    // default: 300 sec = 5 min
+      MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MILLISECONDS = process.env.MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MILLISECONDS || 300000    // default: 300 sec = 5 min
 
 
 const FAILED_AUTH_ATTEMPTS_BY_IP = {}
@@ -46,7 +46,7 @@ class AuthService {
         
         // After the 3rd failed retry, add 5 Minutes
         blockingData.blockedUntil = blockingData.failedAttempts >= MAX_AUTH_ATTEMPTS
-                ? new Date().getTime() + MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS
+                ? new Date().getTime() + parseInt(MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MILLISECONDS)
                 : 0
         
         FAILED_AUTH_ATTEMPTS_BY_IP[clientKey] = blockingData
