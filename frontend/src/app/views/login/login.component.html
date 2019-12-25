@@ -13,7 +13,8 @@
                name="Username"
                type="text"
                id="username"
-               formControlName="username">
+               formControlName="username"
+               [attr.disabled]="isBlocked()">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -23,11 +24,15 @@
                name="Password"
                type="password"
                id="password"
-               formControlName="password">
+               formControlName="password"
+               [attr.disabled]="isBlocked()">
       </mat-form-field>
 
-      <button type="submit" mat-stroked-button color="primary">
-        Login
+      <button type="submit"
+              mat-stroked-button
+              color="primary"
+              [disabled]="isBlocked()">
+          {{ getBlockedMessage() || 'Login' }}
       </button>
 
     </form>

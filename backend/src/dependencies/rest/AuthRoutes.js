@@ -4,12 +4,17 @@ const router = express.Router()
 
 const Logger = require('../../logging/Logger')
 
-const TOKEN_PROPERTY = 'user'
-const COOKIE_CONFIG = {
-    httpOnly: true,
-    domain: process.env.HOST_DOMAIN,
-    path: '/'
-}
+const TOKEN_PROPERTY = 'user',
+
+    COOKIE_CONFIG = {
+        httpOnly: true,
+        domain: process.env.HOST_DOMAIN,
+        path: '/'
+    },
+
+    FAILED_AUTH_ATTEMPTS_BY_IP = {},
+    MAX_AUTH_ATTEMPTS = 5,
+    MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MINUTES = 5
 
 Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
 
@@ -27,12 +32,28 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
             })
         }
 
+
+        let clientIp = req.headers['x-real-ip'] || 'default'
+        console.log('x-real-ip:', req.headers['x-real-ip'])
+        console.log('x-forwarded-for:', req.headers['x-forwarded-for'])
+        console.log('-> client IP:', clientIp)
+
+        let blockingData = FAILED_AUTH_ATTEMPTS_BY_IP[clientIp]
+        if (blockingData && (blockingData.blockedUntil > new Date().getTime())) {
+            return res.status(401)
+                .send({
+                    message: 'Too many auth attempts',
+                    blockedUntil: new Date(blockingData.blockedUntil).toISOString()
+                })
+        }
+
         return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
             if (err) {
                 return next(err)
             }
 
             if (passportUser) {
+                delete FAILED_AUTH_ATTEMPTS_BY_IP[clientIp]
                 const token = AuthService.generateJWT(passportUser)
                 res.cookie('Authorization', token, COOKIE_CONFIG)
                     .status(200)
@@ -42,7 +63,21 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
                 return
             }
 
-            return res.status(401).send()
+            blockingData = blockingData || {
+                failedAttempts: 0,
+                blockedUntil: new Date().getTime()
+            }
+            blockingData.failedAttempts++
+            // After the 3rd failed retry, add 5 Minutes
+            blockingData.blockedUntil = blockingData.failedAttempts >= MAX_AUTH_ATTEMPTS
+                    ? new Date().getTime() + MAX_AUTH_ATTEMPTS_BLOCKED_FOR_MINUTES * 60000
+                    : 0
+            FAILED_AUTH_ATTEMPTS_BY_IP[clientIp] = blockingData
+
+            return res.status(401).send({
+                message: blockingData.blockedUntil ? 'Too many auth attempts' : 'Username and/or password invalid',
+                blockedUntil: blockingData.blockedUntil ? new Date(blockingData.blockedUntil).toISOString() : 0
+            })
         })(req, res, next)
     })
 
