@@ -4,9 +4,13 @@ const fs = require('fs')
 
 const Logger = require('../logging/Logger')
 
-// TODO: Configurize
-const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60
-const SECRET = process.env.JWT_SECRET || randomstring.generate()
+const JWT_VALID_PERIOD = process.env.JWT_VALID_PERIOD || 60,
+      SECRET = process.env.JWT_SECRET || randomstring.generate(),
+      MAX_AUTH_ATTEMPTS = process.env.MAX_AUTH_ATTEMPTS || 5,
+      MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS = process.env.MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS || 300000    // default: 300 sec = 5 min
+
+
+const FAILED_AUTH_ATTEMPTS_BY_IP = {}
 
 class AuthService {
 
@@ -16,6 +20,37 @@ class AuthService {
 
     getJwtSecret() {
         return SECRET
+    }
+
+    getBlockedUntil(clientKey) {
+        let blockingData = FAILED_AUTH_ATTEMPTS_BY_IP[clientKey]
+        return blockingData ? blockingData.blockedUntil : null
+    }
+
+    isBlocked(clientKey) {
+        let blockingData = FAILED_AUTH_ATTEMPTS_BY_IP[clientKey]
+        return blockingData && (blockingData.blockedUntil > new Date().getTime())
+    }
+
+    unblock(clientKey) {
+        delete FAILED_AUTH_ATTEMPTS_BY_IP[clientKey]
+    }
+
+    updateFailedAuthAttempt(clientKey) {
+        let blockingData = FAILED_AUTH_ATTEMPTS_BY_IP[clientKey] || {
+            failedAttempts: 0,
+            blockedUntil: new Date().getTime()
+        }
+
+        blockingData.failedAttempts++
+        
+        // After the 3rd failed retry, add 5 Minutes
+        blockingData.blockedUntil = blockingData.failedAttempts >= MAX_AUTH_ATTEMPTS
+                ? new Date().getTime() + MAX_AUTH_ATTEMPTS_BLOCKED_FOR_SECONDS
+                : 0
+        
+        FAILED_AUTH_ATTEMPTS_BY_IP[clientKey] = blockingData
+
     }
 
     registerNewUser(username, password, permissions = []) {
