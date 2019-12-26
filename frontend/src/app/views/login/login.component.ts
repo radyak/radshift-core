@@ -103,9 +103,13 @@ export class LoginComponent implements OnInit {
         }, (err) => {
           console.error('Error:', err);
           this.notificationService.error(err.error.message);
-          this.blockedUntil = err.error.blockedUntil ? new Date(err.error.blockedUntil).getTime() : 0;
-          this.form.disable();
-          this.startTimeout();
+          if (err.error.blockedUntil) {
+            this.blockedUntil = new Date(err.error.blockedUntil).getTime();
+            this.form.disable();
+            this.startTimeout();
+          } else {
+            this.blockedUntil = 0;
+          }
         });
     }
   }
