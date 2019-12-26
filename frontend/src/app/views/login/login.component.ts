@@ -33,8 +33,9 @@ export class LoginComponent implements OnInit {
     }
     this.timerSubscription = timer(0, 1000).subscribe(() => {
       if (this.blockedUntil <= new Date().getTime()) {
-        this.stopTimeout();
         this.blockedUntil = 0;
+        this.form.enable();
+        this.stopTimeout();
       }
     });
   }
@@ -103,6 +104,7 @@ export class LoginComponent implements OnInit {
           console.error('Error:', err);
           this.notificationService.error(err.error.message);
           this.blockedUntil = err.error.blockedUntil ? new Date(err.error.blockedUntil).getTime() : 0;
+          this.form.disable();
           this.startTimeout();
         });
     }
