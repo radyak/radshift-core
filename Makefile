@@ -1,6 +1,4 @@
 #!make
-include .env
-export
 
 IMAGE=radshift-core
 
@@ -17,21 +15,21 @@ default:
 ## arm32
 
 build.arm32: prepare
-	docker build -t $(REPO)/$(IMAGE):$(TAG) --build-arg BASE_IMAGE=$(BASE_IMAGE_ARM32) .
+	docker build -t $(IMAGE):$(TAG) --build-arg BASE_IMAGE=$(BASE_IMAGE_ARM32) .
 
 deploy.arm32: build.arm32
-	docker tag  $(REPO)/$(IMAGE):$(TAG) $(REPO)/$(IMAGE):$(TAG)
-	docker push $(REPO)/$(IMAGE):$(TAG)
+	docker tag  $(IMAGE):$(TAG) $(IMAGE):$(TAG)
+	docker push $(IMAGE):$(TAG)
 
 
 ## x86
 
 build.x86: prepare
-	docker build -t $(REPO)/$(IMAGE):$(TAG_X86) --build-arg BASE_IMAGE=$(BASE_IMAGE_X86) .
+	docker build -t $(IMAGE):$(TAG_X86) --build-arg BASE_IMAGE=$(BASE_IMAGE_X86) .
 
 deploy.x86: build.x86
-	docker tag  $(REPO)/$(IMAGE):$(TAG_X86) $(REPO)/$(IMAGE):$(TAG_X86)
-	docker push $(REPO)/$(IMAGE):$(TAG_X86)
+	docker tag  $(IMAGE):$(TAG_X86) $(IMAGE):$(TAG_X86)
+	docker push $(IMAGE):$(TAG_X86)
 
 
 ## tests
@@ -52,7 +50,7 @@ run.dev.frontend:
 	cd frontend; npm start
 
 run.x86: build.x86
-	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
+	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(IMAGE):$(TAG_X86)
 
 
 ## other
