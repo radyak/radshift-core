@@ -8,8 +8,7 @@ BASE_IMAGE_X86=node:lts-alpine
 TAG=latest
 TAG_X86=x86-latest
 
-default:
-	echo "No default goal defined"
+default: deploy.arm32
 
 
 ## arm32
