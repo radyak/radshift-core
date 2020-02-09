@@ -3,7 +3,7 @@
 REPO=radyak
 IMAGE=radshift-core
 
-BASE_IMAGE_ARM32=arm32v7/node:lts-slim
+BASE_IMAGE_ARM32=arm32v7/node:lts-alpine
 BASE_IMAGE_X86=node:lts-alpine
 
 TAG=latest

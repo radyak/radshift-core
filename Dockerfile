@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=arm32v7/node:lts-slim
+ARG BASE_IMAGE
 
 
 ## Frontend
