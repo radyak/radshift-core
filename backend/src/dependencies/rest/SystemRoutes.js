@@ -1,32 +1,55 @@
 var express = require('express')
 var router = express.Router()
 var DockerApiClient = require('../interface/DockerApiClient')
+const systeminformation = require('systeminformation');
 
 const dockerApiClient = new DockerApiClient()
 
 
 Provider('SystemRoutes', () => {
+    
+  router.get('/system', (req, res) => {
+    systeminformation.system().then(info => res.status(200).send(info))
+  })
+    
+  router.get('/time', (req, res) => {
+    res.status(200).send(systeminformation.time())
+  })
+    
+  router.get('/cpu', (req, res) => {
+    Promise.all([
+      systeminformation.cpuCurrentspeed(),
+      systeminformation.cpuTemperature(),
+    ])
+    .then(info => res.status(200).send({
+      speed: info[0],
+      temperature: info[1],
+    }))
+  })
+    
+  router.get('/memory', (req, res) => {
+    systeminformation.mem().then(info => res.status(200).send(info))
+  })
+    
+  router.get('/space', (req, res) => {
+    systeminformation.fsSize().then(info => res.status(200).send(info))
+  })
+
+  router.get('/load', (req, res) => {
+    Promise.all([
+      systeminformation.currentLoad(),
+      systeminformation.fullLoad(),
+      systeminformation.processes(),
+    ])
+    .then(info => res.status(200).send({
+      currentLoad: info[0],
+      fullLoad: info[1],
+      processes: info[2],
+    }))
+  })
   
   router.get('/containers', (req, res) => {
-    dockerApiClient.getAllContainerDetails()
-    .then(containerDetails => {
-      return containerDetails.map(containerDetail => containerDetail.Names[0].replace(/\//g, ''))
-    })
-    .then(containers => {
-      res.status(200).send(containers)
-    })
-  })
-  
-  router.get('/containers/:name', (req, res) => {
-    dockerApiClient.getContainerDetails(req.params.name).then(details => {
-      res.status(200).send(details)
-    })
-  })
-  
-  router.get('/containers/:name/stats', (req, res) => {
-    dockerApiClient.getContainerStats(req.params.name).then(stats => {
-      res.status(200).send(stats)
-    })
+    systeminformation.dockerAll().then(info => res.status(200).send(info))
   })
 
   return router
