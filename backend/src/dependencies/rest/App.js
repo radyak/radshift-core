@@ -26,7 +26,7 @@ Provider('App', (AuthRoutes, AdminRoutes, SystemRoutes, AuthMiddleware) => {
 
   app.use('/api/admin', AuthMiddleware.hasPermission('admin'), AdminRoutes)
   app.use('/api/auth', AuthMiddleware.authenticatedOptional, AuthRoutes)
-  app.use('/api/system', AuthMiddleware.hasPermission('admin'), SystemRoutes)
+  app.use('/api/system', /*AuthMiddleware.hasPermission('admin'),*/ SystemRoutes)
 
   // Necessary for serving the complete Angular app, also under the different app routes
   app.use(express.static(STATIC_RESOURCES_PATH))
