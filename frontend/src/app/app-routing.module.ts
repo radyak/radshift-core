@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PermissionGuard } from './guards/permission.guard';
 import { UserSettingsComponent } from './views/user-settings/user-settings.component';
 import { NotFoundComponent } from './views/not-found/not-found.component';
+import { SystemstatsComponent } from './views/systemstats/systemstats.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,19 @@ const routes: Routes = [
     data: {
       label: 'Settings',
       icon: 'settings_applications'
+    }
+  },
+
+  {
+    path: 'system',
+    component: SystemstatsComponent,
+    canActivate: [
+      AuthGuard,
+      PermissionGuard
+    ],
+    data: {
+      label: 'System',
+      icon: 'storage'
     }
   },
 
