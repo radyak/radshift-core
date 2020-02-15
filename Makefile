@@ -50,7 +50,7 @@ run.dev.frontend:
 	cd frontend; npm start
 
 run.x86: build.x86
-	docker run -p 80:80 -p 443:443 -v /home/fvo/tmp/test-mounts:/usr/src/conf -e CONF_DIR=/usr/src/conf -e ENV=dev $(IMAGE):$(TAG_X86)
+	docker run -p 80:80 -p 443:443 --privileged -v /home/fvo/tmp/test-mounts:/usr/src/conf -v /var/run/docker.sock:/var/run/docker.sock -e CONF_DIR=/usr/src/conf -e ENV=dev $(REPO)/$(IMAGE):$(TAG_X86)
 
 
 ## other

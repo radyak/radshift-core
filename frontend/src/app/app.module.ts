@@ -11,10 +11,11 @@ import {
   MatChipsModule,
   MatDialogModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { ErrorHintComponent } from './components/error-hint/error-hint.component
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NotFoundComponent } from './views/not-found/not-found.component';
+import { SystemstatsComponent } from './views/systemstats/systemstats.component';
 
 @NgModule({
   declarations: [
@@ -44,12 +46,14 @@ import { NotFoundComponent } from './views/not-found/not-found.component';
     DeleteUserDialogComponent,
     UserSettingsComponent,
     ErrorHintComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SystemstatsComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    BrowserModule,
+    ChartsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

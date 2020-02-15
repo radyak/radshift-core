@@ -1,14 +1,11 @@
 var express = require('express')
 var router = express.Router()
-var DockerApiClient = require('../interface/DockerApiClient')
 const systeminformation = require('systeminformation');
-
-const dockerApiClient = new DockerApiClient()
 
 
 Provider('SystemRoutes', () => {
     
-  router.get('/system', (req, res) => {
+  router.get('/', (req, res) => {
     systeminformation.system().then(info => res.status(200).send(info))
   })
     
