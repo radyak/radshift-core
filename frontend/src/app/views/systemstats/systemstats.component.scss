@@ -39,6 +39,8 @@
     background-color: map-get($brand, 500);
     color: #333;
     margin: 10px 0;
+    overflow: scroll;
+    max-height: 250px;
 }
 
 .indicator {
