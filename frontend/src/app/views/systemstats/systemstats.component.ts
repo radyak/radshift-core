@@ -54,8 +54,15 @@ export class SystemstatsComponent implements OnInit {
     this.systemStatsServiceService.getSpace().subscribe(space => this.space = space);
     this.systemStatsServiceService.getContainers().subscribe(containers => this.containers = containers);
     this.systemStatsServiceService.getNetworkInfo().subscribe(networkInfo => this.networkInfo = networkInfo);
-    this.systemStatsServiceService.getBackupInfo().subscribe(backupInfo => this.backupInfo = backupInfo);
+    this.systemStatsServiceService.getBackupInfo().subscribe(
+      backupInfo => this.backupInfo = backupInfo,
+      err => this.backupInfo = {
+        status: 'NO BACKUP FOUND',
+        date: '',
+        log: ''
+      });
   }
+
 
   getContainers(): Container[] {
     if (!this.containers) {
