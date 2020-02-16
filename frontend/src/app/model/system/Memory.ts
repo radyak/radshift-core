@@ -11,8 +11,4 @@ export interface Memory {
     swaptotal: number;
     swapused: number;
     swapfree: number;
-    totalGigabyte: number;
-    freeGigabyte: number;
-    usedGigabyte: number;
-    usagePercent: number;
 }
