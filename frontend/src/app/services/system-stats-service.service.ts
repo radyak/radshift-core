@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SystemInfo } from '../model/system/SystemInfo';
-import { map, take, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Space } from '../model/system/Space';
 import { CPU } from '../model/system/CPU';
 import { Memory } from '../model/system/Memory';
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
 import { SystemTime } from '../model/system/SystemTime';
+import { Container } from '../model/system/Container';
 
 @Injectable({
   providedIn: 'root'
@@ -40,17 +39,7 @@ export class SystemStatsServiceService {
   }
 
   public getMemory(): Observable<Memory> {
-    return this.http.get<Memory>(`/api/system/memory`).pipe(
-      map(memory => {
-        return {
-          ...memory,
-          totalGigabyte: this.toGigabyte(memory.total),
-          freeGigabyte: this.toGigabyte(memory.free),
-          usedGigabyte: this.toGigabyte(memory.used),
-          usagePercent: this.round((memory.used / memory.total * 100), 2)
-        };
-      })
-    );
+    return this.http.get<Memory>(`/api/system/memory`);
   }
 
   public getSpace(): Observable<Space[]> {

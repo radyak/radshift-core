@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { SingleDataSet, Label, Color } from 'ng2-charts';
+import { Color } from 'ng2-charts';
 import { SystemStatsServiceService } from 'src/app/services/system-stats-service.service';
 import { Space } from 'src/app/model/system/Space';
 import { SystemInfo } from 'src/app/model/system/SystemInfo';
 import { SystemTime } from 'src/app/model/system/SystemTime';
 import { CPU } from 'src/app/model/system/CPU';
 import { Memory } from 'src/app/model/system/Memory';
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+import { Container } from 'src/app/model/system/Container';
 
 
 @Component({
@@ -24,6 +23,7 @@ export class SystemstatsComponent implements OnInit {
   memory: Memory;
   containers: Container[];
 
+  showAllContainers: boolean = false;
 
   chartColors: Color[] = [
     {
@@ -31,9 +31,20 @@ export class SystemstatsComponent implements OnInit {
       borderColor: ['rgb(8,224,73)', 'rgb(4,112,36)'],
     }
   ];
+  warnColors: Color[] = [
+    {
+      backgroundColor: ['rgb(224,14,88)', 'rgb(112,7,44)'],
+      borderColor: ['rgb(224,14,88)', 'rgb(112,7,44)'],
+    }
+  ];
 
-  doughnutChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  doughnutChartData: SingleDataSet = [250, 130, 70];
+
+  getContainers(): Container[] {
+    if (!this.containers) {
+      return [];
+    }
+    return this.containers.filter(container => container.state !== 'exited' || this.showAllContainers);
+  }
 
 
   constructor(private systemStatsServiceService: SystemStatsServiceService) { }
@@ -45,6 +56,10 @@ export class SystemstatsComponent implements OnInit {
     this.systemStatsServiceService.getMemory().subscribe(memory => this.memory = memory);
     this.systemStatsServiceService.getSpace().subscribe(space => this.space = space);
     this.systemStatsServiceService.getContainers().subscribe(containers => this.containers = containers);
+  }
+
+  isContainerRunning(container: Container): boolean {
+    return container.state.toLocaleLowerCase() === 'running';
   }
 
 }

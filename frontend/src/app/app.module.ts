@@ -12,6 +12,7 @@ import {
   MatDialogModule,
   MatSidenavModule,
   MatListModule,
+  MatCheckboxModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -33,6 +34,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NotFoundComponent } from './views/not-found/not-found.component';
 import { SystemstatsComponent } from './views/systemstats/systemstats.component';
+import { PercentagePipe } from './pipes/percentage.pipe';
+import { MemoryPipe } from './pipes/memory.pipe';
+import { TimespanPipe } from './pipes/timespan.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +51,10 @@ import { SystemstatsComponent } from './views/systemstats/systemstats.component'
     UserSettingsComponent,
     ErrorHintComponent,
     NotFoundComponent,
-    SystemstatsComponent
+    SystemstatsComponent,
+    PercentagePipe,
+    MemoryPipe,
+    TimespanPipe
   ],
   imports: [
     AppRoutingModule,
@@ -69,6 +76,7 @@ import { SystemstatsComponent } from './views/systemstats/systemstats.component'
     MatDialogModule,
     MatSidenavModule,
     MatListModule,
+    MatCheckboxModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <td>Uptime:</td>
-            <td>{{ time?.uptime }} seconds</td>
+            <td>{{ time?.uptime | timespan }}</td>
         </tr>
         <tr>
             <td>Timezone:</td>
@@ -47,25 +47,18 @@
             Memory
         </h3>
 
-        <table *ngIf="memory">
-            <tr>
-                <td>
-                    <div>Total: {{ memory?.totalGigabyte }} GB</div>
-                    <div>Used: {{ memory?.usedGigabyte }} GB</div>
-                    <div>Free: {{ memory?.freeGigabyte }} GB</div>
-                </td>
-                <td>
-                    <canvas baseChart
-                        class="chart"
-                        [data]="[memory.used, memory.free]"
-                        [colors]="chartColors"
-                        chartType="doughnut">
-                    </canvas>
-                    <div>{{ memory.usagePercent }} %</div>
-                </td>
-            </tr>
-        </table>
-
+        <div *ngIf="memory" class="center">
+            <div>{{ memory?.used | memory:GB }} / {{ memory?.total | memory:GB }}</div>
+            <div>
+                <canvas baseChart
+                    class="chart"
+                    [data]="[memory.used, memory.free]"
+                    [colors]="(memory.used / memory.total) > 0.75 ? warnColors : chartColors"
+                    chartType="doughnut">
+                </canvas>
+            </div>
+            <h3>{{ (memory.used / memory.total) | percentage:1 }}</h3>
+        </div>
     </section>
 
     <section>
@@ -76,17 +69,16 @@
         <div *ngFor="let spa of space">
             <table>
                 <tr>
-                    <td>
-                        <h4>{{ spa.mount === '/' ? 'Main' : spa.mount }}</h4>
+                    <td class="top">
+                        <div class="space-header">{{ spa.mount === '/' ? 'Main' : spa.mount }}</div>
                         <div>[{{ spa.type }}]</div>
-                        <div>{{ spa.size }} byte</div>
-                        <div>{{ spa.used }} byte</div>
                     </td>
-                    <td>
+                    <td class="center">
+                        <div>{{ spa.used | memory:GB }} / {{ spa.size | memory:GB }}</div>
                         <canvas baseChart
-                            class="chart"
+                            class="chart-space"
                             [data]="[spa.used, spa.size - spa.used]"
-                            [colors]="chartColors"
+                            [colors]="spa.use > 75 ? warnColors : chartColors"
                             chartType="doughnut">
                         </canvas>
                         <div>{{ spa.use }} %</div>
@@ -98,38 +90,51 @@
 
     <section>
         <h3>
-            <!-- <mat-icon>bar_chart</mat-icon> -->
-            <mat-icon>dashboard</mat-icon>
-            <!-- <mat-icon>developer_board</mat-icon> -->
+            <mat-icon>developer_board</mat-icon>
             Containers
         </h3>
 
-        <div *ngFor="let container of containers">
+        <mat-checkbox [(ngModel)]="showAllContainers">Also exited containers</mat-checkbox>
+
+        <div *ngFor="let container of getContainers()">
             <table>
                 <tr>
                     <td>
-                        <h4>{{ container.name }}</h4>
-                        <div>Memory usage: {{ container.mem_usage }} byte ({{ container.mem_percent }} %)</div>
-                        <div>CPU usage: {{ container.cpu_percent }} %</div>
-                        <div>State: {{ container.state }}</div>
-                    </td>
-                    <!-- <td>
-                        <canvas statebaseChart
-                            class="chart"
-                            [data]="[container.mem_percent, 100 - container.mem_percent]"
-                            [colors]="chartColors"
-                            chartType="doughnut">
-                        </canvas>
-                        <div>{{ container.mem_percent }} %</div>
+                        <h4 [ngClass]="isContainerRunning(container) ? 'on' : 'off'">
+                            <div class="indicator"></div>
+                            {{ container.name }}
+                            <span class="header-info">[{{ container.state }}]</span>
+                        </h4>
 
-                        <canvas baseChart
-                            class="chart"
-                            [data]="[container.cpu_percent, 100 - container.cpu_percent]"
-                            [colors]="chartColors"
-                            chartType="doughnut">
-                        </canvas>
-                        <div>{{ container.cpu_percent }} %</div>
-                    </td> -->
+                        <table *ngIf="isContainerRunning(container)">
+                            <tr>
+                                <td class="center">
+                                    <div>Memory</div>
+                                    <canvas baseChart
+                                        class="chart-space"
+                                        [data]="[container.mem_percent, 100 - container.mem_percent]"
+                                        [colors]="mem_percent > 75 ? warnColors : chartColors"
+                                        chartType="doughnut">
+                                    </canvas>
+                                    <div>
+                                        {{ container.mem_percent | number:'1.0-2' }} %
+                                        ({{ container.mem_usage | memory:GB }})
+                                    </div>
+                                </td>
+                                <td class="center">
+                                    <div>CPU</div>
+                                    <canvas baseChart
+                                        class="chart-space"
+                                        [data]="[container.cpu_percent, 100 - container.cpu_percent]"
+                                        [colors]="cpu_percent > 75 ? warnColors : chartColors"
+                                        chartType="doughnut">
+                                    </canvas>
+                                    <div>{{ container.cpu_percent | number:'1.0-2' }} %</div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
                 </tr>
             </table>
         </div>
