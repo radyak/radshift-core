@@ -73,7 +73,7 @@
         </h3>
 
         <div *ngIf="memory" class="center">
-            <div>{{ memory?.used | memory:GB }} / {{ memory?.total | memory:GB }}</div>
+            <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
             <div>
                 <canvas baseChart
                     class="chart"
@@ -99,7 +99,7 @@
                         <div>[{{ spa.type }}]</div>
                     </td>
                     <td class="center">
-                        <div>{{ spa.used | memory:GB }} / {{ spa.size | memory:GB }}</div>
+                        <div>{{ spa.used | memory:'GB' }} / {{ spa.size | memory:'GB' }}</div>
                         <canvas baseChart
                             class="chart-space"
                             [data]="[spa.used, spa.size - spa.used]"
@@ -138,12 +138,12 @@
                                     <canvas baseChart
                                         class="chart-space"
                                         [data]="[container.mem_percent, 100 - container.mem_percent]"
-                                        [colors]="mem_percent > 75 ? warnColors : chartColors"
+                                        [colors]="container.mem_percent > 75 ? warnColors : chartColors"
                                         chartType="doughnut">
                                     </canvas>
                                     <div>
                                         {{ container.mem_percent | number:'1.0-2' }} %
-                                        ({{ container.mem_usage | memory:GB }})
+                                        ({{ container.mem_usage | memory:'GB' }})
                                     </div>
                                 </td>
                                 <td class="center">
@@ -151,7 +151,7 @@
                                     <canvas baseChart
                                         class="chart-space"
                                         [data]="[container.cpu_percent, 100 - container.cpu_percent]"
-                                        [colors]="cpu_percent > 75 ? warnColors : chartColors"
+                                        [colors]="container.cpu_percent > 75 ? warnColors : chartColors"
                                         chartType="doughnut">
                                     </canvas>
                                     <div>{{ container.cpu_percent | number:'1.0-2' }} %</div>
