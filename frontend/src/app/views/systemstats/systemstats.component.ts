@@ -7,6 +7,7 @@ import { SystemTime } from 'src/app/model/system/SystemTime';
 import { CPU } from 'src/app/model/system/CPU';
 import { Memory } from 'src/app/model/system/Memory';
 import { Container } from 'src/app/model/system/Container';
+import { NetworkInfo } from 'src/app/model/system/NetworkInfo';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { Container } from 'src/app/model/system/Container';
 export class SystemstatsComponent implements OnInit {
 
   systemInfo: SystemInfo;
+  networkInfo: NetworkInfo;
   space: Space[];
   time: SystemTime;
   cpu: CPU;
@@ -39,15 +41,8 @@ export class SystemstatsComponent implements OnInit {
   ];
 
 
-  getContainers(): Container[] {
-    if (!this.containers) {
-      return [];
-    }
-    return this.containers.filter(container => container.state !== 'exited' || this.showAllContainers);
-  }
-
-
   constructor(private systemStatsServiceService: SystemStatsServiceService) { }
+
 
   ngOnInit() {
     this.systemStatsServiceService.getSystemInfo().subscribe(systemInfo => this.systemInfo = systemInfo);
@@ -56,6 +51,14 @@ export class SystemstatsComponent implements OnInit {
     this.systemStatsServiceService.getMemory().subscribe(memory => this.memory = memory);
     this.systemStatsServiceService.getSpace().subscribe(space => this.space = space);
     this.systemStatsServiceService.getContainers().subscribe(containers => this.containers = containers);
+    this.systemStatsServiceService.getNetworkInfo().subscribe(networkInfo => this.networkInfo = networkInfo);
+  }
+
+  getContainers(): Container[] {
+    if (!this.containers) {
+      return [];
+    }
+    return this.containers.filter(container => container.state !== 'exited' || this.showAllContainers);
   }
 
   isContainerRunning(container: Container): boolean {

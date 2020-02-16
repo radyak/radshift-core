@@ -174,6 +174,10 @@ class DynDnsUpdateService {
     Logger.info(`Cyclic update stopped`)
     return this
   }
+
+  getCurrentIp() {
+    return state.previousExternalIP
+  }
 }
 
 module.exports = DynDnsUpdateService

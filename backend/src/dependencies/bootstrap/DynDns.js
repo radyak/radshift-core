@@ -19,6 +19,10 @@ Provider('DynDns', () => {
     },
     restartUpdateCyclic: () => {
       Logger.debug('DynDns Mock: restartUpdateCyclic')
+    },
+    getCurrentIp: () => {
+      Logger.debug('DynDns Mock: getIp')
+      return '127.0.0.1'
     }
   }
 }, 'dev')

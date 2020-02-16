@@ -7,6 +7,7 @@ import { CPU } from '../model/system/CPU';
 import { Memory } from '../model/system/Memory';
 import { SystemTime } from '../model/system/SystemTime';
 import { Container } from '../model/system/Container';
+import { NetworkInfo } from '../model/system/NetworkInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,10 @@ export class SystemStatsServiceService {
 
   public getContainers(): Observable<Container[]> {
     return this.http.get<Container[]>(`/api/system/containers`);
+  }
+
+  public getNetworkInfo(): Observable<NetworkInfo> {
+    return this.http.get<NetworkInfo>(`/api/system/network`);
   }
 
 }

@@ -4,7 +4,7 @@
         <mat-icon [inline]="true">storage</mat-icon>
         System
     </h2>
-    <table *ngIf="systemInfo && time">
+    <table *ngIf="systemInfo && time && networkInfo">
         <tr>
             <td>Manufacturer:</td>
             <td>{{ systemInfo?.manufacturer }}</td>
@@ -12,6 +12,10 @@
         <tr>
             <td>Model:</td>
             <td>{{ systemInfo?.model }}</td>
+        </tr>
+        <tr>
+            <td>IP:</td>
+            <td>{{ networkInfo?.ip }}</td>
         </tr>
         <tr>
             <td>Uptime:</td>

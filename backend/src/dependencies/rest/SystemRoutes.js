@@ -3,7 +3,7 @@ var router = express.Router()
 const systeminformation = require('systeminformation');
 
 
-Provider('SystemRoutes', () => {
+Provider('SystemRoutes', (DynDns) => {
     
   router.get('/', (req, res) => {
     systeminformation.system().then(info => res.status(200).send(info))
@@ -47,6 +47,12 @@ Provider('SystemRoutes', () => {
   
   router.get('/containers', (req, res) => {
     systeminformation.dockerAll().then(info => res.status(200).send(info))
+  })
+    
+  router.get('/network', (req, res) => {
+    res.status(200).send({
+      ip: DynDns.getCurrentIp()
+    })
   })
 
   return router
