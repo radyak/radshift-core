@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Color } from 'ng2-charts';
 import { SystemStatsServiceService } from 'src/app/services/system-stats-service.service';
 import { Space } from 'src/app/model/system/Space';
-import { SystemInfo } from 'src/app/model/system/SystemInfo';
 import { SystemTime } from 'src/app/model/system/SystemTime';
 import { CPU } from 'src/app/model/system/CPU';
 import { Memory } from 'src/app/model/system/Memory';
@@ -18,7 +17,6 @@ import { BackupInfo } from 'src/app/model/system/BackupInfo';
 })
 export class SystemstatsComponent implements OnInit {
 
-  systemInfo: SystemInfo;
   networkInfo: NetworkInfo;
   space: Space[];
   time: SystemTime;
@@ -47,7 +45,6 @@ export class SystemstatsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.systemStatsServiceService.getSystemInfo().subscribe(systemInfo => this.systemInfo = systemInfo);
     this.systemStatsServiceService.getSystemTime().subscribe(time => this.time = time);
     this.systemStatsServiceService.getCpu().subscribe(cpu => this.cpu = cpu);
     this.systemStatsServiceService.getMemory().subscribe(memory => this.memory = memory);

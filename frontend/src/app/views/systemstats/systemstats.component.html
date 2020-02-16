@@ -4,15 +4,7 @@
         <mat-icon [inline]="true">storage</mat-icon>
         System
     </h2>
-    <table *ngIf="systemInfo && time && networkInfo">
-        <tr>
-            <td>Manufacturer:</td>
-            <td>{{ systemInfo?.manufacturer }}</td>
-        </tr>
-        <tr>
-            <td>Model:</td>
-            <td>{{ systemInfo?.model }}</td>
-        </tr>
+    <table *ngIf="time && networkInfo">
         <tr>
             <td>IP:</td>
             <td>{{ networkInfo?.ip }}</td>
@@ -40,7 +32,7 @@
             </tr>
             <tr>
                 <td>Temperature:</td>
-                <td>{{ cpu?.temperature.max }}°C</td>
+                <td>{{ cpu?.temperature.max | number:'1.0' }}°C</td>
             </tr>
         </table>
     </section>
@@ -106,7 +98,7 @@
                             [colors]="spa.use > 75 ? warnColors : chartColors"
                             chartType="doughnut">
                         </canvas>
-                        <div>{{ spa.use }} %</div>
+                        <div>{{ spa.use }}%</div>
                     </td>
                 </tr>
             </table>
@@ -142,7 +134,7 @@
                                         chartType="doughnut">
                                     </canvas>
                                     <div>
-                                        {{ container.mem_percent | number:'1.0-2' }} %
+                                        {{ container.mem_percent | number:'1.0-2' }}%
                                         ({{ container.mem_usage | memory:'GB' }})
                                     </div>
                                 </td>
@@ -154,7 +146,7 @@
                                         [colors]="container.cpu_percent > 75 ? warnColors : chartColors"
                                         chartType="doughnut">
                                     </canvas>
-                                    <div>{{ container.cpu_percent | number:'1.0-2' }} %</div>
+                                    <div>{{ container.cpu_percent | number:'1.0-2' }}%</div>
                                 </td>
                             </tr>
                         </table>
