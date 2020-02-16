@@ -4,12 +4,9 @@ var fs = require('fs')
 const systeminformation = require('systeminformation');
 
 
-const BACKUP_METAINFO_PATH = process.env.BACKUP_METAINFO_PATH || '.'
-
-
 let getBackupStatus = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile(`${BACKUP_METAINFO_PATH}/backup.status`, (err, data) => {
+    fs.readFile(`/backup/backup.status`, (err, data) => {
       if (err) {
         return reject(err)
       }
@@ -20,7 +17,7 @@ let getBackupStatus = () => {
 
 let getBackupLog = () => {
   return new Promise((resolve, reject) => {
-    fs.readFile(`${BACKUP_METAINFO_PATH}/backup.log`, (err, data) => {
+    fs.readFile(`/backup/backup.log`, (err, data) => {
       if (err) {
         return reject(err)
       }
