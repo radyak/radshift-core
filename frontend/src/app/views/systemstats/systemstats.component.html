@@ -47,6 +47,27 @@
 
     <section>
         <h3>
+            <mat-icon>save</mat-icon>
+            Backup
+        </h3>
+        <table *ngIf="backupInfo">
+            <tr [ngClass]="backupInfo?.status === 'SUCCESS' ? 'on' : 'off'">
+                <td>Status:</td>
+                <td>{{ backupInfo?.status }}</td>
+            </tr>
+            <tr>
+                <td>Date:</td>
+                <td>{{ backupInfo?.date }}</td>
+            </tr>
+        </table>
+
+        <div *ngIf="backupInfo?.log" class="code">
+            {{ backupInfo?.log }}
+        </div>
+    </section>
+
+    <section>
+        <h3>
             <mat-icon>donut_small</mat-icon>
             Memory
         </h3>

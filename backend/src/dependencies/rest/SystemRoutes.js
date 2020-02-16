@@ -1,6 +1,31 @@
 var express = require('express')
 var router = express.Router()
+var fs = require('fs')
 const systeminformation = require('systeminformation');
+
+
+let getBackupStatus = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile('./backup.status', (err, data) => {
+      if (err) {
+        return reject(err)
+      }
+      resolve(JSON.parse(data.toString()))
+    })
+  })
+}
+
+let getBackupLog = () => {
+  return new Promise((resolve, reject) => {
+    fs.readFile('./backup.log', (err, data) => {
+      if (err) {
+        return reject(err)
+      }
+      resolve(data.toString())
+    })
+  })
+}
+
 
 
 Provider('SystemRoutes', (DynDns) => {
@@ -52,6 +77,23 @@ Provider('SystemRoutes', (DynDns) => {
   router.get('/network', (req, res) => {
     res.status(200).send({
       ip: DynDns.getCurrentIp()
+    })
+  })
+    
+  router.get('/backup', (req, res) => {
+    Promise.all([
+      getBackupStatus(),
+      getBackupLog()
+    ]).then(val => {
+      let status = val[0]
+      let log = val[1]
+      res.status(200).send({
+        status: status.status,
+        date: status.date,
+        log: log
+      })
+    }, err => {
+      res.status(500).send(err)
     })
   })
 

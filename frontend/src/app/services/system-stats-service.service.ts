@@ -8,6 +8,7 @@ import { Memory } from '../model/system/Memory';
 import { SystemTime } from '../model/system/SystemTime';
 import { Container } from '../model/system/Container';
 import { NetworkInfo } from '../model/system/NetworkInfo';
+import { BackupInfo } from '../model/system/BackupInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class SystemStatsServiceService {
 
   public getNetworkInfo(): Observable<NetworkInfo> {
     return this.http.get<NetworkInfo>(`/api/system/network`);
+  }
+
+  public getBackupInfo(): Observable<BackupInfo> {
+    return this.http.get<BackupInfo>(`/api/system/backup`);
   }
 
 }

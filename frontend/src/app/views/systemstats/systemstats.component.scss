@@ -34,6 +34,15 @@
     color: map-get($brand-red, 500);
 }
 
+.code {
+    font-family: monospace !important;
+    white-space: pre;
+    padding: 5px;
+    background-color: map-get($brand, 500);
+    color: #333;
+    margin: 10px 0;
+}
+
 .indicator {
     display: inline-block;
     border-radius: 5px;

@@ -8,6 +8,7 @@ import { CPU } from 'src/app/model/system/CPU';
 import { Memory } from 'src/app/model/system/Memory';
 import { Container } from 'src/app/model/system/Container';
 import { NetworkInfo } from 'src/app/model/system/NetworkInfo';
+import { BackupInfo } from 'src/app/model/system/BackupInfo';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class SystemstatsComponent implements OnInit {
   cpu: CPU;
   memory: Memory;
   containers: Container[];
+  backupInfo: BackupInfo;
 
   showAllContainers: boolean = false;
 
@@ -52,6 +54,7 @@ export class SystemstatsComponent implements OnInit {
     this.systemStatsServiceService.getSpace().subscribe(space => this.space = space);
     this.systemStatsServiceService.getContainers().subscribe(containers => this.containers = containers);
     this.systemStatsServiceService.getNetworkInfo().subscribe(networkInfo => this.networkInfo = networkInfo);
+    this.systemStatsServiceService.getBackupInfo().subscribe(backupInfo => this.backupInfo = backupInfo);
   }
 
   getContainers(): Container[] {
