@@ -128,7 +128,7 @@
                                 <td class="center">
                                     <div>Memory</div>
                                     <canvas baseChart
-                                        class="chart-space"
+                                        class="chart-container"
                                         [data]="[container.mem_percent, 100 - container.mem_percent]"
                                         [colors]="container.mem_percent > 75 ? warnColors : chartColors"
                                         chartType="doughnut">
@@ -141,7 +141,7 @@
                                 <td class="center">
                                     <div>CPU</div>
                                     <canvas baseChart
-                                        class="chart-space"
+                                        class="chart-container"
                                         [data]="[container.cpu_percent, 100 - container.cpu_percent]"
                                         [colors]="container.cpu_percent > 75 ? warnColors : chartColors"
                                         chartType="doughnut">
