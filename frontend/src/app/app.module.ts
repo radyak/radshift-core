@@ -16,7 +16,6 @@ import {
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +36,7 @@ import { SystemstatsComponent } from './views/systemstats/systemstats.component'
 import { PercentagePipe } from './pipes/percentage.pipe';
 import { MemoryPipe } from './pipes/memory.pipe';
 import { TimespanPipe } from './pipes/timespan.pipe';
+import { DonutChartComponent } from './components/donut-chart/donut-chart.component';
 
 @NgModule({
   declarations: [
@@ -54,13 +54,13 @@ import { TimespanPipe } from './pipes/timespan.pipe';
     SystemstatsComponent,
     PercentagePipe,
     MemoryPipe,
-    TimespanPipe
+    TimespanPipe,
+    DonutChartComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    ChartsModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

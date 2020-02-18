@@ -14,6 +14,14 @@
             <td>{{ time?.uptime | timespan }}</td>
         </tr>
         <tr>
+            <td>Date:</td>
+            <td>{{ getSystemTime() | date:'yyyy-MM-dd' }}</td>
+        </tr>
+        <tr>
+            <td>Time:</td>
+            <td>{{ getSystemTime() | date:'HH:mm:ss' }}</td>
+        </tr>
+        <tr>
             <td>Timezone:</td>
             <td>{{ time?.timezoneName }}</td>
         </tr>
@@ -67,12 +75,9 @@
         <div *ngIf="memory" class="center">
             <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
             <div>
-                <canvas baseChart
-                    class="chart"
-                    [data]="[memory.used, memory.free]"
-                    [colors]="(memory.used / memory.total) > 0.75 ? warnColors : chartColors"
-                    chartType="doughnut">
-                </canvas>
+                <donut-chart [fractions]="[memory.used, memory.total]"
+                             [color]="(memory.used / memory.total) > 0.75 ? warnColor : normalColor"
+                             class="chart"></donut-chart>
             </div>
             <h3>{{ (memory.used / memory.total) | percentage:1 }}</h3>
         </div>
@@ -92,12 +97,9 @@
                     </td>
                     <td class="center">
                         <div>{{ spa.used | memory:'GB' }} / {{ spa.size | memory:'GB' }}</div>
-                        <canvas baseChart
-                            class="chart-space"
-                            [data]="[spa.used, spa.size - spa.used]"
-                            [colors]="spa.use > 75 ? warnColors : chartColors"
-                            chartType="doughnut">
-                        </canvas>
+                        <donut-chart [fractions]="[spa.used, spa.size]"
+                                     [color]="spa.use > 75 ? warnColor : normalColor"
+                                     class="chart"></donut-chart>
                         <div>{{ spa.use }}%</div>
                     </td>
                 </tr>
@@ -127,12 +129,9 @@
                             <tr>
                                 <td class="center">
                                     <div>Memory</div>
-                                    <canvas baseChart
-                                        class="chart-container"
-                                        [data]="[container.mem_percent, 100 - container.mem_percent]"
-                                        [colors]="container.mem_percent > 75 ? warnColors : chartColors"
-                                        chartType="doughnut">
-                                    </canvas>
+                                    <donut-chart [fractions]="[container.mem_percent, 100]"
+                                                 [color]="container.mem_percent > 75 ? warnColor : normalColor"
+                                                 class="chart"></donut-chart>
                                     <div>
                                         {{ container.mem_percent | number:'1.0-2' }}%
                                         ({{ container.mem_usage | memory:'GB' }})
@@ -140,12 +139,9 @@
                                 </td>
                                 <td class="center">
                                     <div>CPU</div>
-                                    <canvas baseChart
-                                        class="chart-container"
-                                        [data]="[container.cpu_percent, 100 - container.cpu_percent]"
-                                        [colors]="container.cpu_percent > 75 ? warnColors : chartColors"
-                                        chartType="doughnut">
-                                    </canvas>
+                                    <donut-chart [fractions]="[container.cpu_percent, 100]"
+                                                 [color]="container.cpu_percent > 75 ? warnColor : normalColor"
+                                                 class="chart"></donut-chart>
                                     <div>{{ container.cpu_percent | number:'1.0-2' }}%</div>
                                 </td>
                             </tr>

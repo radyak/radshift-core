@@ -16,14 +16,11 @@
     vertical-align: top;
 }
 
-.chart-space {
-    max-width: 150px;
-    max-height: 150px;
-}
-
-.chart-container {
-    max-width: 130px;
-    max-height: 130px;
+.chart {
+    margin: 20px auto;
+    padding: 5px;
+    display: block;
+    max-width: 200px;
 }
 
 .header-info {
@@ -76,4 +73,5 @@ table {
 
 td {
     width: 50%;
+    vertical-align: baseline;
 }

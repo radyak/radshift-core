@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Color } from 'ng2-charts';
 import { SystemStatsServiceService } from 'src/app/services/system-stats-service.service';
 import { Space } from 'src/app/model/system/Space';
 import { SystemTime } from 'src/app/model/system/SystemTime';
@@ -27,18 +26,9 @@ export class SystemstatsComponent implements OnInit {
 
   showAllContainers: boolean = false;
 
-  chartColors: Color[] = [
-    {
-      backgroundColor: ['rgb(8,224,73)', 'rgb(4,112,36)'],
-      borderColor: ['rgb(8,224,73)', 'rgb(4,112,36)'],
-    }
-  ];
-  warnColors: Color[] = [
-    {
-      backgroundColor: ['rgb(224,14,88)', 'rgb(112,7,44)'],
-      borderColor: ['rgb(224,14,88)', 'rgb(112,7,44)'],
-    }
-  ];
+
+  normalColor: string = 'rgb(8,224,73)';
+  warnColor: string = 'rgb(224,14,88)';
 
 
   constructor(private systemStatsServiceService: SystemStatsServiceService) { }
@@ -70,6 +60,10 @@ export class SystemstatsComponent implements OnInit {
 
   isContainerRunning(container: Container): boolean {
     return container.state.toLocaleLowerCase() === 'running';
+  }
+
+  getSystemTime(): Date {
+    return new Date(this.time.current);
   }
 
 }
