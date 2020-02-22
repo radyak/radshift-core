@@ -86,23 +86,127 @@
         </h3>
         <mat-progress-bar *ngIf="loadingMemory" color="primary" mode="indeterminate"></mat-progress-bar>
 
-        <table *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}">
+        <h4>Total: {{ memory?.total | memory:'GB' }}</h4>
+        <table *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}" style="table-layout: fixed;">
             <tr>
-                <td class="center">
-                    <div>Used</div>
-                    <donut-chart [fractions]="[memory.used, memory.total]"
-                                 [color]="(memory.used / memory.total) > 0.75 ? warnColor : normalColor"
-                                 class="chart"></donut-chart>
-                    <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
-                    <h3>{{ (memory.used / memory.total) | percentage:1 }}</h3>
+                <td class="center top">
+                    Used:
                 </td>
-                <td class="center">
-                    <div>Available</div>
-                    <donut-chart [fractions]="[memory.available, memory.total]"
-                                 [color]="(memory.available / memory.total) < 0.25 ? warnColor : normalColor"
-                                 class="chart"></donut-chart>
-                    <div>{{ memory?.available | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
-                    <h3>{{ (memory.available / memory.total) | percentage:1 }}</h3>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.used, memory.total]"
+                               [color]="(memory.used / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.used | memory:'GB' }}</div>
+                    <div>{{ (memory.used / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Active:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.active, memory.total]"
+                               [color]="(memory.active / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.active | memory:'GB' }}</div>
+                    <div>{{ (memory.active / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Available:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.available, memory.total]"
+                               [color]="(memory.available / memory.total) < 0.25 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.available | memory:'GB' }}</div>
+                    <div>{{ (memory.available / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Buffers:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.buffers, memory.total]"
+                               [color]="(memory.buffers / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.buffers | memory:'GB' }}</div>
+                    <div>{{ (memory.buffers / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Cached:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.cached, memory.total]"
+                               [color]="(memory.cached / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.cached | memory:'GB' }}</div>
+                    <div>{{ (memory.cached / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Slab:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.slab, memory.total]"
+                               [color]="(memory.slab / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.slab | memory:'GB' }}</div>
+                    <div>{{ (memory.slab / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Buffcache:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.buffcache, memory.total]"
+                               [color]="(memory.buffcache / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.buffcache | memory:'GB' }}</div>
+                    <div>{{ (memory.buffcache / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+        </table>
+
+        <h4>Swap: {{ memory?.swaptotal | memory:'GB' }}</h4>
+        <table *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}" style="table-layout: fixed;">
+            <tr>
+                <td class="center top">
+                    Swap Total:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.swaptotal, memory.total]"
+                               [color]="(memory.swaptotal / memory.total) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.swaptotal | memory:'GB' }}</div>
+                    <div>{{ (memory.swaptotal / memory.total) | percentage:1 }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="center top">
+                    Swap Used:
+                </td>
+                <td class="center top">
+                    <bar-chart [fractions]="[memory.swapused, memory.swapfree]"
+                               [color]="(memory.swapused / memory.swapfree) > 0.75 ? warnColor : normalColor"></bar-chart>
+                </td>
+                <td class="center top">
+                    <div>{{ memory?.swapused | memory:'GB' }}</div>
+                    <div>{{ (memory.swapused / memory.swapfree) | percentage:1 }}</div>
                 </td>
             </tr>
         </table>

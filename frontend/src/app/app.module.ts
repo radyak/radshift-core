@@ -38,6 +38,7 @@ import { PercentagePipe } from './pipes/percentage.pipe';
 import { MemoryPipe } from './pipes/memory.pipe';
 import { TimespanPipe } from './pipes/timespan.pipe';
 import { DonutChartComponent } from './components/donut-chart/donut-chart.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { DonutChartComponent } from './components/donut-chart/donut-chart.compon
     PercentagePipe,
     MemoryPipe,
     TimespanPipe,
-    DonutChartComponent
+    DonutChartComponent,
+    BarChartComponent
   ],
   imports: [
     AppRoutingModule,
