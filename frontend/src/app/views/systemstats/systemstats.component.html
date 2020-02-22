@@ -4,7 +4,7 @@
         <mat-icon [inline]="true">storage</mat-icon>
         System
     </h2>
-    <table *ngIf="time && networkInfo">
+    <table *ngIf="clientTime && networkInfo">
         <tr>
             <td>IP:</td>
             <td>{{ networkInfo?.ip }}</td>
@@ -14,16 +14,16 @@
             <td>{{ time?.uptime | timespan }}</td>
         </tr>
         <tr>
-            <td>Date:</td>
-            <td>{{ getSystemTime() | date:'yyyy-MM-dd' }}</td>
+            <td>Client Time:</td>
+            <td>{{ clientTime | date:'yyyy-MM-dd' }}</td>
         </tr>
         <tr>
-            <td>Time:</td>
-            <td>{{ getSystemTime() | date:'HH:mm:ss' }}</td>
+            <td></td>
+            <td>{{ clientTime | date:'HH:mm:ss' }}</td>
         </tr>
         <tr>
-            <td>Timezone:</td>
-            <td>{{ time?.timezoneName }}</td>
+            <td></td>
+            <td>{{ clientTime | date:'z' }}</td>
         </tr>
     </table>
 
@@ -32,8 +32,13 @@
         <h3>
             <mat-icon>memory</mat-icon>
             CPU
+            <a class="refresh-button" (click)="fetchCpu()">
+                <mat-icon>refresh</mat-icon>
+            </a>
         </h3>
-        <table *ngIf="cpu">
+        <mat-progress-bar *ngIf="loadingCpu" color="primary" mode="indeterminate"></mat-progress-bar>
+
+        <table *ngIf="cpu" [ngClass]="{'opaque': loadingCpu}">
             <tr>
                 <td>Speed:</td>
                 <td>{{ cpu?.speed.avg }} GHz</td>
@@ -49,8 +54,13 @@
         <h3>
             <mat-icon>save</mat-icon>
             Backup
+            <a class="refresh-button" (click)="fetchBackupInfo()">
+                <mat-icon>refresh</mat-icon>
+            </a>
         </h3>
-        <table *ngIf="backupInfo">
+        <mat-progress-bar *ngIf="loadingBackupInfo" color="primary" mode="indeterminate"></mat-progress-bar>
+
+        <table *ngIf="backupInfo" [ngClass]="{'opaque': loadingBackupInfo}">
             <tr [ngClass]="backupInfo?.status === 'SUCCESS' ? 'on' : 'off'">
                 <td>Status:</td>
                 <td>{{ backupInfo?.status }}</td>
@@ -70,9 +80,13 @@
         <h3>
             <mat-icon>donut_small</mat-icon>
             Memory
+            <a class="refresh-button" (click)="fetchMemory()">
+                <mat-icon>refresh</mat-icon>
+            </a>
         </h3>
+        <mat-progress-bar *ngIf="loadingMemory" color="primary" mode="indeterminate"></mat-progress-bar>
 
-        <div *ngIf="memory" class="center">
+        <div *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}">
             <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
             <div>
                 <donut-chart [fractions]="[memory.used, memory.total]"
@@ -87,8 +101,13 @@
         <h3>
             <mat-icon>data_usage</mat-icon>
             Space
+            <a class="refresh-button" (click)="fetchSpace()">
+                <mat-icon>refresh</mat-icon>
+            </a>
         </h3>
-        <div *ngFor="let spa of space">
+        <mat-progress-bar *ngIf="loadingSpace" color="primary" mode="indeterminate"></mat-progress-bar>
+
+        <div *ngFor="let spa of space" [ngClass]="{'opaque': loadingSpace}">
             <table>
                 <tr>
                     <td class="top">
@@ -111,11 +130,16 @@
         <h3>
             <mat-icon>developer_board</mat-icon>
             Containers
+            <a class="refresh-button" (click)="fetchContainers()">
+                <mat-icon>refresh</mat-icon>
+            </a>
         </h3>
+        <mat-progress-bar *ngIf="loadingContainers" color="primary" mode="indeterminate"></mat-progress-bar>
+
 
         <mat-checkbox [(ngModel)]="showAllContainers">Also exited containers</mat-checkbox>
 
-        <div *ngFor="let container of getContainers()">
+        <div *ngFor="let container of getContainers()" [ngClass]="{'opaque': loadingContainers}">
             <table>
                 <tr>
                     <td>

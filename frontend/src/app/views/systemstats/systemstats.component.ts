@@ -18,14 +18,22 @@ export class SystemstatsComponent implements OnInit {
 
   networkInfo: NetworkInfo;
   space: Space[];
-  time: SystemTime;
   cpu: CPU;
   memory: Memory;
   containers: Container[];
   backupInfo: BackupInfo;
 
+  loadingNetworkInfo: boolean = false;
+  loadingSpace: boolean = false;
+  loadingCpu: boolean = false;
+  loadingMemory: boolean = false;
+  loadingContainers: boolean = false;
+  loadingBackupInfo: boolean = false;
+
+
   showAllContainers: boolean = false;
 
+  clientTime: Date = new Date();
 
   normalColor: string = 'rgb(8,224,73)';
   warnColor: string = 'rgb(224,14,88)';
@@ -33,14 +41,47 @@ export class SystemstatsComponent implements OnInit {
 
   constructor(private systemStatsServiceService: SystemStatsServiceService) { }
 
+  fetchCpu(): void {
+    this.loadingCpu = true;
+    this.systemStatsServiceService.getCpu().subscribe(cpu => {
+      this.cpu = cpu;
+      this.loadingCpu = false;
+    });
+  }
 
-  ngOnInit() {
-    this.systemStatsServiceService.getSystemTime().subscribe(time => this.time = time);
-    this.systemStatsServiceService.getCpu().subscribe(cpu => this.cpu = cpu);
-    this.systemStatsServiceService.getMemory().subscribe(memory => this.memory = memory);
-    this.systemStatsServiceService.getSpace().subscribe(space => this.space = space);
-    this.systemStatsServiceService.getContainers().subscribe(containers => this.containers = containers);
-    this.systemStatsServiceService.getNetworkInfo().subscribe(networkInfo => this.networkInfo = networkInfo);
+  fetchMemory(): void {
+    this.loadingMemory = true;
+    this.systemStatsServiceService.getMemory().subscribe(memory => {
+      this.memory = memory;
+      this.loadingMemory = false;
+    });
+  }
+
+  fetchSpace(): void {
+    this.loadingSpace = true;
+    this.systemStatsServiceService.getSpace().subscribe(space => {
+      this.space = space;
+      this.loadingSpace = false;
+    });
+  }
+
+  fetchContainers(): void {
+    this.loadingContainers = true;
+    this.systemStatsServiceService.getContainers().subscribe(containers => {
+      this.containers = containers;
+      this.loadingContainers = false;
+    });
+  }
+
+  fetchNetworkInfo(): void {
+    this.loadingNetworkInfo = true;
+    this.systemStatsServiceService.getNetworkInfo().subscribe(networkInfo => {
+      this.networkInfo = networkInfo;
+      this.loadingNetworkInfo = false;
+    });
+  }
+
+  fetchBackupInfo(): void {
     this.systemStatsServiceService.getBackupInfo().subscribe(
       backupInfo => this.backupInfo = backupInfo,
       err => this.backupInfo = {
@@ -48,6 +89,17 @@ export class SystemstatsComponent implements OnInit {
         date: '',
         log: ''
       });
+  }
+
+  ngOnInit() {
+    this.fetchCpu();
+    this.fetchMemory();
+    this.fetchSpace();
+    this.fetchContainers();
+    this.fetchNetworkInfo();
+    this.fetchBackupInfo();
+
+    this.clientTime = new Date();
   }
 
 
@@ -60,10 +112,6 @@ export class SystemstatsComponent implements OnInit {
 
   isContainerRunning(container: Container): boolean {
     return container.state.toLocaleLowerCase() === 'running';
-  }
-
-  getSystemTime(): Date {
-    return new Date(this.time.current);
   }
 
 }

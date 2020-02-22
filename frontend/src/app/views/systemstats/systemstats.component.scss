@@ -75,3 +75,12 @@ td {
     width: 50%;
     vertical-align: baseline;
 }
+
+.refresh-button {
+    float: right;
+    color: map-get($brand, 500);
+}
+
+.opaque {
+    opacity: 0.5;
+}

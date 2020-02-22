@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatListModule,
   MatCheckboxModule,
+  MatProgressBarModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -77,6 +78,7 @@ import { DonutChartComponent } from './components/donut-chart/donut-chart.compon
     MatSidenavModule,
     MatListModule,
     MatCheckboxModule,
+    MatProgressBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
