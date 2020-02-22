@@ -89,6 +89,7 @@ export class SystemstatsComponent implements OnInit {
   }
 
   fetchBackupInfo(): void {
+    this.loadingBackupInfo = true;
     this.systemStatsServiceService.getBackupInfo().subscribe(
       backupInfo => this.backupInfo = backupInfo,
       err => this.backupInfo = {
@@ -96,6 +97,7 @@ export class SystemstatsComponent implements OnInit {
         date: '',
         log: ''
       });
+      this.loadingBackupInfo = false;
   }
 
   ngOnInit() {
