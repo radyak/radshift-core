@@ -22,6 +22,7 @@ export class SystemstatsComponent implements OnInit {
   memory: Memory;
   containers: Container[];
   backupInfo: BackupInfo;
+  time: SystemTime;
 
   loadingNetworkInfo: boolean = false;
   loadingSpace: boolean = false;
@@ -46,6 +47,12 @@ export class SystemstatsComponent implements OnInit {
     this.systemStatsServiceService.getCpu().subscribe(cpu => {
       this.cpu = cpu;
       this.loadingCpu = false;
+    });
+  }
+
+  fetchSystemTime(): void {
+    this.systemStatsServiceService.getSystemTime().subscribe(time => {
+      this.time = time;
     });
   }
 
@@ -92,6 +99,7 @@ export class SystemstatsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchSystemTime();
     this.fetchCpu();
     this.fetchMemory();
     this.fetchSpace();
