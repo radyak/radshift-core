@@ -29,7 +29,7 @@ export class DonutChartComponent implements OnInit {
     if (this.percentagePoints) {
       percentage = this.percentagePoints / 100;
     } else if (this.fractions && this.fractions.length > 1) {
-      percentage = this.fractions[0]/this.fractions[1]
+      percentage = this.fractions[0]/this.fractions[this.fractions.length - 1]
     }
     let dashArray = `${100 * percentage} ${100 - 100 * percentage}`;
     return dashArray;

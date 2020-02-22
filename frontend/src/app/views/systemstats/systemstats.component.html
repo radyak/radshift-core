@@ -86,7 +86,28 @@
         </h3>
         <mat-progress-bar *ngIf="loadingMemory" color="primary" mode="indeterminate"></mat-progress-bar>
 
-        <div *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}">
+        <table *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}">
+            <tr>
+                <td class="center">
+                    <div>Used</div>
+                    <donut-chart [fractions]="[memory.used, memory.total]"
+                                 [color]="(memory.used / memory.total) > 0.75 ? warnColor : normalColor"
+                                 class="chart"></donut-chart>
+                    <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
+                    <h3>{{ (memory.used / memory.total) | percentage:1 }}</h3>
+                </td>
+                <td class="center">
+                    <div>Available</div>
+                    <donut-chart [fractions]="[memory.available, memory.total]"
+                                 [color]="(memory.available / memory.total) < 0.25 ? warnColor : normalColor"
+                                 class="chart"></donut-chart>
+                    <div>{{ memory?.available | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
+                    <h3>{{ (memory.available / memory.total) | percentage:1 }}</h3>
+                </td>
+            </tr>
+        </table>
+
+        <!-- <div *ngIf="memory" class="center" [ngClass]="{'opaque': loadingMemory}">
             <div>{{ memory?.used | memory:'GB' }} / {{ memory?.total | memory:'GB' }}</div>
             <div>
                 <donut-chart [fractions]="[memory.used, memory.total]"
@@ -94,7 +115,7 @@
                              class="chart"></donut-chart>
             </div>
             <h3>{{ (memory.used / memory.total) | percentage:1 }}</h3>
-        </div>
+        </div> -->
     </section>
 
     <section>
@@ -140,37 +161,30 @@
         <mat-checkbox [(ngModel)]="showAllContainers">Also exited containers</mat-checkbox>
 
         <div *ngFor="let container of getContainers()" [ngClass]="{'opaque': loadingContainers}">
-            <table>
+            <h4 [ngClass]="isContainerRunning(container) ? 'on' : 'off'">
+                <div class="indicator"></div>
+                {{ container.name }}
+                <span class="header-info">[{{ container.state }}]</span>
+            </h4>
+
+            <table *ngIf="isContainerRunning(container)">
                 <tr>
-                    <td>
-                        <h4 [ngClass]="isContainerRunning(container) ? 'on' : 'off'">
-                            <div class="indicator"></div>
-                            {{ container.name }}
-                            <span class="header-info">[{{ container.state }}]</span>
-                        </h4>
-
-                        <table *ngIf="isContainerRunning(container)">
-                            <tr>
-                                <td class="center">
-                                    <div>Memory</div>
-                                    <donut-chart [fractions]="[container.mem_percent, 100]"
-                                                 [color]="container.mem_percent > 75 ? warnColor : normalColor"
-                                                 class="chart"></donut-chart>
-                                    <div>
-                                        {{ container.mem_percent | number:'1.0-2' }}%
-                                        ({{ container.mem_usage | memory:'GB' }})
-                                    </div>
-                                </td>
-                                <td class="center">
-                                    <div>CPU</div>
-                                    <donut-chart [fractions]="[container.cpu_percent, 100]"
-                                                 [color]="container.cpu_percent > 75 ? warnColor : normalColor"
-                                                 class="chart"></donut-chart>
-                                    <div>{{ container.cpu_percent | number:'1.0-2' }}%</div>
-                                </td>
-                            </tr>
-                        </table>
-
+                    <td class="center">
+                        <div>Memory</div>
+                        <donut-chart [fractions]="[container.mem_percent, 100]"
+                                        [color]="container.mem_percent > 75 ? warnColor : normalColor"
+                                        class="chart"></donut-chart>
+                        <div>
+                            {{ container.mem_percent | number:'1.0-2' }}%
+                            ({{ container.mem_usage | memory:'GB' }})
+                        </div>
+                    </td>
+                    <td class="center">
+                        <div>CPU</div>
+                        <donut-chart [fractions]="[container.cpu_percent, 100]"
+                                        [color]="container.cpu_percent > 75 ? warnColor : normalColor"
+                                        class="chart"></donut-chart>
+                        <div>{{ container.cpu_percent | number:'1.0-2' }}%</div>
                     </td>
                 </tr>
             </table>
