@@ -76,13 +76,13 @@ class SelfMonitorService {
   }
 
   log(metrics) {
-    let dir = process.env.SELFMONITOR_LOG_DIR || 'log'
+    let dir = process.env.SELFMONITOR_LOG_DIR || './log'
     if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
     }
 
     let date = new Date().toISOString()
-    let filename = `./${dir}/${date}.metrics.json`
+    let filename = `${dir}/${date}.metrics.json`
 
     console.log('Current metrics:', metrics)
     

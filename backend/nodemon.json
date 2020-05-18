@@ -19,7 +19,7 @@
     "PERSISTENCE_FILE": "./data.json",
     "CONF_DIR": ".",
     "JWT_SECRET": "dev-secret",
-    "DISABLE_SELFMONITOR": "false"
+    "DISABLE_SELFMONITOR": "true"
   },
   "ext": "js,json"
 }
