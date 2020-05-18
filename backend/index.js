@@ -8,7 +8,7 @@ njs
   .scan([
     'src/dependencies'
   ])
-  .start((Server, DynDns, Initializer) => {
+  .start((Server, DynDns, Initializer, SelfMonitor) => {
     Initializer.run()
     Server.start()
     console.log(`Application started`)
@@ -16,5 +16,6 @@ njs
     process.on('SIGHUP', () => {
       Server.stop()
       DynDns.stopUpdateCyclic()
+      SelfMonitor.stopUpdateCyclic()
     })
   })

@@ -3,7 +3,8 @@
   "ignore": [
     ".git",
     "node_modules/**/node_modules",
-    "data.json"
+    "data.json",
+    "log/**"
   ],
   "verbose": true,
   "execMap": {
@@ -17,7 +18,8 @@
     "PORT": 3030,
     "PERSISTENCE_FILE": "./data.json",
     "CONF_DIR": ".",
-    "JWT_SECRET": "dev-secret"
+    "JWT_SECRET": "dev-secret",
+    "DISABLE_SELFMONITOR": "false"
   },
   "ext": "js,json"
 }
