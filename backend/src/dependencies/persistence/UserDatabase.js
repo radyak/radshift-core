@@ -26,7 +26,7 @@ const HASH_ITERATIONS = 10000,
       HASH_ALGORYTHM = 'sha512',
 
       USERNAME_PATTERN = /^[a-zA-Z0-9.\-_@]{3,32}$/,
-      PASSWORD_PATTERN = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*\.\-\_])[\w!@#$%^&*\.\-\_]{8,128}$/,
+      PASSWORD_PATTERN = /^[a-zA-Z0-9.\-_@\w!#$%^&*]{6,128}$/,
       PERMISSION_PATTERN = /^[a-zA-Z0-9.\-_]{3,32}$/
 
 
