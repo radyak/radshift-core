@@ -46,7 +46,10 @@ Provider('AuthRoutes', (AuthService, BackendService, AuthMiddleware) => {
             if (passportUser) {
                 AuthService.unblock(clientIp)
                 const token = AuthService.generateJWT(passportUser)
-                res.cookie('Authorization', token, COOKIE_CONFIG)
+                res.cookie('Authorization', token, {
+                        ...COOKIE_CONFIG,
+                        expires: AuthService.getSessionExpirationDate()
+                    })
                     .status(200)
                     .send({
                         token: token
